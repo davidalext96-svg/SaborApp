@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#140d17">
+<meta name="description" content="Escuela interactiva de salsa y bachata: teoría, práctica con metrónomo y seguimiento de progreso.">
+<title>Sabor · Escuela de Salsa y Bachata</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#140d17; --bg2:#1d1421; --card:#251a2b; --card2:#2e2135; --line:#3d2d45;
+  --text:#f6ece8; --muted:#b9a6b5; --dim:#86728a;
+  --salsa:#ff6b4a; --salsa2:#ffb347; --bachata:#e04f8f; --bachata2:#a77bff;
+  --ok:#5fd39a; --warn:#ffcf5c; --bad:#ff6b7a;
+  --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.35);
+  --font:"Outfit",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --display:"Fraunces",Georgia,serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:radial-gradient(1200px 600px at 85% -10%,rgba(224,79,143,.18),transparent 60%),radial-gradient(900px 500px at -10% 10%,rgba(255,107,74,.14),transparent 60%),var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;min-height:100vh}
+a{color:inherit}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0 0 .5em}
+h1{font-size:clamp(1.8rem,4vw,2.6rem)}
+h2{font-size:clamp(1.35rem,3vw,1.8rem)}
+h3{font-size:1.15rem}
+p{margin:0 0 .8em}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px}
+
+/* Header */
+header.top{position:sticky;top:0;z-index:20;background:rgba(20,13,23,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:800;font-size:1.3rem;letter-spacing:.3px}
+.brand .dot{width:30px;height:30px;border-radius:50%;background:conic-gradient(var(--salsa),var(--salsa2),var(--bachata),var(--bachata2),var(--salsa));box-shadow:0 0 18px rgba(255,107,74,.5)}
+nav.tabs{margin-left:auto;display:flex;gap:4px}
+nav.tabs a{text-decoration:none;padding:8px 14px;border-radius:999px;color:var(--muted);font-weight:500;font-size:.95rem;transition:.2s}
+nav.tabs a:hover{color:var(--text);background:var(--card)}
+nav.tabs a.active{color:#1a0f14;background:linear-gradient(135deg,var(--salsa2),var(--salsa));font-weight:600}
+@media (max-width:720px){
+  header.top{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg)}
+  nav.tabs{position:fixed;bottom:0;left:0;right:0;justify-content:space-around;background:rgba(20,13,23,.96);border-top:1px solid var(--line);padding:8px 6px calc(8px + env(safe-area-inset-bottom));margin:0}
+  nav.tabs a{font-size:.8rem;padding:8px 10px;display:flex;flex-direction:column;align-items:center;gap:2px}
+  body{padding-bottom:80px}
+}
+nav.tabs a .ic{font-size:1.1rem;line-height:1}
+@media (min-width:721px){nav.tabs a .ic{display:none}}
+
+main{padding:26px 0 60px}
+.view{display:none;animation:fade .35s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:900px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.g2,.g3{grid-template-columns:1fr}}
+.muted{color:var(--muted)}
+.dim{color:var(--dim)}
+.small{font-size:.88rem}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.spacer{flex:1}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:.78rem;font-weight:600;background:var(--card2);border:1px solid var(--line);color:var(--muted)}
+.chip.salsa{color:var(--salsa);border-color:rgba(255,107,74,.4);background:rgba(255,107,74,.08)}
+.chip.bachata{color:var(--bachata);border-color:rgba(224,79,143,.4);background:rgba(224,79,143,.08)}
+.chip.ok{color:var(--ok);border-color:rgba(95,211,154,.4);background:rgba(95,211,154,.08)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--card2);color:var(--text);padding:10px 16px;border-radius:12px;font-weight:600;transition:.15s;text-decoration:none}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:linear-gradient(135deg,var(--salsa2),var(--salsa));color:#1a0f14;border:none}
+.btn.pink{background:linear-gradient(135deg,var(--bachata2),var(--bachata));color:#fff;border:none}
+.btn.ghost{background:transparent}
+.btn.ok{background:var(--ok);color:#0d2117;border:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sm{padding:6px 12px;font-size:.88rem;border-radius:10px}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;margin-bottom:18px}
+@media (max-width:800px){.hero{grid-template-columns:1fr}}
+.hero .card{position:relative;overflow:hidden}
+.hero .hi{font-size:clamp(1.6rem,3.6vw,2.3rem)}
+.hero .bg-art{position:absolute;right:-40px;bottom:-40px;width:220px;height:220px;border-radius:50%;background:conic-gradient(from 90deg,rgba(255,107,74,.25),rgba(224,79,143,.25),rgba(167,123,255,.2),rgba(255,107,74,.25));filter:blur(4px)}
+.ring{--p:0;--c:var(--salsa);width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--card2) 0);display:grid;place-items:center;flex-shrink:0}
+.ring>div{width:94px;height:94px;border-radius:50%;background:var(--bg2);display:grid;place-items:center;text-align:center}
+.ring b{font-size:1.5rem;font-family:var(--display)}
+.ring.sm{width:74px;height:74px}.ring.sm>div{width:56px;height:56px}.ring.sm b{font-size:1rem}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat .v{font-family:var(--display);font-size:1.9rem;font-weight:800}
+.stat .l{color:var(--muted);font-size:.85rem}
+.bar{height:10px;border-radius:99px;background:var(--card2);overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--salsa2),var(--salsa));transition:width .6s}
+.bar.pink>i{background:linear-gradient(90deg,var(--bachata2),var(--bachata))}
+.lvlrow{display:grid;grid-template-columns:110px 1fr 46px;gap:10px;align-items:center;margin:8px 0;font-size:.9rem}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.badge{text-align:center;padding:14px 8px;border-radius:14px;background:var(--card2);border:1px solid var(--line);opacity:.4;filter:grayscale(1);transition:.3s}
+.badge.on{opacity:1;filter:none;border-color:rgba(255,179,71,.5);box-shadow:0 0 0 1px rgba(255,179,71,.15) inset}
+.badge .e{font-size:1.8rem}
+.badge .t{font-weight:600;font-size:.88rem;margin-top:4px}
+.badge .d{font-size:.75rem;color:var(--muted)}
+.activity li{padding:8px 0;border-bottom:1px dashed var(--line);font-size:.92rem;list-style:none}
+.activity{padding:0;margin:0}
+.chart svg{width:100%;height:auto;display:block}
+
+/* Lessons */
+.seg{display:inline-flex;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+.seg button{border:none;background:transparent;color:var(--muted);padding:8px 16px;border-radius:999px;font-weight:600}
+.seg button.on{background:var(--text);color:var(--bg)}
+.seg.dance button.on[data-v="salsa"]{background:var(--salsa);color:#1a0f14}
+.seg.dance button.on[data-v="bachata"]{background:var(--bachata);color:#fff}
+.level-block{margin-top:22px}
+.level-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.level-head h3{margin:0}
+.lcard{display:flex;flex-direction:column;gap:8px;padding:16px;border-radius:14px;background:var(--card);border:1px solid var(--line);text-decoration:none;transition:.2s;position:relative;min-height:150px}
+.lcard:hover{transform:translateY(-2px);border-color:var(--muted)}
+.lcard .num{font-family:var(--display);font-size:.9rem;color:var(--dim)}
+.lcard .tt{font-weight:600;font-size:1.02rem}
+.lcard .ob{font-size:.85rem;color:var(--muted);flex:1}
+.lcard.done{border-color:rgba(95,211,154,.45)}
+.lcard.done::after{content:"✓";position:absolute;top:12px;right:14px;width:26px;height:26px;border-radius:50%;background:var(--ok);color:#0d2117;display:grid;place-items:center;font-weight:800;font-size:.85rem}
+.lcard.locked{opacity:.55}
+.lock-note{font-size:.8rem;color:var(--warn)}
+
+.lesson-head{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px}
+.lesson-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
+@media (max-width:900px){.lesson-grid{grid-template-columns:1fr}}
+.theory p{color:#e9dcdf}
+.kp{margin:0;padding-left:20px}
+.kp li{margin:4px 0}
+.err li::marker{content:"✗  ";color:var(--bad)}
+.ok-list li::marker{content:"✓  ";color:var(--ok)}
+
+/* Counter visualizer */
+.counter{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin:14px 0}
+.cnt{border-radius:12px;background:var(--card2);border:1px solid var(--line);padding:10px 4px;text-align:center;transition:transform .08s,background .08s,border-color .08s;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px}
+.cnt .n{font-family:var(--display);font-size:1.4rem;font-weight:800}
+.cnt .lbl{font-size:.7rem;color:var(--muted);line-height:1.2}
+.cnt .ft{font-size:.72rem;font-weight:700;padding:1px 6px;border-radius:6px;background:rgba(255,255,255,.07)}
+.cnt.pause{opacity:.6;border-style:dashed}
+.cnt.tap .ft{background:rgba(224,79,143,.25);color:#ffc2dc}
+.cnt.on{transform:scale(1.06);border-color:var(--salsa2);background:linear-gradient(180deg,rgba(255,179,71,.3),rgba(255,107,74,.18))}
+.bach .cnt.on{border-color:var(--bachata);background:linear-gradient(180deg,rgba(224,79,143,.35),rgba(167,123,255,.18))}
+@media (max-width:560px){.counter{grid-template-columns:repeat(4,1fr)}}
+.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+input[type=range]{accent-color:var(--salsa);width:160px}
+.bach input[type=range]{accent-color:var(--bachata)}
+.check{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--card2);margin:8px 0;cursor:pointer;user-select:none}
+.check input{margin-top:4px;accent-color:var(--ok);width:18px;height:18px}
+.check.done{border-color:rgba(95,211,154,.4)}
+.quiz-q{margin:14px 0}
+.quiz-q .q{font-weight:600;margin-bottom:8px}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card2);color:var(--text)}
+.opt:hover:not(:disabled){border-color:var(--muted)}
+.opt.right{border-color:var(--ok);background:rgba(95,211,154,.12)}
+.opt.wrong{border-color:var(--bad);background:rgba(255,107,122,.12)}
+.opt:disabled{cursor:default}
+.fb{font-size:.88rem;margin-top:6px}
+.lesson-nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px;flex-wrap:wrap}
+.complete-box{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:16px;border-radius:14px;border:1px dashed var(--line);margin-top:14px}
+
+/* Practice */
+.big-count{font-family:var(--display);font-size:clamp(4rem,14vw,8rem);font-weight:800;text-align:center;line-height:1;margin:10px 0;background:linear-gradient(135deg,var(--salsa2),var(--salsa));-webkit-background-clip:text;background-clip:text;color:transparent;transition:transform .08s}
+.bach .big-count{background-image:linear-gradient(135deg,var(--bachata2),var(--bachata))}
+.big-count.pulse{transform:scale(1.08)}
+.timer{font-family:var(--display);font-size:2rem;font-weight:800}
+select,input[type=text],input[type=number]{background:var(--card2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-family:inherit;font-size:.95rem}
+label.fld{display:flex;flex-direction:column;gap:6px;font-size:.85rem;color:var(--muted)}
+
+/* Theory */
+.clave-grid{display:grid;grid-template-columns:repeat(16,1fr);gap:4px;margin:12px 0}
+.cg{aspect-ratio:1;border-radius:8px;background:var(--card2);border:1px solid var(--line);display:grid;place-items:center;font-size:.7rem;color:var(--dim);cursor:pointer;transition:.1s}
+.cg.beat{color:var(--muted);font-weight:700}
+.cg.hit{background:linear-gradient(135deg,var(--salsa2),var(--salsa));color:#1a0f14;border:none}
+.cg.now{outline:2px solid #fff;outline-offset:1px}
+@media (max-width:560px){.clave-grid{grid-template-columns:repeat(8,1fr)}}
+.inst{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;background:var(--card2);border:1px solid var(--line)}
+.inst .e{font-size:1.6rem}
+.gloss dt{font-weight:700;margin-top:10px}
+.gloss dd{margin:2px 0 0;color:var(--muted)}
+details.tcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 18px;margin:10px 0}
+details.tcard summary{cursor:pointer;padding:14px 0;font-weight:600;font-size:1.05rem;list-style:none;display:flex;align-items:center;gap:10px}
+details.tcard summary::-webkit-details-marker{display:none}
+details.tcard summary::after{content:"+";margin-left:auto;font-size:1.3rem;color:var(--muted)}
+details.tcard[open] summary::after{content:"−"}
+details.tcard .body{padding-bottom:16px}
+.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:50;box-shadow:var(--shadow)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{text-align:center;color:var(--dim);font-size:.8rem;padding:20px 0 30px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#dashboard"><span class="dot"></span>Sabor</a>
+    <nav class="tabs" id="tabs">
+      <a href="#dashboard" data-r="dashboard"><span class="ic">📊</span>Progreso</a>
+      <a href="#lecciones" data-r="lecciones"><span class="ic">🎓</span>Lecciones</a>
+      <a href="#teoria" data-r="teoria"><span class="ic">📖</span>Teoría</a>
+      <a href="#practica" data-r="practica"><span class="ic">🥁</span>Práctica</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="view" id="v-dashboard"></section>
+  <section class="view" id="v-lecciones"></section>
+  <section class="view" id="v-leccion"></section>
+  <section class="view" id="v-teoria"></section>
+  <section class="view" id="v-practica"></section>
+</main>
+
+<footer>Sabor · Escuela interactiva de salsa y bachata · Tu progreso se guarda solo en este navegador.</footer>
+<div class="toast" id="toast"></div>
+<input type="file" id="importFile" accept="application/json" class="sr">
+
+<script>
+"use strict";
+/* =========================================================
+   DATOS: niveles y lecciones
+   ========================================================= */
+const LEVELS = [
+  {id:"principiante", name:"Principiante", icon:"🌱"},
+  {id:"basico", name:"Básico", icon:"🔥"},
+  {id:"intermedio", name:"Intermedio", icon:"💃"},
+  {id:"avanzado", name:"Avanzado", icon:"👑"}
+];
+const DANCES = {
+  salsa:{name:"Salsa", color:"var(--salsa)", emoji:"🎺"},
+  bachata:{name:"Bachata", color:"var(--bachata)", emoji:"🎸"}
+};
+// p(label, tipo, pie)  tipo: s=paso, p=pausa, t=toque, q=quiebre
+const p = (l,t,f)=>({l,t:t||"s",f:f||""});
+
+const SALSA_LIDER = [p("Adelante","q","I"),p("En sitio","s","D"),p("Junta","s","I"),p("Pausa","p"),p("Atrás","q","D"),p("En sitio","s","I"),p("Junta","s","D"),p("Pausa","p")];
+const SALSA_SEG   = [p("Atrás","q","D"),p("En sitio","s","I"),p("Junta","s","D"),p("Pausa","p"),p("Adelante","q","I"),p("En sitio","s","D"),p("Junta","s","I"),p("Pausa","p")];
+const BACH_LIDER  = [p("Lado","s","I"),p("Junta","s","D"),p("Lado","s","I"),p("Toque","t","D"),p("Lado","s","D"),p("Junta","s","I"),p("Lado","s","D"),p("Toque","t","I")];
+const BACH_SEG    = [p("Lado","s","D"),p("Junta","s","I"),p("Lado","s","D"),p("Toque","t","I"),p("Lado","s","I"),p("Junta","s","D"),p("Lado","s","I"),p("Toque","t","D")];
+
+const LESSONS = [
+/* ---------------- SALSA ---------------- */
+{id:"s01",dance:"salsa",level:"principiante",title:"El ritmo y el conteo de la salsa",mode:"salsa",bpm:150,
+ obj:"Entender cómo se cuenta la salsa en 8 tiempos y dónde van las pausas.",
+ theory:["La salsa se escribe en compás de 4/4, pero los bailarines cuentan dos compases seguidos: una frase de 8 tiempos. En cada mitad se dan 3 pasos y se hace una pausa: pasos en 1-2-3 y 5-6-7, pausa en 4 y 8.",
+         "El tempo habitual va de 160 a 220 pulsos por minuto, por eso al principio conviene practicar más lento. Para encontrar el «1», escucha dónde empiezan las frases del cantante y los cambios fuertes de la orquesta; la campana (cencerro) marca los pulsos con claridad en las partes de mambo.",
+         "La conga toca un patrón llamado tumbao, cuyos golpes abiertos caen alrededor del 4 y el 8: justo en las pausas. Eso ayuda a sentir dónde no se pisa."],
+ points:["Cuenta en voz alta: «1, 2, 3… 5, 6, 7…»","Las pausas (4 y 8) no son silencio: el cuerpo sigue en movimiento, solo no se transfiere el peso.","Empieza a contar con canciones lentas (cerca de 150 BPM)."],
+ errors:["Dar un paso en el 4 o en el 8.","Empezar a bailar sin haber encontrado el 1."],
+ pattern:{general:[p("Paso"),p("Paso"),p("Paso"),p("Pausa","p"),p("Paso"),p("Paso"),p("Paso"),p("Pausa","p")]},
+ checklist:["Aplaudí solo en 1-2-3 y 5-6-7 durante una canción completa","Identifiqué el 1 en tres canciones distintas","Conté en voz alta con el metrónomo a 150 BPM sin perderme"],
+ quiz:[{q:"¿En qué tiempos NO se pisa en salsa On1?",o:["1 y 5","4 y 8","2 y 6","3 y 7"],a:1},
+       {q:"¿Cuántos tiempos tiene la frase que cuentan los bailarines?",o:["4","6","8","12"],a:2}]},
+
+{id:"s02",dance:"salsa",level:"principiante",title:"Paso básico adelante y atrás (mambo)",mode:"salsa",bpm:150,
+ obj:"Dominar el básico frontal de salsa en línea (On1) en ambos roles.",
+ theory:["Es el paso base del estilo en línea (On1). El líder rompe hacia adelante con el pie izquierdo en el 1 y la seguidora rompe hacia atrás con el derecho; en el 5 se invierte la dirección.",
+         "El paso que cambia la dirección se llama quiebre o «break». Los otros dos pasos solo trasladan el peso: el 2 se queda en su sitio y el 3 vuelve a juntar los pies."],
+ points:["Pasos cortos: el pie no va más allá de medio pie de distancia.","Transfiere el peso completo en cada paso; las rodillas siempre un poco flexionadas.","El torso se mantiene arriba y estable; se mueven las piernas y la cadera."],
+ errors:["Pasos largos que te dejan atrasado en tempos rápidos.","Mirar los pies todo el tiempo (rompe la postura)."],
+ pattern:{lider:SALSA_LIDER,seguidora:SALSA_SEG},
+ checklist:["8 frases seguidas en rol de líder sin perder el conteo","8 frases seguidas en rol de seguidora","Practiqué frente a un espejo revisando la postura"],
+ quiz:[{q:"En On1, ¿con qué pie rompe el líder hacia adelante en el 1?",o:["Derecho","Izquierdo","Cualquiera","Ninguno, hace pausa"],a:1},
+       {q:"¿Qué es el «quiebre» o break?",o:["Una pausa larga","El paso que cambia la dirección","Un giro","Un adorno de brazos"],a:1}]},
+
+{id:"s03",dance:"salsa",level:"principiante",title:"Básico lateral y básico en el sitio",mode:"salsa",bpm:155,
+ obj:"Ampliar el vocabulario de pasos básicos para variar sin perder el ritmo.",
+ theory:["El básico lateral mantiene la misma estructura (3 pasos y pausa) pero el quiebre va hacia el costado: el líder abre el izquierdo al lado en el 1, el derecho en el 5. Es muy útil para descansar o para esperar el momento de una figura.",
+         "El básico en el sitio (o marcha) solo transfiere el peso sin desplazarse. Sirve para tempos muy rápidos y como base de muchos shines."],
+ points:["Al abrir al costado, la rodilla apunta en la misma dirección que el pie.","Combina: 2 frases de básico frontal + 2 de lateral.","Mantén el mismo tamaño de paso en ambos lados."],
+ errors:["Cruzar los pies al volver en el 3.","Perder el 1 al cambiar de un básico a otro."],
+ pattern:{lider:[p("Al lado","q","I"),p("En sitio","s","D"),p("Junta","s","I"),p("Pausa","p"),p("Al lado","q","D"),p("En sitio","s","I"),p("Junta","s","D"),p("Pausa","p")],
+          seguidora:[p("Al lado","q","D"),p("En sitio","s","I"),p("Junta","s","D"),p("Pausa","p"),p("Al lado","q","I"),p("En sitio","s","D"),p("Junta","s","I"),p("Pausa","p")]},
+ checklist:["Alterné frontal y lateral cada 2 frases durante una canción","Hice básico en el sitio a 180 BPM","Cambié de básico sin detenerme"],
+ quiz:[{q:"En el básico lateral, ¿qué se mantiene igual que en el frontal?",o:["La dirección","La estructura 3 pasos + pausa","El pie de inicio cambia","Nada"],a:1},
+       {q:"¿Para qué es especialmente útil el básico en el sitio?",o:["Para girar","Para tempos muy rápidos y shines","Para el dip final","Para bachata"],a:1}]},
+
+{id:"s04",dance:"salsa",level:"basico",title:"Marco y conexión en pareja",mode:"salsa",bpm:155,
+ obj:"Aprender a guiar y seguir a través del marco (frame) y las manos.",
+ theory:["El marco es la estructura de brazos y torso que transmite la guía. Los brazos van ligeramente doblados, con los codos delante del cuerpo, nunca detrás de la espalda. Así el movimiento del torso del líder llega a la seguidora sin necesidad de jalar.",
+         "La conexión funciona con dos sensaciones: compresión (los dos empujan suavemente hacia el otro) y tensión (los dos se alejan suavemente). La señal de preparación, o «prep», se da normalmente en 1-2-3 para que la figura ocurra en 5-6-7."],
+ points:["Agarre con dedos, no con la palma cerrada: la mano de la seguidora debe poder girar.","El líder guía con el cuerpo; el brazo solo transmite.","La seguidora mantiene un tono ligero en el brazo, ni flojo ni rígido."],
+ errors:["Apretar la mano o jalar con el brazo.","Brazos totalmente estirados o pegados al cuerpo."],
+ pattern:{lider:SALSA_LIDER,seguidora:SALSA_SEG},
+ checklist:["Hice básico en pareja sintiendo compresión en 1 y tensión en 5","Practiqué con los ojos cerrados (seguidora) guiada solo por el marco","Revisé que mis codos estén delante del torso"],
+ quiz:[{q:"¿Qué transmite principalmente la guía?",o:["La fuerza del brazo","El torso a través del marco","La mirada","Los pies"],a:1},
+       {q:"¿En qué tiempos se da normalmente la preparación para una figura que ocurre en 5-6-7?",o:["1-2-3","4 y 8","5-6-7","Solo en el 8"],a:0}]},
+
+{id:"s05",dance:"salsa",level:"basico",title:"Giro a la derecha de la seguidora",mode:"salsa",bpm:150,
+ obj:"Ejecutar y guiar el giro simple a la derecha con buena técnica de pivote.",
+ theory:["Es el giro más común. El líder prepara en 1-2-3 (un pequeño contrapeso hacia su izquierda), levanta la mano izquierda en el 5 formando un «halo» sobre la cabeza de la seguidora y ella gira hacia su derecha en 5-6-7, terminando de frente en el 8.",
+         "La técnica del giro se basa en pivotar sobre la parte delantera del pie (metatarso) con las piernas juntas y el eje vertical. El «spotting» —fijar la mirada en un punto y girar la cabeza al final— evita el mareo."],
+ points:["Seguidora: en el 5 el pie izquierdo pisa adelante y pivota; en el 6 completa; en el 7 cierra.","Líder: la mano dibuja un pequeño círculo sobre la cabeza, sin empujar hacia abajo.","El líder sigue haciendo su básico mientras ella gira."],
+ errors:["Girar sobre el talón.","Líder que levanta la mano tarde (en el 6)."],
+ pattern:{lider:[p("Prep.","q","I"),p("En sitio","s","D"),p("Junta","s","I"),p("Pausa","p"),p("Mano arriba","q","D"),p("Halo","s","I"),p("Junta","s","D"),p("Pausa","p")],
+          seguidora:[p("Atrás","q","D"),p("En sitio","s","I"),p("Junta","s","D"),p("Pausa","p"),p("Pisa y pivota","q","I"),p("Gira","s","D"),p("Cierra","s","I"),p("Frente","p")]},
+ checklist:["10 giros sola/solo con spotting sin marearme","5 giros en pareja guiados en el 5","Terminé cada giro de frente en el 8"],
+ quiz:[{q:"¿Sobre qué parte del pie se pivota?",o:["Talón","Metatarso (parte delantera)","Borde externo","Pie plano"],a:1},
+       {q:"¿Para qué sirve el spotting?",o:["Para lucirse","Para evitar el mareo y mantener la orientación","Para guiar","Para marcar el 1"],a:1}]},
+
+{id:"s06",dance:"salsa",level:"basico",title:"Cross Body Lead (CBL)",mode:"salsa",bpm:150,
+ obj:"Dominar la figura base de la salsa en línea: el cambio de lado de la seguidora.",
+ theory:["En el Cross Body Lead el líder abre un «camino» (el slot) para que la seguidora pase de un lado a otro de la línea. El líder rompe adelante en el 1, en el 2 da un cuarto de vuelta hacia su izquierda y en el 3 se aparta del camino; la seguidora avanza en 1-2-3 y en 5-6 pivota media vuelta para quedar de frente.",
+         "En salsa cubana, la figura que cumple una función parecida es el «dile que no»: un cambio de posición que prepara muchas otras figuras de casino."],
+ points:["El líder libera el camino en el 3, no antes.","La seguidora camina recto por la línea, sin curvarse.","Al terminar, ambos quedan en la línea pero en lados opuestos."],
+ errors:["Líder que se queda en medio de la línea y bloquea el paso.","Seguidora que se anticipa y pasa sin guía."],
+ pattern:{lider:[p("Adelante","q","I"),p("¼ vuelta","s","D"),p("Abre camino","s","I"),p("Pausa","p"),p("Atrás","q","D"),p("Gira","s","I"),p("Cierra","s","D"),p("Pausa","p")],
+          seguidora:[p("Atrás","q","D"),p("Avanza","s","I"),p("Avanza","s","D"),p("Pausa","p"),p("Pivota","q","I"),p("Media vuelta","s","D"),p("Cierra","s","I"),p("Pausa","p")]},
+ checklist:["Hice 10 CBL seguidos manteniendo la línea","Combiné CBL + giro derecho","Revisé que termino en el lado opuesto de la línea"],
+ quiz:[{q:"¿Qué hace el líder en el CBL para que pase la seguidora?",o:["Gira él","Abre el camino (slot)","Hace un dip","Se detiene"],a:1},
+       {q:"¿Qué figura de salsa cubana cumple una función parecida?",o:["Dile que no","Suzie Q","Hammerlock","Cambré"],a:0}]},
+
+{id:"s07",dance:"salsa",level:"intermedio",title:"Giro a la izquierda y vueltas del líder",mode:"salsa",bpm:160,
+ obj:"Agregar el giro izquierdo (inside turn) y el giro propio del líder.",
+ theory:["El giro izquierdo o inside turn hace que la seguidora gire hacia su izquierda, normalmente dentro de un Cross Body Lead: el líder prepara en el 1, y ella gira en 5-6-7 mientras el líder guía con un halo en sentido contrario a las agujas del reloj.",
+         "El giro del líder suele ir en 1-2-3 o 5-6-7, soltando o pasando la mano por detrás de su cabeza. La regla de oro: el líder nunca suelta la responsabilidad de la conexión, por eso vuelve a tomar la mano en el 8 o en el 4."],
+ points:["La seguidora prepara el giro izquierdo con un pequeño contragiro de hombros.","El líder gira sobre su propio eje, sin desplazarse.","Mantén el marco listo al terminar cada giro."],
+ errors:["Halo demasiado bajo que golpea la cabeza.","Perder el conteo después de girar."],
+ pattern:{general:[p("Prep."),p("Paso"),p("Paso"),p("Pausa","p"),p("Gira","q"),p("Gira"),p("Cierra"),p("Pausa","p")]},
+ checklist:["5 giros izquierdos sola/solo con spotting","Hice CBL con inside turn en pareja","Hice el giro del líder y retomé la conexión en el 8"],
+ quiz:[{q:"¿En qué figura suele ejecutarse el inside turn?",o:["Dentro de un Cross Body Lead","En un dip","En el básico lateral","En un shine"],a:0},
+       {q:"Tras el giro del líder, ¿cuándo se retoma la conexión típicamente?",o:["En el 2","En el 4 o el 8","Nunca","En el 6"],a:1}]},
+
+{id:"s08",dance:"salsa",level:"intermedio",title:"Shines: cross-over y Suzie Q",mode:"salsa",bpm:170,
+ obj:"Bailar pasos libres (shines) para los momentos de baile suelto.",
+ theory:["Los shines son secuencias de pies que se bailan separados, sobre todo cuando la orquesta entra en el mambo. Mantienen la estructura de 3 pasos y pausa, pero agregan cruces, toques y giros.",
+         "El cross-over cruza el pie que rompe por delante del otro (en el 1 y en el 5). La Suzie Q combina un cruce por delante con un paso abierto al lado y un pequeño giro de talones, desplazándose lateralmente. Ambos se practican primero sin música y luego al tempo."],
+ points:["Los brazos acompañan: no los dejes colgando.","Empieza a 140 BPM y sube de 10 en 10.","Los cruces se hacen con la cadera, no solo con el pie."],
+ errors:["Perder la pausa del 4 y el 8 por ir rápido.","Cruzar tanto que se pierde el equilibrio."],
+ pattern:{general:[p("Cruza delante","q","I"),p("En sitio","s","D"),p("Al lado","s","I"),p("Pausa","p"),p("Cruza delante","q","D"),p("En sitio","s","I"),p("Al lado","s","D"),p("Pausa","p")]},
+ checklist:["16 frases de cross-over sin perder el ritmo","Practiqué la Suzie Q desplazándome a ambos lados","Hice un mini shine de 4 frases combinando ambos"],
+ quiz:[{q:"¿Cuándo suelen bailarse los shines?",o:["Siempre agarrados","En el mambo, separados","Solo al inicio","Solo en bachata"],a:1},
+       {q:"¿Qué mantiene un shine respecto al básico?",o:["La estructura 3 pasos + pausa","Nada","La posición cerrada","La dirección"],a:0}]},
+
+{id:"s09",dance:"salsa",level:"intermedio",title:"Copa y combinaciones",mode:"salsa",bpm:165,
+ obj:"Enlazar figuras en combinaciones fluidas de 2 a 4 frases.",
+ theory:["La «copa» es una figura en la que el líder hace que la seguidora vaya hacia él y luego la devuelve con un giro, como si dibujara la forma de una copa. Suele enlazarse con un CBL.",
+         "Las combinaciones son la gramática de la salsa: cada figura termina en una posición que permite empezar la siguiente. Practica pensando en «de dónde salgo y adónde llego» (mano derecha o izquierda, posición abierta o cerrada)."],
+ points:["Antes de una combinación, define posición inicial y final.","Cada figura empieza en el 1 de una frase.","Une siempre con un básico si te pierdes."],
+ errors:["Encadenar figuras que dejan las manos cruzadas sin salida.","Acelerar la combinación y salirse del 1."],
+ pattern:{general:[p("Prep."),p("Paso"),p("Paso"),p("Pausa","p"),p("Figura","q"),p("Figura"),p("Cierra"),p("Pausa","p")]},
+ checklist:["Combo: básico → CBL → copa → giro derecho","Repetí la combinación 5 veces sin errores","Creé una combinación propia de 4 frases"],
+ quiz:[{q:"¿Qué conviene definir antes de enlazar figuras?",o:["El color de ropa","La posición inicial y final","El número de giros","El tempo exacto"],a:1},
+       {q:"¿Cuándo empieza normalmente cada figura?",o:["En el 1 de una frase","En el 4","En cualquier tiempo","En el 8"],a:0}]},
+
+{id:"s10",dance:"salsa",level:"avanzado",title:"Salsa On2 (estilo Nueva York)",mode:"on2",bpm:170,
+ obj:"Entender la lógica del On2 y practicar su conteo.",
+ theory:["En On2 el quiebre (cambio de dirección) cae en el 2 y en el 6, en lugar del 1 y el 5. Muchos bailarines lo sienten más conectado con la conga y el bajo, que acentúan esos tiempos.",
+         "Existen variantes. La más difundida, la de Eddie Torres, mantiene un paso en el 1 y hace el quiebre en el 2. Otra variante, llamada «Palladium» o «power On2», arranca en el 2 y deja una pausa en el 1 y el 5, que es la que se muestra en el contador de abajo.",
+         "Pasar de On1 a On2 cuesta al principio: practica primero solo los pies con el metrónomo y después en pareja."],
+ points:["Cuenta en voz alta y marca fuerte el «2».","Escucha la conga: sus golpes en 2 y 6 son tus aliados.","No mezcles On1 y On2 con la misma pareja sin acordarlo."],
+ errors:["Volver al On1 sin darte cuenta en las figuras.","Hacer el quiebre en el 3 por llegar tarde."],
+ pattern:{general:[p("Pausa","p"),p("Quiebre","q"),p("En sitio"),p("Junta"),p("Pausa","p"),p("Quiebre","q"),p("En sitio"),p("Junta")]},
+ checklist:["Hice básico On2 con el metrónomo 3 minutos seguidos","Identifiqué el golpe de la conga en 2 y 6","Hice un CBL en On2"],
+ quiz:[{q:"¿En qué tiempos cae el quiebre en On2?",o:["1 y 5","2 y 6","3 y 7","4 y 8"],a:1},
+       {q:"¿Qué instrumento ayuda especialmente a sentir el On2?",o:["Piano","Conga","Trompeta","Voz"],a:1}]},
+
+{id:"s11",dance:"salsa",level:"avanzado",title:"Giros múltiples y spotting",mode:"salsa",bpm:160,
+ obj:"Lograr dobles y triples giros controlados.",
+ theory:["Los giros múltiples dependen de tres cosas: un eje vertical firme (abdomen activo, hombros abajo), un pivote limpio sobre el metatarso y un spotting rápido de la cabeza.",
+         "En pareja, el líder da la preparación con más energía y mantiene el halo más tiempo, pero el impulso de girar lo genera la seguidora con su propio cuerpo. Un buen doble giro termina estable en el 8, no tambaleando."],
+ points:["Brazos cerca del cuerpo mientras giras: aceleran el giro.","Primero dobles perfectos, después triples.","Aterriza siempre en el 7 con el peso centrado."],
+ errors:["Inclinarse hacia adelante durante el giro.","Líder que «revuelve» la mano y saca del eje a la seguidora."],
+ pattern:{general:[p("Prep."),p("Paso"),p("Paso"),p("Pausa","p"),p("Giro 1","q"),p("Giro 2"),p("Aterriza"),p("Pausa","p")]},
+ checklist:["10 dobles giros sola/solo terminando estable","Doble giro guiado en pareja","Intenté 3 triples giros con spotting"],
+ quiz:[{q:"¿Qué ayuda a acelerar un giro?",o:["Brazos abiertos","Brazos cerca del cuerpo","Mirar al piso","Rodillas rígidas"],a:1},
+       {q:"En pareja, ¿quién genera el impulso de giro?",o:["Solo el líder con el brazo","La seguidora con su propio cuerpo","Nadie","La música"],a:1}]},
+
+{id:"s12",dance:"salsa",level:"avanzado",title:"Musicalidad: clave, mambo y styling",mode:"salsa",bpm:175,
+ obj:"Bailar la canción, no solo el ritmo: clave, estructura y expresión.",
+ theory:["La clave es el patrón rítmico que organiza la salsa: cinco golpes repartidos en dos compases. En la son clave 3-2, tres golpes caen en el primer compás (1, «2 y», 4) y dos en el segundo (6, 7). En 2-3 el orden se invierte.",
+         "Una salsa típica tiene introducción, cuerpo (tema cantado), montuno (coro y pregón del cantante) y mambo (secciones de metales). Los «hits» y «breaks» son golpes fuertes o silencios de la orquesta; bailarlos —una pausa, un adorno, un golpe de brazo— es la marca de un bailarín musical.",
+         "El styling (brazos, hombros, cabeza) debe servir a la música: suave en el tema, más intenso en el mambo."],
+ points:["Escucha una canción completa e identifica sus partes antes de bailarla.","Marca un hit con el cuerpo, no solo con los pies.","Usa la sección de Teoría para escuchar la clave 3-2 y 2-3."],
+ errors:["Hacer figuras complicadas en el break y perder el momento.","Styling que no tiene que ver con la música."],
+ pattern:{general:[p("Clave","q"),p("Paso"),p("Paso"),p("Pausa","p"),p("Paso","q"),p("Clave"),p("Clave"),p("Pausa","p")]},
+ checklist:["Aplaudí la clave 3-2 sobre una canción","Identifiqué tema, montuno y mambo en dos canciones","Bailé un break con una pausa intencional"],
+ quiz:[{q:"En la son clave 3-2, ¿cuántos golpes hay en el primer compás?",o:["2","3","4","5"],a:1},
+       {q:"¿En qué parte de la canción suelen entrar los metales con fuerza?",o:["Intro","Mambo","Final silencioso","Nunca"],a:1}]},
+
+/* ---------------- BACHATA ---------------- */
+{id:"b01",dance:"bachata",level:"principiante",title:"Estructura musical de la bachata",mode:"bachata",bpm:125,
+ obj:"Reconocer el pulso, el «toque» del 4 y del 8 y los instrumentos de la bachata.",
+ theory:["La bachata nació en República Dominicana; sus primeras grabaciones se atribuyen a José Manuel Calderón en 1962. Durante años fue llamada «música de amargue» y se escuchaba sobre todo en barrios populares, hasta popularizarse en todo el mundo.",
+         "Se baila en frases de 8 tiempos: tres pasos y un toque (tap) o movimiento de cadera en el 4, y lo mismo en 5-6-7 con toque en el 8. El tempo suele estar entre 110 y 150 BPM; la bachata moderna y sensual suele ser más lenta.",
+         "Instrumentos: requinto (guitarra líder, hace las melodías), segunda guitarra (rítmica), bajo, bongó y güira (el raspado metálico que marca la subdivisión)."],
+ points:["El toque del 4 y el 8 es suave, con la cadera, sin transferir el peso.","Escucha la güira para no perder el pulso.","Empieza en 120–125 BPM."],
+ errors:["Transferir el peso en el toque y quedar con el pie equivocado.","Exagerar la cadera hasta perder la postura."],
+ pattern:{general:[p("Paso"),p("Paso"),p("Paso"),p("Toque","t"),p("Paso"),p("Paso"),p("Paso"),p("Toque","t")]},
+ checklist:["Aplaudí 1-2-3 y marqué el toque en 4 y 8 en una canción","Distinguí el requinto de la segunda guitarra","Conté con el metrónomo a 125 BPM sin perderme"],
+ quiz:[{q:"¿Qué ocurre en los tiempos 4 y 8 de la bachata?",o:["Un giro","Un toque o movimiento de cadera sin peso","Una pausa total","Un salto"],a:1},
+       {q:"¿Qué instrumento hace las melodías principales?",o:["Güira","Bongó","Requinto","Bajo"],a:2}]},
+
+{id:"b02",dance:"bachata",level:"principiante",title:"Básico lateral",mode:"bachata",bpm:122,
+ obj:"Dominar el paso básico lateral en ambos roles.",
+ theory:["El básico lateral es la base de la bachata. El líder se desplaza a su izquierda en 1-2-3 (lado, junta, lado) y toca en el 4; luego regresa a la derecha en 5-6-7 y toca en el 8. La seguidora hace el espejo.",
+         "El movimiento de cadera nace de flexionar y estirar las rodillas: al pisar, la rodilla de apoyo se estira ligeramente y la cadera se mueve sola. No hay que empujarla."],
+ points:["Pasos del ancho de los hombros, no más.","El toque se hace con la punta del pie, junto al pie de apoyo.","El torso tranquilo; la cadera es consecuencia de las rodillas."],
+ errors:["Pasos demasiado anchos que te dejan atrasado.","Pisar con todo el pie en el toque."],
+ pattern:{lider:BACH_LIDER,seguidora:BACH_SEG},
+ checklist:["16 frases de básico lateral como líder","16 frases como seguidora","Sentí la cadera moverse por las rodillas, sin forzarla"],
+ quiz:[{q:"¿Hacia dónde va el líder en 1-2-3 del básico lateral?",o:["A su derecha","A su izquierda","Adelante","Atrás"],a:1},
+       {q:"¿De dónde nace el movimiento de cadera?",o:["De empujar la cadera","De flexionar y estirar las rodillas","De los hombros","De los brazos"],a:1}]},
+
+{id:"b03",dance:"bachata",level:"principiante",title:"Básico frontal y box step",mode:"bachata",bpm:122,
+ obj:"Añadir el básico adelante-atrás y el paso en cuadro.",
+ theory:["En el básico frontal el líder avanza con el izquierdo en el 1, pisa en sitio en el 2, junta en el 3 y toca en el 4; en el 5 retrocede con el derecho. Es útil en posición cerrada y para preparar giros.",
+         "El box step (paso en cuadro) combina lateral y frontal: los pies dibujan un cuadrado en dos frases. Ayuda a moverse por la pista sin chocar con otras parejas."],
+ points:["En el frontal, pasos cortos y peso siempre centrado.","En el box, los pies se juntan en el 2 y el 6.","Practica el cambio entre lateral y frontal sin pausa."],
+ errors:["Inclinar el torso hacia adelante al avanzar.","Olvidar el toque al cambiar de dirección."],
+ pattern:{lider:[p("Adelante","s","I"),p("En sitio","s","D"),p("Junta","s","I"),p("Toque","t","D"),p("Atrás","s","D"),p("En sitio","s","I"),p("Junta","s","D"),p("Toque","t","I")],
+          seguidora:[p("Atrás","s","D"),p("En sitio","s","I"),p("Junta","s","D"),p("Toque","t","I"),p("Adelante","s","I"),p("En sitio","s","D"),p("Junta","s","I"),p("Toque","t","D")]},
+ checklist:["8 frases de básico frontal","4 cuadrados completos de box step","Alterné lateral, frontal y box durante una canción"],
+ quiz:[{q:"¿Para qué sirve especialmente el box step?",o:["Para girar rápido","Para moverse por la pista sin chocar","Para hacer dips","Para la salsa"],a:1},
+       {q:"En el básico frontal del líder, ¿qué hace en el 4?",o:["Avanza","Toca sin peso","Gira","Salta"],a:1}]},
+
+{id:"b04",dance:"bachata",level:"basico",title:"Conexión: abrazo cerrado y abierto",mode:"bachata",bpm:120,
+ obj:"Bailar cómodo en posición cerrada y abierta, y pasar de una a otra.",
+ theory:["En posición cerrada, la mano derecha del líder va en la espalda de la seguidora, a la altura del omóplato, y la mano izquierda sostiene la derecha de ella a la altura de los hombros. La cercanía la decide la pareja: hay abrazo cerrado, semi-abierto y abierto.",
+         "En posición abierta las manos se toman frente al cuerpo, con los codos flexionados. La transición se hace en un 1, normalmente después del toque del 8."],
+ points:["La mano en la espalda guía, no aprieta.","Respeta la distancia que la otra persona propone.","En abierta, mantén un poco de tono en los brazos para sentir la guía."],
+ errors:["Mano en la cintura baja (incómoda y sin guía).","Brazos flojos en posición abierta."],
+ pattern:{lider:BACH_LIDER,seguidora:BACH_SEG},
+ checklist:["Bailé una canción en cerrada","Pasé de cerrada a abierta en el 1 sin perder el paso","Practiqué con dos parejas distintas"],
+ quiz:[{q:"¿Dónde va la mano derecha del líder en posición cerrada?",o:["En la cintura baja","A la altura del omóplato","En el hombro","En el cuello"],a:1},
+       {q:"¿Cuándo se suele hacer la transición de posición?",o:["En el 1, después del toque del 8","En el 4","En medio del giro","En cualquier momento"],a:0}]},
+
+{id:"b05",dance:"bachata",level:"basico",title:"Giro simple de la seguidora",mode:"bachata",bpm:118,
+ obj:"Guiar y ejecutar el giro a la derecha en bachata.",
+ theory:["Desde posición abierta, el líder prepara durante 1-2-3-4 con el básico lateral y en el 5 levanta su mano izquierda; la seguidora gira a su derecha desplazándose en 5-6-7 y toca en el 8 ya de frente.",
+         "A diferencia de la salsa, el giro de bachata suele viajar un poco hacia el costado, siguiendo la dirección del básico. Los tres pasos del giro reemplazan los tres pasos laterales."],
+ points:["Seguidora: los tres pasos del giro son pequeños.","Líder: el halo se hace sobre la cabeza de ella, no al lado.","Se termina con el toque del 8, igual que el básico."],
+ errors:["Girar en el 4 y perder el toque.","Halo demasiado amplio que la desequilibra."],
+ pattern:{lider:[p("Lado","s","I"),p("Junta","s","D"),p("Lado","s","I"),p("Toque","t","D"),p("Mano arriba","s","D"),p("Halo","s","I"),p("Lado","s","D"),p("Toque","t","I")],
+          seguidora:[p("Lado","s","D"),p("Junta","s","I"),p("Lado","s","D"),p("Toque","t","I"),p("Gira","s","I"),p("Gira","s","D"),p("Gira","s","I"),p("Toque","t","D")]},
+ checklist:["8 giros sola/solo terminando con toque en el 8","5 giros guiados en pareja","Hice el giro en ambas direcciones del básico"],
+ quiz:[{q:"¿En qué tiempos gira la seguidora en el giro simple?",o:["1-2-3","5-6-7","4 y 8","2-3-4"],a:1},
+       {q:"¿Qué diferencia hay con el giro de salsa?",o:["No hay toque","Suele desplazarse un poco hacia el costado","Se hace en el 4","Siempre es doble"],a:1}]},
+
+{id:"b06",dance:"bachata",level:"basico",title:"Giro del líder y cambio de lado",mode:"bachata",bpm:120,
+ obj:"Incorporar el giro del líder y el intercambio de posiciones.",
+ theory:["En el cambio de lado los dos caminan cruzándose en 1-2-3 mientras el líder guía a la seguidora por debajo de su brazo; en el 4 ambos tocan ya en el lado contrario.",
+         "El giro del líder suele ir en 5-6-7, pasando la mano por encima de su propia cabeza. Igual que en salsa, la conexión se recupera al terminar."],
+ points:["Al cruzarse, ambos giran el torso para no chocar.","El líder no suelta la mano en el cambio de lado.","Toca en el 4 y el 8 aunque estés girando."],
+ errors:["Cruzarse demasiado cerca.","Perder el toque por terminar el giro tarde."],
+ pattern:{general:[p("Cruza"),p("Cruza"),p("Cruza"),p("Toque","t"),p("Gira"),p("Gira"),p("Cierra"),p("Toque","t")]},
+ checklist:["Hice 6 cambios de lado seguidos","Hice el giro del líder sin perder el toque","Combiné: básico → giro de ella → cambio de lado"],
+ quiz:[{q:"En el cambio de lado, ¿en qué tiempo se toca ya en el lado contrario?",o:["1","2","4","6"],a:2},
+       {q:"¿Se suelta la mano en el cambio de lado básico?",o:["Sí, siempre","No","Solo en el 8","Solo la seguidora"],a:1}]},
+
+{id:"b07",dance:"bachata",level:"intermedio",title:"Bachata dominicana: footwork y síncopas",mode:"bachata",bpm:135,
+ obj:"Bailar el estilo dominicano con juegos de pies y síncopas.",
+ theory:["La bachata dominicana es la forma original: más rápida, alegre y con mucho trabajo de pies. Se baila en abrazo abierto o semicerrado, desplazándose poco y jugando con los pies sobre el pulso.",
+         "Una síncopa agrega un paso extra en el «y» de un tiempo (por ejemplo «3 y 4»). En lugar de tocar en el 4, se puede hacer un pequeño doble paso. Los pies se mantienen cerca del piso, con pasos cortos y rápidos."],
+ points:["Pasos pequeños y ágiles, rodillas sueltas.","Cuenta en voz alta «1, 2, 3 y 4».","Escucha el bongó: sus repiques invitan a la síncopa."],
+ errors:["Llevar la síncopa a todo y perder el pulso.","Pasos grandes que no permiten ir rápido."],
+ pattern:{general:[p("Paso"),p("Paso"),p("Paso"),p("Síncopa «y 4»","t"),p("Paso"),p("Paso"),p("Paso"),p("Síncopa «y 8»","t")]},
+ checklist:["Hice síncopa en el 4 durante 8 frases","Bailé a 135 BPM sin atrasarme","Escuché una bachata dominicana clásica identificando el bongó"],
+ quiz:[{q:"¿Qué es una síncopa?",o:["Un paso extra en el «y» de un tiempo","Una pausa larga","Un giro doble","Un tipo de abrazo"],a:0},
+       {q:"¿Cómo es la bachata dominicana frente a la sensual?",o:["Más lenta","Más rápida y con más trabajo de pies","Sin pasos","Igual"],a:1}]},
+
+{id:"b08",dance:"bachata",level:"intermedio",title:"Ondas corporales (body waves)",mode:"bachata",bpm:112,
+ obj:"Realizar ondas corporales controladas, base de la bachata moderna y sensual.",
+ theory:["La onda es un movimiento que viaja por la columna: pecho, abdomen, cadera (onda hacia abajo) o al revés (hacia arriba). Se hace aislando cada parte y uniéndolas en un solo movimiento fluido.",
+         "En la bachata moderna se usa con frecuencia en 8 tiempos: la onda dura 1-2-3-4 y se reemplaza el básico por un paso en el sitio. Practica primero contra una pared, despacio."],
+ points:["Rodillas flexionadas para que la onda llegue a la cadera.","Respira: exhala al bajar, inhala al subir.","Lento primero, luego al ritmo."],
+ errors:["Mover solo la cabeza adelante y atrás.","Bloquear las rodillas."],
+ pattern:{general:[p("Pecho"),p("Abdomen"),p("Cadera"),p("Toque","t"),p("Cadera"),p("Abdomen"),p("Pecho"),p("Toque","t")]},
+ checklist:["10 ondas hacia abajo contra la pared","10 ondas hacia arriba","Integré una onda de 4 tiempos dentro del básico"],
+ quiz:[{q:"¿Qué orden sigue una onda hacia abajo?",o:["Cadera → abdomen → pecho","Pecho → abdomen → cadera","Cabeza → pies","Brazos → piernas"],a:1},
+       {q:"¿Qué ayuda a que la onda llegue a la cadera?",o:["Rodillas bloqueadas","Rodillas flexionadas","Puntas de pie","Brazos arriba"],a:1}]},
+
+{id:"b09",dance:"bachata",level:"intermedio",title:"Combinación: hammerlock y salida",mode:"bachata",bpm:118,
+ obj:"Ejecutar una combinación con hammerlock (brazo detrás de la espalda) y salida en giro.",
+ theory:["En el hammerlock el líder lleva el brazo derecho de la seguidora hacia su propia espalda, con un giro, de modo que quedan en posición cerrada lateral. Para salir, el líder guía un giro en sentido contrario y la vuelve a dejar de frente.",
+         "La seguridad es clave: el brazo de ella siempre doblado, sin forzar el hombro. Si se siente tensión, el líder suelta."],
+ points:["Seguidora: brazo relajado y doblado.","Líder: lleva la mano a la altura de la cintura de ella, nunca más arriba.","Las entradas y salidas empiezan en el 1 o el 5."],
+ errors:["Forzar el hombro subiendo demasiado la mano.","Hacer la figura sin preparar en el 4."],
+ pattern:{general:[p("Prep."),p("Gira"),p("Envuelve"),p("Toque","t"),p("Desenvuelve"),p("Gira"),p("Frente"),p("Toque","t")]},
+ checklist:["Entré y salí del hammerlock 5 veces sin tensión en el hombro","Lo combiné con un giro simple","Lo practiqué en ambos roles"],
+ quiz:[{q:"¿Qué hace el líder si nota tensión en el hombro de la seguidora?",o:["Sigue","Suelta","Aprieta","Acelera"],a:1},
+       {q:"¿Cómo debe estar el brazo de la seguidora en el hammerlock?",o:["Estirado","Doblado y relajado","Rígido","Arriba de la cabeza"],a:1}]},
+
+{id:"b10",dance:"bachata",level:"avanzado",title:"Musicalidad: derecho, majao y mambo",mode:"bachata",bpm:130,
+ obj:"Reconocer las partes de una bachata dominicana y adaptar el baile a cada una.",
+ theory:["La bachata tradicional se organiza en secciones: el derecho (las estrofas, ritmo estable y tranquilo), el majao (pasaje con un ritmo de bongó más marcado, que suele preparar el mambo) y el mambo (sección instrumental donde lucen el requinto y la segunda guitarra).",
+         "En el mambo el bongosero suele cambiar el bongó por la campana (cencerro), y la energía sube. Es el momento ideal para footwork, síncopas y figuras con más energía; en el derecho, mejor pasos fluidos y conexión."],
+ points:["Escucha la campana: si aparece, estás en el mambo.","Guarda tus mejores pasos de pies para el mambo.","En el derecho, prioriza la conexión y la suavidad."],
+ errors:["Bailar igual toda la canción.","Hacer figuras grandes en un pasaje tranquilo."],
+ pattern:{general:[p("Paso"),p("Paso"),p("Paso"),p("Toque","t"),p("Paso"),p("Paso"),p("Paso"),p("Toque","t")]},
+ checklist:["Identifiqué derecho, majao y mambo en dos canciones","Escuché el cambio a campana en el mambo","Bailé una canción adaptando la energía a cada parte"],
+ quiz:[{q:"¿Qué instrumento suele tomar el bongosero en el mambo?",o:["Güira","Campana (cencerro)","Maracas","Timbal"],a:1},
+       {q:"¿Cómo se llaman las estrofas de ritmo estable?",o:["Majao","Mambo","Derecho","Montuno"],a:2}]},
+
+{id:"b11",dance:"bachata",level:"avanzado",title:"Bachata sensual: ondas en pareja e inclinaciones",mode:"bachata",bpm:108,
+ obj:"Introducir el estilo sensual con ondas en pareja e inclinaciones seguras.",
+ theory:["La bachata sensual surgió en España a mediados de los 2000, desarrollada por Korke y Judith. Se caracteriza por la conexión de torso, las ondas en pareja, los movimientos circulares de cabeza y las inclinaciones (cambré).",
+         "En una inclinación el líder sostiene a la seguidora por la espalda alta, ella mantiene el abdomen activo y el cuello alineado, y ambos se mueven despacio. La guía de cabeza nunca se fuerza: ella decide cuánto se inclina."],
+ points:["Abdomen activo para proteger la espalda.","El líder acompaña, no empuja.","Pide permiso tácito: empieza suave y observa la respuesta."],
+ errors:["Movimientos bruscos de cuello.","Inclinar a alguien que no ha mostrado comodidad con la figura."],
+ pattern:{general:[p("Onda"),p("Onda"),p("Onda"),p("Pausa","t"),p("Inclina"),p("Sostén"),p("Sube"),p("Toque","t")]},
+ checklist:["Hice ondas en pareja sincronizadas durante 4 frases","Practiqué un cambré suave con control de abdomen","Acordé con mi pareja señales de comodidad"],
+ quiz:[{q:"¿Dónde surgió la bachata sensual?",o:["República Dominicana","España","Cuba","Colombia"],a:1},
+       {q:"En una inclinación, ¿qué protege la espalda de la seguidora?",o:["El abdomen activo","Los brazos estirados","Mirar al piso","Ir rápido"],a:0}]},
+
+{id:"b12",dance:"bachata",level:"avanzado",title:"Improvisación y breaks",mode:"bachata",bpm:120,
+ obj:"Improvisar con la música: pausas, cambios de energía y juego con el requinto.",
+ theory:["Improvisar es elegir en tiempo real qué bailar según lo que suena. En bachata, el requinto propone frases melódicas que se pueden «dibujar» con el cuerpo: ondas para frases largas, pies rápidos para notas cortas.",
+         "Los breaks (silencios o cortes de la banda) se marcan con una pausa: detener el paso, sostener la pose y retomar en el 1 siguiente. Bailar el silencio es tan importante como bailar el ritmo."],
+ points:["Escucha 8 tiempos antes de decidir qué hacer.","Ten un repertorio de 3 recursos: pausa, onda, footwork.","Mira a tu pareja: la improvisación es una conversación."],
+ errors:["Llenar cada silencio con pasos.","Repetir la misma figura toda la canción."],
+ pattern:{general:[p("Escucha"),p("Paso"),p("Paso"),p("Toque","t"),p("Break","p"),p("Sostén","p"),p("Retoma"),p("Toque","t")]},
+ checklist:["Marqué 3 breaks en una canción con una pausa","Bailé una canción usando pausa, onda y footwork","Grabé un video de 1 minuto improvisando"],
+ quiz:[{q:"¿Qué se hace normalmente en un break?",o:["Un giro doble","Una pausa y se retoma en el 1","Se cambia de pareja","Se acelera"],a:1},
+       {q:"¿Qué instrumento propone frases melódicas para «dibujar» con el cuerpo?",o:["Güira","Requinto","Bajo","Bongó"],a:1}]}
+];
+
+const THEORY = [
+ {id:"t-historia",title:"Historia y estilos"},
+ {id:"t-instrumentos",title:"Instrumentos"},
+ {id:"t-clave",title:"La clave (interactiva)"},
+ {id:"t-glosario",title:"Glosario"}
+];
+
+/* =========================================================
+   ESTADO (localStorage)
+   ========================================================= */
+const KEY = "sabor-progress-v1";
+const blank = ()=>({v:1,name:"",completed:{},quiz:{},checks:{},practice:[],theory:{},activity:[],last:null});
+let S = load();
+function load(){
+  try{ const raw = localStorage.getItem(KEY); if(raw){ return Object.assign(blank(), JSON.parse(raw)); } }catch(e){}
+  return blank();
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+const today = ()=>{ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+const dayKey = d=> d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+function log(text){ S.activity.unshift({d:new Date().toISOString(),t:text}); S.activity = S.activity.slice(0,40); }
+function activeDays(){
+  const set = new Set();
+  Object.values(S.completed).forEach(d=>set.add(d));
+  S.practice.forEach(x=>set.add(x.date));
+  S.activity.forEach(a=>set.add(dayKey(new Date(a.d))));
+  return set;
+}
+function streak(){
+  const set = activeDays(); let n=0; const d=new Date();
+  if(!set.has(dayKey(d))) d.setDate(d.getDate()-1);
+  while(set.has(dayKey(d))){ n++; d.setDate(d.getDate()-1); }
+  return n;
+}
+const totalMinutes = ()=> S.practice.reduce((a,b)=>a+b.min,0);
+const lessonsOf = (dance,level)=> LESSONS.filter(l=>l.dance===dance && (!level||l.level===level));
+const doneCount = arr => arr.filter(l=>S.completed[l.id]).length;
+const pct = (a,b)=> b? Math.round(a*100/b):0;
+function quizAvg(){
+  const vals = Object.values(S.quiz); if(!vals.length) return null;
+  return Math.round(vals.reduce((a,q)=>a+q.score/q.total,0)/vals.length*100);
+}
+function levelUnlocked(dance, levelIdx){
+  if(levelIdx===0) return true;
+  const prev = lessonsOf(dance, LEVELS[levelIdx-1].id);
+  return doneCount(prev) >= 2;
+}
+
+/* =========================================================
+   AUDIO: motor de ritmo (Web Audio)
+   ========================================================= */
+const Audio = (()=>{
+  let ctx=null, timer=null, nextTime=0, step=0, bpm=120, mode="salsa", onCount=null, vol=0.8, clave="32";
+  const CLAVE = {"32":[0,3,6,10,12],"23":[2,4,8,11,14],"rumba32":[0,3,7,10,12]};
+  function ensure(){ if(!ctx){ const C = window.AudioContext||window.webkitAudioContext; if(!C) return null; ctx = new C(); } if(ctx.state==="suspended") ctx.resume(); return ctx; }
+  function env(node,t,a,d,peak){ node.gain.setValueAtTime(0.0001,t); node.gain.exponentialRampToValueAtTime(peak*vol,t+a); node.gain.exponentialRampToValueAtTime(0.0001,t+a+d); }
+  function tone(t,freq,type,d,peak){ const o=ctx.createOscillator(), g=ctx.createGain(); o.type=type; o.frequency.setValueAtTime(freq,t); env(g,t,0.002,d,peak); o.connect(g).connect(ctx.destination); o.start(t); o.stop(t+d+0.05); }
+  function noise(t,d,peak,hp){ const len=Math.floor(ctx.sampleRate*d); const b=ctx.createBuffer(1,len,ctx.sampleRate); const ch=b.getChannelData(0); for(let i=0;i<len;i++) ch[i]=Math.random()*2-1; const s=ctx.createBufferSource(); s.buffer=b; const f=ctx.createBiquadFilter(); f.type="highpass"; f.frequency.value=hp||5000; const g=ctx.createGain(); env(g,t,0.001,d,peak); s.connect(f).connect(g).connect(ctx.destination); s.start(t); }
+  const S_ = {
+    clave:t=>{tone(t,2500,"sine",0.06,0.5);tone(t,1700,"triangle",0.05,0.25);},
+    bell:(t,acc)=>{tone(t,acc?800:560,"square",0.08,acc?0.12:0.07);tone(t,acc?1200:840,"square",0.06,0.04);},
+    conga:t=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.setValueAtTime(320,t);o.frequency.exponentialRampToValueAtTime(190,t+0.12);env(g,t,0.003,0.18,0.6);o.connect(g).connect(ctx.destination);o.start(t);o.stop(t+0.25);},
+    bass:t=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(60,t+0.2);env(g,t,0.004,0.25,0.8);o.connect(g).connect(ctx.destination);o.start(t);o.stop(t+0.3);},
+    guira:(t,acc)=>noise(t,acc?0.09:0.05,acc?0.35:0.18,6000),
+    bongo:t=>{tone(t,520,"sine",0.09,0.45);},
+    tick:(t,acc)=>tone(t,acc?1500:1000,"sine",0.04,acc?0.4:0.22)
+  };
+  function schedule(s,t){
+    const beat = s%2===0 ? s/2 : -1; // 0..7 en tiempos, -1 en «y»
+    if(mode==="salsa"||mode==="on2"||mode==="clave"){
+      if(CLAVE[clave].includes(s)) S_.clave(t);
+      if(mode!=="clave"){
+        if(beat>=0) S_.bell(t, beat===0||beat===4);
+        if(mode==="on2" && (beat===1||beat===5)) S_.conga(t);
+        if(mode==="salsa" && (s===7||s===15)) S_.conga(t);
+      }
+      if(mode==="clave" && beat>=0) S_.tick(t, beat===0);
+    } else if(mode==="bachata"){
+      S_.guira(t, beat>=0);
+      if(beat===0||beat===4) S_.bass(t);
+      if(beat===3||beat===7) S_.bongo(t);
+      if(beat===3||beat===7) S_.tick(t,false);
+    } else { if(beat>=0) S_.tick(t,beat===0); }
+    if(beat>=0 && onCount){ const delay=Math.max(0,(t-ctx.currentTime)*1000); setTimeout(()=>{ if(timer) onCount(beat); }, delay); }
+    if(onStep){ const delay=Math.max(0,(t-ctx.currentTime)*1000); setTimeout(()=>{ if(timer && onStep) onStep(s); }, delay); }
+  }
+  let onStep=null;
+  function loop(){ const spb = 60/bpm/2; while(nextTime < ctx.currentTime+0.12){ schedule(step,nextTime); nextTime+=spb; step=(step+1)%16; } }
+  return {
+    start(opts){ if(!ensure()) { toast("Tu navegador no soporta audio web"); return false; } this.stop(); bpm=opts.bpm||bpm; mode=opts.mode||mode; clave=opts.clave||"32"; onCount=opts.onCount||null; onStep=opts.onStep||null; step=0; nextTime=ctx.currentTime+0.08; timer=setInterval(loop,25); loop(); return true; },
+    stop(){ if(timer){ clearInterval(timer); timer=null; } onCount=null; onStep=null; },
+    setBpm(b){ bpm=b; }, setVol(v){ vol=v; }, setClave(c){ clave=c; },
+    running(){ return !!timer; },
+    hit(name){ if(!ensure()) return; const t=ctx.currentTime+0.01; if(name==="clave"){S_.clave(t);} else if(name==="campana"){S_.bell(t,true);} else if(name==="conga"){S_.conga(t);} else if(name==="guira"){ for(let i=0;i<4;i++) S_.guira(t+i*0.12,i===0);} else if(name==="bongo"){S_.bongo(t);S_.bongo(t+0.12);} else if(name==="bajo"){S_.bass(t);} }
+  };
+})();
+
+/* =========================================================
+   UTILIDADES UI
+   ========================================================= */
+const $ = (s,el=document)=>el.querySelector(s);
+const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let toastT;
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("show"),2200); }
+const levelName = id=> LEVELS.find(l=>l.id===id).name;
+const fmtDate = iso=>{ const d=new Date(iso); return d.toLocaleDateString("es",{day:"numeric",month:"short"})+" · "+d.toLocaleTimeString("es",{hour:"2-digit",minute:"2-digit"}); };
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+const BADGES = [
+ {e:"👣",t:"Primer paso",d:"Completa 1 lección",ok:()=>Object.keys(S.completed).length>=1},
+ {e:"🎺",t:"Salsero/a",d:"Principiante y Básico de salsa",ok:()=>["principiante","basico"].every(l=>doneCount(lessonsOf("salsa",l))===3)},
+ {e:"🎸",t:"Bachatero/a",d:"Principiante y Básico de bachata",ok:()=>["principiante","basico"].every(l=>doneCount(lessonsOf("bachata",l))===3)},
+ {e:"⏱️",t:"Pies calientes",d:"60 min de práctica",ok:()=>totalMinutes()>=60},
+ {e:"🔥",t:"Constancia",d:"Racha de 3 días",ok:()=>streak()>=3},
+ {e:"🗓️",t:"Semana de baile",d:"Racha de 7 días",ok:()=>streak()>=7},
+ {e:"🧠",t:"Musical",d:"Lee toda la teoría",ok:()=>THEORY.every(t=>S.theory[t.id])},
+ {e:"🎯",t:"Buen oído",d:"Promedio de quiz ≥ 90%",ok:()=>{const q=quizAvg();return q!==null && Object.keys(S.quiz).length>=4 && q>=90;}},
+ {e:"👑",t:"Maestría",d:"Completa las 24 lecciones",ok:()=>Object.keys(S.completed).length>=LESSONS.length}
+];
+function nextLesson(){
+  const order = [];
+  LEVELS.forEach(lv=>{ ["salsa","bachata"].forEach(d=>lessonsOf(d,lv.id).forEach(l=>order.push(l))); });
+  if(S.last){ const last = LESSONS.find(l=>l.id===S.last); if(last){ const same = lessonsOf(last.dance).find(l=>!S.completed[l.id]); if(same) return same; } }
+  return order.find(l=>!S.completed[l.id]) || null;
+}
+function weekChart(){
+  const days=[]; const d=new Date(); d.setDate(d.getDate()-6);
+  for(let i=0;i<7;i++){ const k=dayKey(d); const s=S.practice.filter(x=>x.date===k); days.push({k,lbl:d.toLocaleDateString("es",{weekday:"short"}).replace(".",""),salsa:s.filter(x=>x.dance==="salsa").reduce((a,b)=>a+b.min,0),bachata:s.filter(x=>x.dance!=="salsa").reduce((a,b)=>a+b.min,0),les:Object.values(S.completed).filter(v=>v===k).length}); d.setDate(d.getDate()+1); }
+  const max = Math.max(10,...days.map(x=>x.salsa+x.bachata));
+  const W=560,H=200,pad=28,bw=40,gap=(W-pad*2-bw*7)/6;
+  let bars="";
+  days.forEach((x,i)=>{
+    const X = pad+i*(bw+gap); const hs=(x.salsa/max)*(H-60), hb=(x.bachata/max)*(H-60); const base=H-30;
+    bars+=`<rect x="${X}" y="${base-hs}" width="${bw}" height="${hs}" rx="4" fill="#ff6b4a"><title>Salsa: ${x.salsa} min</title></rect>`;
+    bars+=`<rect x="${X}" y="${base-hs-hb}" width="${bw}" height="${hb}" rx="4" fill="#e04f8f"><title>Bachata: ${x.bachata} min</title></rect>`;
+    const tot=x.salsa+x.bachata;
+    if(tot) bars+=`<text x="${X+bw/2}" y="${base-hs-hb-6}" text-anchor="middle" fill="#f6ece8" font-size="12" font-weight="600">${tot}</text>`;
+    bars+=`<text x="${X+bw/2}" y="${H-10}" text-anchor="middle" fill="#b9a6b5" font-size="12">${x.lbl}</text>`;
+    if(x.les) bars+=`<circle cx="${X+bw/2}" cy="${base+5}" r="3.5" fill="#5fd39a"><title>${x.les} lección(es) completada(s)</title></circle>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Minutos de práctica de los últimos 7 días"><line x1="${pad}" x2="${W-pad}" y1="${H-30}" y2="${H-30}" stroke="#3d2d45"/>${bars}</svg>`;
+}
+function renderDashboard(){
+  const total = LESSONS.length, done = Object.keys(S.completed).length, P = pct(done,total);
+  const nl = nextLesson(); const q = quizAvg(); const mins = totalMinutes(); const st = streak();
+  const hello = S.name ? `¡Hola, ${esc(S.name)}!` : "¡Hola, bailarín/a!";
+  const lvlRows = dance => LEVELS.map(lv=>{ const ls=lessonsOf(dance,lv.id); const pc=pct(doneCount(ls),ls.length); return `<div class="lvlrow"><span>${lv.icon} ${lv.name}</span><div class="bar ${dance==="bachata"?"pink":""}"><i style="width:${pc}%"></i></div><span class="small muted">${doneCount(ls)}/${ls.length}</span></div>`; }).join("");
+  const sDone = pct(doneCount(lessonsOf("salsa")),12), bDone = pct(doneCount(lessonsOf("bachata")),12);
+  $("#v-dashboard").innerHTML = `
+  <div class="hero">
+    <div class="card"><div class="bg-art"></div>
+      <div class="hi" style="font-family:var(--display);font-weight:800">${hello}</div>
+      <p class="muted" style="max-width:46ch">Aprende salsa y bachata paso a paso: teoría, contador interactivo con ritmo real y un registro de todo lo que avanzas.</p>
+      ${nl ? `<div class="row" style="margin-top:14px;position:relative">
+        <a class="btn ${nl.dance==="salsa"?"primary":"pink"}" href="#leccion/${nl.id}">▶ Continuar: ${esc(nl.title)}</a>
+        <span class="chip ${nl.dance}">${DANCES[nl.dance].name} · ${levelName(nl.level)}</span></div>`
+        : `<p style="margin-top:14px">🎉 ¡Completaste todas las lecciones! Sigue practicando en la sección de Práctica.</p>`}
+    </div>
+    <div class="card row" style="justify-content:space-around">
+      <div class="ring" style="--p:${P};--c:var(--salsa2)"><div><div><b>${P}%</b><div class="small muted">total</div></div></div></div>
+      <div class="grid" style="gap:10px">
+        <div class="stat"><span class="v">${done}<span class="dim" style="font-size:1rem">/${total}</span></span><span class="l">lecciones completadas</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid g4" style="margin-bottom:18px">
+    <div class="card stat"><span class="v">${mins}</span><span class="l">minutos de práctica</span></div>
+    <div class="card stat"><span class="v">${st} ${st?"🔥":""}</span><span class="l">días de racha</span></div>
+    <div class="card stat"><span class="v">${q===null?"—":q+"%"}</span><span class="l">promedio en quizzes</span></div>
+    <div class="card stat"><span class="v">${BADGES.filter(b=>b.ok()).length}<span class="dim" style="font-size:1rem">/${BADGES.length}</span></span><span class="l">insignias</span></div>
+  </div>
+
+  <div class="grid g2" style="margin-bottom:18px">
+    <div class="card">
+      <div class="row"><div class="ring sm" style="--p:${sDone};--c:var(--salsa)"><div><b>${sDone}%</b></div></div><div><h3 style="margin:0">🎺 Salsa</h3><span class="small muted">${doneCount(lessonsOf("salsa"))} de 12 lecciones</span></div></div>
+      <div style="margin-top:12px">${lvlRows("salsa")}</div>
+    </div>
+    <div class="card">
+      <div class="row"><div class="ring sm" style="--p:${bDone};--c:var(--bachata)"><div><b>${bDone}%</b></div></div><div><h3 style="margin:0">🎸 Bachata</h3><span class="small muted">${doneCount(lessonsOf("bachata"))} de 12 lecciones</span></div></div>
+      <div style="margin-top:12px">${lvlRows("bachata")}</div>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-bottom:18px">
+    <div class="card chart">
+      <div class="row"><h3 style="margin:0">Últimos 7 días</h3><span class="spacer"></span><span class="chip salsa">Salsa</span><span class="chip bachata">Bachata</span></div>
+      <p class="small dim" style="margin:4px 0 8px">Minutos de práctica por día · ● lección completada</p>
+      ${weekChart()}
+    </div>
+    <div class="card">
+      <h3>Actividad reciente</h3>
+      ${S.activity.length? `<ul class="activity">${S.activity.slice(0,7).map(a=>`<li>${esc(a.t)} <span class="dim small">· ${fmtDate(a.d)}</span></li>`).join("")}</ul>` : `<p class="muted">Aún no hay actividad. Empieza con la primera lección o una sesión de práctica.</p>`}
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    <h3>Insignias</h3>
+    <div class="badges">${BADGES.map(b=>`<div class="badge ${b.ok()?"on":""}"><div class="e">${b.e}</div><div class="t">${b.t}</div><div class="d">${b.d}</div></div>`).join("")}</div>
+  </div>
+
+  <div class="card">
+    <h3>Tu perfil y respaldo</h3>
+    <div class="row">
+      <label class="fld" style="flex:1;min-width:200px">Tu nombre<input type="text" id="nameIn" value="${esc(S.name)}" placeholder="¿Cómo te llamas?"></label>
+      <button class="btn sm" id="exportBtn">⬇ Exportar progreso</button>
+      <button class="btn sm" id="importBtn">⬆ Importar</button>
+      <button class="btn sm ghost" id="resetBtn" style="color:var(--bad)">Reiniciar</button>
+    </div>
+    <p class="small dim" style="margin-top:10px">El progreso se guarda en este navegador. Exporta un respaldo para pasarlo a otro dispositivo.</p>
+  </div>`;
+  $("#nameIn").addEventListener("change",e=>{ S.name=e.target.value.trim().slice(0,40); save(); renderDashboard(); });
+  $("#exportBtn").onclick = ()=>{ const blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="sabor-progreso-"+today()+".json"; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); toast("Respaldo descargado"); };
+  $("#importBtn").onclick = ()=> $("#importFile").click();
+  $("#resetBtn").onclick = ()=>{ if(confirm("¿Borrar todo tu progreso? Esta acción no se puede deshacer.")){ S=blank(); save(); renderDashboard(); toast("Progreso reiniciado"); } };
+}
+$("#importFile").addEventListener("change",e=>{
+  const f=e.target.files[0]; if(!f) return; const r=new FileReader();
+  r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d || typeof d!=="object" || !("completed" in d)) throw 0; S=Object.assign(blank(),d); save(); route(); toast("Progreso importado"); }catch(err){ toast("Archivo no válido"); } };
+  r.readAsText(f); e.target.value="";
+});
+
+/* =========================================================
+   LISTA DE LECCIONES
+   ========================================================= */
+let curDance = "salsa";
+function renderLessons(){
+  const v=$("#v-lecciones");
+  v.innerHTML = `
+   <div class="row" style="margin-bottom:6px"><h1 style="margin:0">Lecciones</h1><span class="spacer"></span>
+     <div class="seg dance" id="danceSeg"><button data-v="salsa">🎺 Salsa</button><button data-v="bachata">🎸 Bachata</button></div></div>
+   <p class="muted">Cuatro niveles con 3 lecciones cada uno. Se recomienda completar al menos 2 lecciones de un nivel antes de pasar al siguiente.</p>
+   ${LEVELS.map((lv,i)=>{ const ls=lessonsOf(curDance,lv.id); const un=levelUnlocked(curDance,i);
+     return `<div class="level-block"><div class="level-head"><h3>${lv.icon} ${lv.name}</h3><span class="chip ${doneCount(ls)===ls.length?"ok":""}">${doneCount(ls)}/${ls.length}</span>${un?"":`<span class="lock-note">🔒 Recomendado tras completar 2 lecciones de ${LEVELS[i-1].name}</span>`}</div>
+     <div class="grid g3">${ls.map((l,j)=>`<a class="lcard ${S.completed[l.id]?"done":""} ${un?"":"locked"}" href="#leccion/${l.id}"><span class="num">Lección ${LESSONS.filter(x=>x.dance===curDance).indexOf(l)+1}</span><span class="tt">${esc(l.title)}</span><span class="ob">${esc(l.obj)}</span><span class="row small dim">♩ ${l.bpm} BPM ${S.quiz[l.id]?` · Quiz ${S.quiz[l.id].score}/${S.quiz[l.id].total}`:""}</span></a>`).join("")}</div></div>`; }).join("")}`;
+  $$("#danceSeg button").forEach(b=>{ b.classList.toggle("on",b.dataset.v===curDance); b.onclick=()=>{ curDance=b.dataset.v; renderLessons(); }; });
+}
+
+/* =========================================================
+   LECCIÓN
+   ========================================================= */
+function renderLesson(id){
+  const L = LESSONS.find(l=>l.id===id); if(!L){ location.hash="#lecciones"; return; }
+  curDance = L.dance; S.last=id; save();
+  const sameDance = lessonsOf(L.dance); const idx = sameDance.indexOf(L);
+  const prev = sameDance[idx-1], next = sameDance[idx+1];
+  const roles = L.pattern.general ? [["general","General"]] : [["lider","Líder"],["seguidora","Seguidora"]];
+  let role = roles[0][0];
+  const checks = S.checks[id] || L.checklist.map(()=>false);
+  const isB = L.dance==="bachata";
+  const v=$("#v-leccion");
+  v.className = "view active"+(isB?" bach":"");
+  v.innerHTML = `
+  <a href="#lecciones" class="small muted" style="text-decoration:none">← Volver a lecciones</a>
+  <div class="lesson-head" style="margin-top:10px">
+    <div style="flex:1;min-width:240px">
+      <div class="row" style="margin-bottom:8px"><span class="chip ${L.dance}">${DANCES[L.dance].emoji} ${DANCES[L.dance].name}</span><span class="chip">${levelName(L.level)}</span><span class="chip">Lección ${idx+1} de 12</span>${S.completed[id]?'<span class="chip ok">✓ Completada</span>':""}</div>
+      <h1>${esc(L.title)}</h1>
+      <p class="muted" style="margin:0">🎯 ${esc(L.obj)}</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="row"><h3 style="margin:0">Contador interactivo</h3><span class="spacer"></span>
+      ${roles.length>1?`<div class="seg" id="roleSeg">${roles.map(r=>`<button data-v="${r[0]}">${r[1]}</button>`).join("")}</div>`:""}
+    </div>
+    <div class="counter" id="counter"></div>
+    <div class="controls">
+      <button class="btn ${isB?"pink":"primary"}" id="playBtn">▶ Reproducir</button>
+      <label class="row small muted">Tempo <input type="range" id="bpm" min="80" max="${isB?160:220}" value="${L.bpm}"> <b id="bpmV" style="color:var(--text)">${L.bpm}</b> BPM</label>
+      <span class="spacer"></span><span class="small dim">I = izquierdo · D = derecho</span>
+    </div>
+    <p class="small dim" style="margin:10px 0 0">Practica primero lento y sube el tempo cuando el paso salga sin pensar. El tiempo que el contador suena se suma a tus minutos de práctica.</p>
+  </div>
+
+  <div class="lesson-grid">
+    <div class="card theory">
+      <h3>📖 Teoría</h3>
+      ${L.theory.map(t=>`<p>${esc(t)}</p>`).join("")}
+      <div class="grid g2" style="margin-top:12px">
+        <div><h3 style="font-size:1rem">Claves</h3><ul class="kp ok-list">${L.points.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+        <div><h3 style="font-size:1rem">Errores comunes</h3><ul class="kp err">${L.errors.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+      </div>
+    </div>
+    <div class="grid" style="align-content:start">
+      <div class="card">
+        <h3>🏋️ Práctica</h3>
+        <div id="checks">${L.checklist.map((c,i)=>`<label class="check ${checks[i]?"done":""}"><input type="checkbox" data-i="${i}" ${checks[i]?"checked":""}><span>${esc(c)}</span></label>`).join("")}</div>
+      </div>
+      <div class="card">
+        <h3>❓ Mini quiz</h3>
+        <div id="quiz"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="complete-box">
+    <div style="flex:1;min-width:220px"><b>¿Listo/a?</b><div class="small muted" id="completeHint"></div></div>
+    <button class="btn ${S.completed[id]?"":"ok"}" id="completeBtn">${S.completed[id]?"Marcar como pendiente":"✓ Marcar lección como completada"}</button>
+  </div>
+
+  <div class="lesson-nav">
+    ${prev?`<a class="btn ghost" href="#leccion/${prev.id}">← ${esc(prev.title)}</a>`:"<span></span>"}
+    ${next?`<a class="btn ghost" href="#leccion/${next.id}">${esc(next.title)} →</a>`:`<a class="btn ghost" href="#dashboard">Ver mi progreso →</a>`}
+  </div>`;
+
+  // contador
+  function drawCounter(){
+    const pat = L.pattern[role];
+    $("#counter").innerHTML = pat.map((x,i)=>`<div class="cnt ${x.t==="p"?"pause":""} ${x.t==="t"?"tap":""}" data-i="${i}"><span class="n">${i+1}</span>${x.f?`<span class="ft">${x.f}</span>`:""}<span class="lbl">${esc(x.l)}</span></div>`).join("");
+  }
+  drawCounter();
+  if(roles.length>1){ $$("#roleSeg button").forEach(b=>{ b.classList.toggle("on",b.dataset.v===role); b.onclick=()=>{ role=b.dataset.v; $$("#roleSeg button").forEach(x=>x.classList.toggle("on",x===b)); drawCounter(); }; }); }
+  const bpmIn=$("#bpm");
+  bpmIn.oninput=()=>{ $("#bpmV").textContent=bpmIn.value; Audio.setBpm(+bpmIn.value); };
+  let playStart=0;
+  $("#playBtn").onclick=()=>{
+    if(Audio.running()){ stopLessonAudio(); return; }
+    const ok = Audio.start({bpm:+bpmIn.value, mode:L.mode, onCount:b=>{ $$("#counter .cnt").forEach((c,i)=>c.classList.toggle("on",i===b)); }});
+    if(ok){ playStart=Date.now(); $("#playBtn").textContent="■ Detener"; lessonStop = ()=>{ const m=Math.floor((Date.now()-playStart)/60000); if(m>=1){ addPractice(m,L.dance,"Lección: "+L.title); } }; }
+  };
+  // checklist
+  $$("#checks input").forEach(cb=>cb.onchange=()=>{ checks[+cb.dataset.i]=cb.checked; cb.closest(".check").classList.toggle("done",cb.checked); S.checks[id]=checks; save(); updateHint(); });
+  // quiz
+  const answers = (S.quiz[id] && S.quiz[id].answers) ? S.quiz[id].answers.slice() : L.quiz.map(()=>null);
+  function drawQuiz(){
+    $("#quiz").innerHTML = L.quiz.map((q,qi)=>`<div class="quiz-q"><div class="q">${qi+1}. ${esc(q.q)}</div>${q.o.map((o,oi)=>{ let cls=""; if(answers[qi]!==null){ if(oi===q.a) cls="right"; else if(oi===answers[qi]) cls="wrong"; } return `<button class="opt ${cls}" data-q="${qi}" data-o="${oi}" ${answers[qi]!==null?"disabled":""}>${esc(o)}</button>`; }).join("")}${answers[qi]!==null?`<div class="fb" style="color:${answers[qi]===q.a?"var(--ok)":"var(--bad)"}">${answers[qi]===q.a?"¡Correcto!":"Respuesta correcta: "+esc(q.o[q.a])}</div>`:""}</div>`).join("") +
+      (answers.every(a=>a!==null)?`<button class="btn sm" id="retryQ">↻ Repetir quiz</button>`:"");
+    $$("#quiz .opt").forEach(b=>b.onclick=()=>{ answers[+b.dataset.q]=+b.dataset.o; if(answers.every(a=>a!==null)){ const score=answers.filter((a,i)=>a===L.quiz[i].a).length; S.quiz[id]={score,total:L.quiz.length,answers:answers.slice()}; log(`Quiz «${L.title}»: ${score}/${L.quiz.length}`); save(); toast(`Quiz: ${score}/${L.quiz.length}`); } drawQuiz(); updateHint(); });
+    const r=$("#retryQ"); if(r) r.onclick=()=>{ answers.fill(null); drawQuiz(); };
+  }
+  drawQuiz();
+  function updateHint(){
+    const c = checks.filter(Boolean).length, qd = S.quiz[id];
+    $("#completeHint").textContent = `Práctica ${c}/${checks.length} · Quiz ${qd?qd.score+"/"+qd.total:"pendiente"}. Recomendado: toda la práctica marcada y el quiz respondido.`;
+  }
+  updateHint();
+  $("#completeBtn").onclick=()=>{
+    if(S.completed[id]){ delete S.completed[id]; log(`Lección «${L.title}» marcada como pendiente`); }
+    else { S.completed[id]=today(); log(`✓ Completaste «${L.title}»`); toast("¡Lección completada! 🎉"); }
+    save(); renderLesson(id);
+  };
+}
+let lessonStop=null;
+function stopLessonAudio(){ Audio.stop(); if(lessonStop){ lessonStop(); lessonStop=null; } const b=$("#playBtn"); if(b) b.textContent="▶ Reproducir"; $$("#counter .cnt").forEach(c=>c.classList.remove("on")); }
+function addPractice(min,dance,label){ S.practice.push({date:today(),min,dance}); log(`${label} · ${min} min`); save(); toast(`+${min} min de práctica registrados`); }
+
+/* =========================================================
+   TEORÍA
+   ========================================================= */
+let claveType="32";
+function renderTheory(){
+  const read = id=>S.theory[id];
+  const markBtn = id=>`<button class="btn sm ${read(id)?"":"ok"}" data-read="${id}">${read(id)?"✓ Leído":"Marcar como leído"}</button>`;
+  $("#v-teoria").innerHTML = `
+  <h1>Teoría</h1>
+  <p class="muted">La base cultural y musical que hace que el baile tenga sentido. Marca cada tema como leído para sumar a tu progreso.</p>
+
+  <details class="tcard" open><summary>🌎 Historia y estilos ${read("t-historia")?'<span class="chip ok">Leído</span>':""}</summary><div class="body">
+    <div class="grid g2">
+      <div><h3>Salsa</h3>
+        <p>Sus raíces están en la música cubana —sobre todo el son, el mambo y el chachachá— que en Nueva York, durante los años 60 y 70, se mezcló con el jazz y otros ritmos caribeños. El sello Fania popularizó el nombre «salsa» en todo el mundo.</p>
+        <ul class="kp">
+          <li><b>Cubana (casino):</b> circular, en pareja o en rueda; muy social y juguetona.</li>
+          <li><b>Caleña (Colombia):</b> pies muy rápidos y acrobacias; tempos altos.</li>
+          <li><b>En línea On1 (L.A.):</b> se baila en un «slot» o línea, quiebre en el 1, muy espectacular.</li>
+          <li><b>En línea On2 (Nueva York):</b> quiebre en el 2, más suave y ligada a la percusión.</li>
+        </ul></div>
+      <div><h3>Bachata</h3>
+        <p>Nació en República Dominicana a comienzos de los años 60, con raíces en el bolero y el son. Fue marginada durante décadas y luego conquistó el mundo, con artistas que la llevaron a la radio internacional.</p>
+        <ul class="kp">
+          <li><b>Dominicana:</b> la original; rápida, alegre, mucho trabajo de pies.</li>
+          <li><b>Moderna:</b> mezcla de pasos, giros y algunas ondas; la más común en academias.</li>
+          <li><b>Sensual:</b> nacida en España; ondas, conexión de torso e inclinaciones.</li>
+        </ul></div>
+    </div>
+    <div style="margin-top:10px">${markBtn("t-historia")}</div>
+  </div></details>
+
+  <details class="tcard"><summary>🥁 Instrumentos ${read("t-instrumentos")?'<span class="chip ok">Leído</span>':""}</summary><div class="body">
+    <p class="muted small">Toca ▶ para escuchar una aproximación sintetizada de cada sonido.</p>
+    <div class="grid g2">
+      ${[["🪵","Clave","clave","Dos palos de madera que tocan el patrón rítmico que organiza toda la salsa."],
+         ["🔔","Campana (cencerro)","campana","Marca los pulsos con fuerza en el mambo de la salsa y en el mambo de la bachata."],
+         ["🪘","Conga","conga","Toca el tumbao; sus golpes abiertos ayudan a sentir el 4 y el 8 (o el 2 y el 6 en On2)."],
+         ["🧽","Güira","guira","Cilindro metálico raspado; es el «motor» constante de la bachata."],
+         ["🥁","Bongó","bongo","Par de tambores pequeños; en bachata adorna y empuja hacia el mambo."],
+         ["🎸","Bajo","bajo","Sostiene la armonía y marca los tiempos fuertes; en bachata cae con fuerza en el 1."]]
+         .map(x=>`<div class="inst"><span class="e">${x[0]}</span><div style="flex:1"><b>${x[1]}</b><div class="small muted">${x[3]}</div></div><button class="btn sm" data-hit="${x[2]}">▶</button></div>`).join("")}
+    </div>
+    <p class="small" style="margin-top:12px">Además: en salsa, el piano hace el montuno (patrón repetitivo), los metales (trompetas, trombones) brillan en el mambo y el timbal marca cortes. En bachata, el <b>requinto</b> lleva la melodía y la <b>segunda guitarra</b> el acompañamiento.</p>
+    <div style="margin-top:10px">${markBtn("t-instrumentos")}</div>
+  </div></details>
+
+  <details class="tcard"><summary>🎼 La clave (interactiva) ${read("t-clave")?'<span class="chip ok">Leído</span>':""}</summary><div class="body">
+    <p>La clave reparte cinco golpes en dos compases (16 corcheas). Los números son los tiempos del bailarín; las celdas «y» son contratiempos. Elige un patrón y escúchalo.</p>
+    <div class="row">
+      <div class="seg" id="claveSeg"><button data-v="32">Son 3-2</button><button data-v="23">Son 2-3</button><button data-v="rumba32">Rumba 3-2</button></div>
+      <button class="btn primary sm" id="clavePlay">▶ Escuchar</button>
+      <label class="row small muted">Tempo <input type="range" id="claveBpm" min="80" max="200" value="120"> <b id="claveBpmV" style="color:var(--text)">120</b></label>
+    </div>
+    <div class="clave-grid" id="claveGrid"></div>
+    <p class="small muted">En 3-2, los golpes caen en <b>1, «2 y», 4</b> | <b>6, 7</b>. La rumba clave mueve el tercer golpe al «4 y». Escucha qué lado de la clave (el de 3 o el de 2) suena cuando empieza la frase de la canción.</p>
+    <div style="margin-top:10px">${markBtn("t-clave")}</div>
+  </div></details>
+
+  <details class="tcard"><summary>📚 Glosario ${read("t-glosario")?'<span class="chip ok">Leído</span>':""}</summary><div class="body">
+    <dl class="gloss">
+      <dt>Quiebre (break)</dt><dd>Paso que cambia la dirección del movimiento.</dd>
+      <dt>Slot</dt><dd>La línea imaginaria por la que se baila la salsa en línea.</dd>
+      <dt>Prep / preparación</dt><dd>Señal previa que avisa de la figura siguiente.</dd>
+      <dt>Halo</dt><dd>Círculo que dibuja la mano del líder sobre la cabeza de quien gira.</dd>
+      <dt>Spotting</dt><dd>Fijar la mirada en un punto durante el giro para no marearse.</dd>
+      <dt>Shine</dt><dd>Secuencia de pies que se baila separados.</dd>
+      <dt>Tap / toque</dt><dd>En bachata, el apoyo sin peso del tiempo 4 y 8.</dd>
+      <dt>Síncopa</dt><dd>Paso adicional en un contratiempo («y»).</dd>
+      <dt>Montuno</dt><dd>Parte de la salsa con coro y pregón; también el patrón del piano.</dd>
+      <dt>Mambo</dt><dd>Sección instrumental de mayor energía (en salsa y en bachata).</dd>
+      <dt>Derecho / majao</dt><dd>Secciones de la bachata: estrofas estables y pasaje con bongó más marcado.</dd>
+      <dt>Cambré</dt><dd>Inclinación del torso hacia atrás o al costado.</dd>
+    </dl>
+    <div style="margin-top:10px">${markBtn("t-glosario")}</div>
+  </div></details>`;
+  $$("[data-read]").forEach(b=>b.onclick=()=>{ const id=b.dataset.read; if(S.theory[id]) delete S.theory[id]; else { S.theory[id]=today(); log(`Teoría leída: ${THEORY.find(t=>t.id===id).title}`); toast("¡Tema leído!"); } save(); const openIdx=$$("details.tcard").map(d=>d.open); renderTheory(); $$("details.tcard").forEach((d,i)=>d.open=openIdx[i]); });
+  $$("[data-hit]").forEach(b=>b.onclick=()=>Audio.hit(b.dataset.hit));
+  const CL={"32":[0,3,6,10,12],"23":[2,4,8,11,14],"rumba32":[0,3,7,10,12]};
+  function drawGrid(){ $("#claveGrid").innerHTML = Array.from({length:16},(_,i)=>`<div class="cg ${i%2===0?"beat":""} ${CL[claveType].includes(i)?"hit":""}" data-s="${i}">${i%2===0?(i/2+1):"y"}</div>`).join(""); }
+  drawGrid();
+  $$("#claveSeg button").forEach(b=>{ b.classList.toggle("on",b.dataset.v===claveType); b.onclick=()=>{ claveType=b.dataset.v; $$("#claveSeg button").forEach(x=>x.classList.toggle("on",x===b)); Audio.setClave(claveType); drawGrid(); }; });
+  $("#claveBpm").oninput=e=>{ $("#claveBpmV").textContent=e.target.value; Audio.setBpm(+e.target.value); };
+  $("#clavePlay").onclick=()=>{
+    if(Audio.running()){ Audio.stop(); $("#clavePlay").textContent="▶ Escuchar"; $$(".cg").forEach(c=>c.classList.remove("now")); return; }
+    if(Audio.start({bpm:+$("#claveBpm").value, mode:"clave", clave:claveType, onStep:s=>{ $$(".cg").forEach((c,i)=>c.classList.toggle("now",i===s)); }})) $("#clavePlay").textContent="■ Detener";
+  };
+}
+
+/* =========================================================
+   PRÁCTICA
+   ========================================================= */
+const RETOS = {
+  salsa:["8 frases de básico frontal sin mirar los pies","Alterna básico frontal y lateral cada frase","Aplaude la clave 3-2 durante 1 minuto","Haz 5 giros a la derecha con spotting","Sube el tempo de 10 en 10 hasta que pierdas el paso","Shine: 4 frases de cross-over con brazos","Cuenta en voz alta mientras haces básico en el sitio a 190 BPM"],
+  bachata:["16 frases de básico lateral con toque suave","Alterna lateral y frontal cada 2 frases","Haz 4 cuadrados de box step","Haz síncopa en cada 4 durante 1 minuto","5 ondas corporales lentas","Marca el toque del 8 con un movimiento de brazos","Baila 1 minuto solo con la güira como guía"]
+};
+let prac = {dance:"salsa",mode:"salsa",bpm:150,start:0,elapsed:0,tick:null};
+function renderPractice(){
+  const isB = prac.dance==="bachata";
+  const v=$("#v-practica"); v.className="view active"+(isB?" bach":"");
+  const reto = RETOS[prac.dance][new Date().getDate()%RETOS[prac.dance].length];
+  v.innerHTML = `
+  <div class="row"><h1 style="margin:0">Práctica</h1><span class="spacer"></span>
+    <div class="seg dance" id="pDance"><button data-v="salsa">🎺 Salsa</button><button data-v="bachata">🎸 Bachata</button></div></div>
+  <p class="muted">Metrónomo con patrones rítmicos reales. Baila al contador y registra tus minutos.</p>
+  <div class="grid g2">
+    <div class="card" style="text-align:center">
+      <div class="big-count" id="bigCount">–</div>
+      <div class="counter" id="pDots" style="grid-template-columns:repeat(8,1fr)"></div>
+      <div class="row" style="justify-content:center;margin-top:8px">
+        <button class="btn ${isB?"pink":"primary"}" id="pPlay">${Audio.running()&&prac.start?"■ Detener":"▶ Empezar"}</button>
+      </div>
+    </div>
+    <div class="grid" style="align-content:start">
+      <div class="card">
+        <div class="grid g2">
+          <label class="fld">Patrón
+            <select id="pMode">${isB?`<option value="bachata">Bachata (güira, bajo, bongó)</option><option value="tick">Solo metrónomo</option>`
+              :`<option value="salsa">Salsa On1 (clave 3-2 + campana)</option><option value="on2">Salsa On2 (conga en 2 y 6)</option><option value="tick">Solo metrónomo</option>`}</select></label>
+          <label class="fld">Tempo: <b id="pBpmV" style="color:var(--text)">${prac.bpm} BPM</b>
+            <input type="range" id="pBpm" min="80" max="${isB?160:220}" value="${prac.bpm}" style="width:100%"></label>
+        </div>
+        <div class="row small" style="margin-top:10px">${(isB?[[110,"Sensual"],[125,"Moderna"],[140,"Dominicana"]]:[[140,"Lento"],[170,"Social"],[200,"Rápido"]]).map(x=>`<button class="btn sm" data-preset="${x[0]}">${x[1]} · ${x[0]}</button>`).join("")}</div>
+      </div>
+      <div class="card">
+        <div class="row"><div><div class="small muted">Sesión actual</div><div class="timer" id="pTimer">00:00</div></div><span class="spacer"></span>
+          <div class="stat" style="text-align:right"><span class="l">Hoy</span><span class="v" style="font-size:1.4rem">${S.practice.filter(x=>x.date===today()).reduce((a,b)=>a+b.min,0)} min</span></div></div>
+        <p class="small dim" style="margin:8px 0 0">Al detener se registran los minutos completos (mínimo 1).</p>
+        <div class="row" style="margin-top:10px"><label class="fld" style="flex-direction:row;align-items:center">Registrar manual: <input type="number" id="manMin" min="1" max="240" value="15" style="width:80px"> min</label><button class="btn sm" id="manAdd">Añadir</button></div>
+      </div>
+      <div class="card"><h3>🎯 Reto del día</h3><p style="margin:0">${esc(reto)}</p></div>
+    </div>
+  </div>`;
+  $("#pMode").value = prac.mode;
+  const dots=$("#pDots"); dots.innerHTML = Array.from({length:8},(_,i)=>`<div class="cnt" style="min-height:52px"><span class="n" style="font-size:1.1rem">${i+1}</span></div>`).join("");
+  $$("#pDance button").forEach(b=>{ b.classList.toggle("on",b.dataset.v===prac.dance); b.onclick=()=>{ if(b.dataset.v===prac.dance) return; stopPractice(); prac.dance=b.dataset.v; prac.mode=prac.dance==="bachata"?"bachata":"salsa"; prac.bpm=prac.dance==="bachata"?125:150; renderPractice(); }; });
+  $("#pMode").onchange=e=>{ prac.mode=e.target.value; if(Audio.running()){ stopPractice(); startPractice(); } };
+  const setB = b=>{ prac.bpm=b; $("#pBpm").value=b; $("#pBpmV").textContent=b+" BPM"; Audio.setBpm(b); };
+  $("#pBpm").oninput=e=>setB(+e.target.value);
+  $$("[data-preset]").forEach(b=>b.onclick=()=>setB(+b.dataset.preset));
+  $("#pPlay").onclick=()=>{ if(prac.start) stopPractice(); else startPractice(); };
+  $("#manAdd").onclick=()=>{ const m=Math.max(1,Math.min(240,parseInt($("#manMin").value)||0)); addPractice(m,prac.dance,`Práctica manual de ${DANCES[prac.dance].name}`); renderPractice(); };
+}
+function startPractice(){
+  const ok = Audio.start({bpm:prac.bpm, mode:prac.mode, onCount:b=>{
+    const big=$("#bigCount"); if(big){ big.textContent=b+1; big.classList.add("pulse"); setTimeout(()=>big.classList.remove("pulse"),90); }
+    $$("#pDots .cnt").forEach((c,i)=>c.classList.toggle("on",i===b));
+  }});
+  if(!ok) return;
+  prac.start=Date.now(); $("#pPlay").textContent="■ Detener";
+  prac.tick=setInterval(()=>{ const s=Math.floor((Date.now()-prac.start)/1000); const t=$("#pTimer"); if(t) t.textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0"); },500);
+}
+function stopPractice(){
+  Audio.stop(); clearInterval(prac.tick);
+  if(prac.start){ const m=Math.floor((Date.now()-prac.start)/60000); prac.start=0; if(m>=1) addPractice(m,prac.dance,`Práctica de ${DANCES[prac.dance].name}`); }
+  const b=$("#pPlay"); if(b) b.textContent="▶ Empezar";
+}
+
+/* =========================================================
+   ROUTER
+   ========================================================= */
+let currentView=null;
+function route(){
+  // detener audio al cambiar de vista
+  if(prac.start) stopPractice(); if(lessonStop || Audio.running()) stopLessonAudio();
+  const h = (location.hash||"#dashboard").slice(1); const [name,arg] = h.split("/");
+  $$(".view").forEach(v=>{ v.classList.remove("active"); v.className="view"; });
+  const tabName = name==="leccion" ? "lecciones" : name;
+  $$("#tabs a").forEach(a=>a.classList.toggle("active",a.dataset.r===tabName));
+  if(name==="lecciones"){ renderLessons(); $("#v-lecciones").classList.add("active"); }
+  else if(name==="leccion"){ renderLesson(arg); }
+  else if(name==="teoria"){ renderTheory(); $("#v-teoria").classList.add("active"); }
+  else if(name==="practica"){ renderPractice(); }
+  else { renderDashboard(); $("#v-dashboard").classList.add("active"); }
+  if(currentView!==h) window.scrollTo({top:0,behavior:"instant" in window?"instant":"auto"});
+  currentView=h;
+}
+window.addEventListener("hashchange",route);
+window.addEventListener("beforeunload",()=>{ if(prac.start) stopPractice(); if(lessonStop) stopLessonAudio(); });
+document.addEventListener("visibilitychange",()=>{ if(document.hidden){ if(prac.start) stopPractice(); if(lessonStop) stopLessonAudio(); } });
+route();
+</script>
+</body>
+</html>
