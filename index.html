@@ -262,6 +262,13 @@ footer{text-align:center;color:var(--dim);font-size:.8rem;padding:20px 0 30px}
 .btn.ok{background:var(--ok);color:#0d2117;border:none}
 .hidden-count .counter{filter:blur(7px);opacity:.3}
 kbd{background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:.78rem;font-family:inherit}
+select{max-width:100%;min-width:0;text-overflow:ellipsis}
+label.fld{max-width:100%;min-width:0}
+.camrow{display:flex;gap:4px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:6px}
+.camrow button{border:1px solid var(--line);background:var(--card2);color:var(--muted);padding:4px 10px;border-radius:999px;font-size:.78rem;font-weight:600}
+.camrow button.on{background:var(--text);color:var(--bg);border-color:transparent}
+svg.p3d{touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+svg.p3d.drag{cursor:grabbing}
 </style>
 </head>
 <body>
@@ -505,9 +512,9 @@ const LESSONS = [
        {q:"¿Cuándo se suele hacer la transición de posición?",o:["En el 1, después del toque del 8","En el 4","En medio del giro","En cualquier momento"],a:0}]},
 
 {id:"b05",dance:"bachata",level:"basico",title:"Giro simple de la seguidora",mode:"bachata",bpm:118,
- obj:"Guiar y ejecutar el giro a la derecha en bachata.",
- theory:["Desde posición abierta, el líder prepara durante 1-2-3-4 con el básico lateral y en el 5 levanta su mano izquierda; la seguidora gira a su derecha desplazándose en 5-6-7 y toca en el 8 ya de frente.",
-         "A diferencia de la salsa, el giro de bachata suele viajar un poco hacia el costado, siguiendo la dirección del básico. Los tres pasos del giro reemplazan los tres pasos laterales."],
+ obj:"Guiar y ejecutar el giro simple de la seguidora siguiendo la dirección del básico.",
+ theory:["Desde posición abierta, el líder prepara durante 1-2-3-4 con el básico lateral y en el 5 levanta su mano izquierda; la seguidora gira desplazándose en 5-6-7 en la misma dirección en que viaja el básico (en este ejemplo, hacia su izquierda) y toca en el 8 ya de frente.",
+         "A diferencia de la salsa, el giro de bachata viaja hacia el costado: los tres pasos del giro reemplazan los tres pasos laterales. Si el básico va a la derecha, el giro natural es a la derecha; si va a la izquierda, a la izquierda."],
  points:["Seguidora: los tres pasos del giro son pequeños.","Líder: el halo se hace sobre la cabeza de ella, no al lado.","Se termina con el toque del 8, igual que el básico."],
  errors:["Girar en el 4 y perder el toque.","Halo demasiado amplio que la desequilibra."],
  pattern:{lider:[p("Lado","s","I"),p("Junta","s","D"),p("Lado","s","I"),p("Toque","t","D"),p("Mano arriba","s","D"),p("Halo","s","I"),p("Lado","s","D"),p("Toque","t","I")],
@@ -617,31 +624,32 @@ const Anim = (()=>{
   const salsaBasic=[F([-sx,-36],Zr,"L"),F([-sx,-36],Zr,"R"),F(Z,Zr,"L"),F(Z,Zr,"L",{p:1}),F(Z,[sx,36],"R"),F(Z,[sx,36],"L"),F(Z,Zr,"R"),F(Z,Zr,"R",{p:1})];
   const salsaSide=[F([-44,0],Zr,"L"),F([-44,0],Zr,"R"),F(Z,Zr,"L"),F(Z,Zr,"L",{p:1}),F(Z,[44,0],"R"),F(Z,[44,0],"L"),F(Z,Zr,"R"),F(Z,Zr,"R",{p:1})];
   const on2=[F(Z,Zr,"L",{p:1}),F(Z,[sx,36],"R"),F(Z,[sx,36],"L"),F(Z,Zr,"R"),F(Z,Zr,"R",{p:1}),F([-sx,-36],Zr,"L"),F([-sx,-36],Zr,"R"),F(Z,Zr,"L")];
-  const crossOver=[F([12,-16],Zr,"L",{rl:15}),F([12,-16],Zr,"R",{rl:15}),F(Z,Zr,"L"),F(Z,Zr,"L",{p:1}),F(Z,[-12,-16],"R",{rr:-15}),F(Z,[-12,-16],"L",{rr:-15}),F(Z,Zr,"R"),F(Z,Zr,"R",{p:1})];
-  function turn(prep,dir,n,o){
-    o=o||{}; const fr=prep.slice(0,4).map(f=>Object.assign({},f)); const A=dir*360*n;
-    fr.push(F([-sx,-4],[sx,4],"L",{a:A/2}));
-    fr.push(F(Z,Zr,"R",{a:A}));
+  const crossOver=[F([10,-18],Zr,"L",{rl:15}),F([10,-18],Zr,"R",{rl:15}),F(Z,Zr,"L"),F(Z,Zr,"L",{p:1}),F(Z,[-10,-18],"R",{rr:-15}),F(Z,[-10,-18],"L",{rr:-15}),F(Z,Zr,"R"),F(Z,Zr,"R",{p:1})];
+  function turn(prep,dir,n){
+    const fr=prep.slice(0,4).map(f=>Object.assign({},f)); const A=dir*360*n;
+    fr.push(F([-sx,-6],[sx,4],"L",{a:A*(n>1?0.375:0.5)}));
+    fr.push(F(Z,Zr,"R",{a:A*(n>1?0.75:1)}));
     fr.push(F(Z,Zr,"L",{a:A}));
     fr.push(F(Z,Zr,"L",{a:A,p:1}));
     return fr;
   }
   const leadTurn=(fr,an)=>mod(fr,i=>i===4?{up:1,pa:an[0]}:i===5?{up:1,pa:an[1]}:i>=6?{pa:an[2]}:{});
+  const handUp=(fr,idx)=>mod(fr,i=>idx.includes(i)?{upR:1}:{});
   const cblL=[
     F([-sx,-30],Zr,"L",{pp:[0,-74,180]}),
     F(Z,Zr,"R",{a:-90,d:[-8,-6],pp:[0,-45,180]}),
-    F(Z,[sx,8],"L",{a:-90,d:[-32,0],pp:[0,-12,180]}),
-    F(Z,[sx,8],"L",{a:-90,d:[-32,0],p:1,pp:[0,14,180]}),
-    F(Z,Zr,"R",{a:-150,d:[-18,0],pp:[0,46,270]}),
+    F(Z,[sx,8],"L",{a:-90,d:[-44,0],pp:[8,-12,180]}),
+    F(Z,[sx,8],"L",{a:-90,d:[-44,0],p:1,pp:[8,14,180]}),
+    F(Z,Zr,"R",{a:-150,d:[-22,0],pp:[4,46,270]}),
     F(Z,Zr,"L",{a:-180,d:[-4,0],pp:[0,74,360]}),
     F(Z,Zr,"R",{a:-180,pp:[0,80,360]}),
     F(Z,Zr,"R",{a:-180,p:1,pp:[0,80,360]})];
   const cblF=[
     F(Z,[sx,30],"R",{pp:[0,-80,180]}),
-    F([-sx,-16],Zr,"L",{d:[0,-30],pp:[22,-84,90]}),
-    F(Z,[sx,-16],"R",{d:[0,-62],pp:[34,-80,90]}),
-    F(Z,Zr,"R",{d:[0,-80],p:1,pp:[34,-80,90]}),
-    F(Z,Zr,"L",{a:90,d:[0,-112],pp:[24,-84,40]}),
+    F([-sx,-16],Zr,"L",{d:[-4,-30],pp:[26,-84,90]}),
+    F(Z,[sx,-16],"R",{d:[-8,-62],pp:[44,-80,90]}),
+    F(Z,Zr,"R",{d:[-8,-80],p:1,pp:[44,-80,90]}),
+    F(Z,Zr,"L",{a:90,d:[-4,-112],pp:[30,-82,40]}),
     F(Z,Zr,"R",{a:180,d:[0,-140],pp:[6,-80,0]}),
     F(Z,Zr,"L",{a:180,d:[0,-150],pp:[0,-80,0]}),
     F(Z,Zr,"L",{a:180,d:[0,-150],p:1,pp:[0,-80,0]})];
@@ -649,18 +657,20 @@ const Anim = (()=>{
   /* ---------- BACHATA ---------- */
   const bachSide=[F([-42,0],[12,0],"L"),F([-42,0],[-18,0],"R"),F([-72,0],[-18,0],"L"),F([-72,0],[-48,-5],"L",{t:"R"}),F([-72,0],[-18,0],"R"),F([-42,0],[-18,0],"L"),F([-42,0],[12,0],"R"),F([-12,-5],[12,0],"R",{t:"L"})];
   const bachFront=[F([-sx,-34],Zr,"L"),F([-sx,-34],Zr,"R"),F(Z,Zr,"L"),F(Z,[sx,-6],"L",{t:"R"}),F(Z,[sx,34],"R"),F(Z,[sx,34],"L"),F(Z,Zr,"R"),F([-sx,-6],Zr,"R",{t:"L"})];
+  // giro de la seguidora en 5-6-7: sigue la dirección del básico (hacia su izquierda)
   const bachTurnF=()=>mir(bachSide).slice(0,4).concat([
-    F(Z,Zr,"R",{a:120,d:[50,0]}),F(Z,Zr,"L",{a:240,d:[28,0]}),F(Z,Zr,"R",{a:360,d:[6,0]}),F(Z,[sx,-5],"R",{a:360,d:[6,0],t:"L"})]);
+    F(Z,Zr,"R",{a:-120,d:[50,0],upR:1}),F(Z,Zr,"L",{a:-240,d:[28,0],upR:1}),F(Z,Zr,"R",{a:-360,d:[6,0]}),F(Z,[sx,-5],"R",{a:-360,d:[6,0],t:"L"})]);
   const cambio=[
-    F(Z,Zr,"L",{a:60,d:[12,-25],pp:[-12,-55,240]}),
-    F(Z,Zr,"R",{a:120,d:[12,-55],pp:[-12,-25,300]}),
+    F(Z,Zr,"L",{a:60,d:[20,-25],pp:[-20,-55,240]}),
+    F(Z,Zr,"R",{a:120,d:[20,-55],pp:[-20,-25,300]}),
     F(Z,Zr,"L",{a:180,d:[0,-80],pp:[0,0,360]}),
     F(Z,Zr,"L",{a:180,d:[0,-80],pp:[0,0,360],t:"R"}),
     F(Z,Zr,"R",{a:300,d:[0,-80],pp:[0,0,360],up:1}),
     F(Z,Zr,"L",{a:420,d:[0,-80],pp:[0,0,360],up:1}),
     F(Z,Zr,"R",{a:540,d:[0,-80],pp:[0,0,360]}),
     F(Z,Zr,"R",{a:540,d:[0,-80],pp:[0,0,360],t:"L"})];
-  const hammer=[F([-sx,-10],Zr,"L"),F(Z,Zr,"R",{a:90,d:[4,-6]}),F(Z,Zr,"L",{a:180,d:[6,-10]}),F(Z,Zr,"L",{a:180,d:[6,-10],t:"R"}),F(Z,Zr,"R",{a:270,d:[4,-6]}),F(Z,Zr,"L",{a:360}),F(Z,Zr,"R",{a:360}),F(Z,Zr,"R",{a:360,t:"L"})];
+  // hammerlock: media vuelta para envolverse y salida en sentido contrario
+  const hammer=[F([-sx,-10],Zr,"L",{upR:1}),F(Z,Zr,"R",{a:90,d:[4,-6],upR:1}),F(Z,Zr,"L",{a:180,d:[6,-10]}),F(Z,Zr,"L",{a:180,d:[6,-10],t:"R"}),F(Z,Zr,"R",{a:90,d:[4,-6],upR:1}),F(Z,Zr,"L",{a:0,upR:1}),F(Z,Zr,"R",{a:0}),F(Z,Zr,"R",{a:0,t:"L"})];
   const bachBreak=bachSide.slice(0,4).concat([F([-72,0],[-48,-5],"L",{p:1}),F([-72,0],[-48,-5],"L",{p:1}),F([-72,0],[-42,0],"R"),F([-66,-5],[-42,0],"R",{t:"L"})]);
   const waveDown=[{c:12,a:2,h:-2},{c:4,a:12,h:0},{c:-2,a:4,h:12},{c:0,a:0,h:4,t:1},{c:-2,a:4,h:12},{c:2,a:12,h:2},{c:12,a:2,h:-2},{c:0,a:0,h:0,t:1}];
   const waveLean=waveDown.slice(0,4).concat([{c:0,a:0,h:6,lean:-22},{c:-4,a:0,h:8,lean:-30},{c:4,a:2,h:2,lean:-8},{c:0,a:0,h:0,t:1}]);
@@ -673,10 +683,10 @@ const Anim = (()=>{
     s02:{lider:{fr:salsaBasic},seguidora:{fr:mir(salsaBasic)}},
     s03:{lider:{fr:salsaSide},seguidora:{fr:mir(salsaSide)}},
     s04:{lider:{fr:salsaBasic,partner:1},seguidora:{fr:mir(salsaBasic),partner:1}},
-    s05:{lider:{fr:leadTurn(salsaBasic,[180,360,360]),partner:1},seguidora:{fr:turn(mir(salsaBasic),1,1),partner:1}},
-    s06:{lider:{fr:cblL,partner:1,base:[CX,CY+15]},seguidora:{fr:cblF,partner:1,base:[CX,CY+65]}},
+    s05:{lider:{fr:leadTurn(salsaBasic,[180,360,360]),partner:1},seguidora:{fr:handUp(turn(mir(salsaBasic),1,1),[4,5]),partner:1}},
+    s06:{lider:{fr:cblL,partner:1,base:[CX,CY+15],cross:1},seguidora:{fr:cblF,partner:1,base:[CX,CY+65],cross:1}},
     s07:{general:{fr:turn(mir(salsaBasic),-1,1)}},
-    s08:{general:{fr:crossOver}},
+    s08:{general:{fr:crossOver,cross:1}},
     s09:{general:{fr:turn(salsaBasic,1,1)}},
     s10:{general:{fr:on2}},
     s11:{general:{fr:turn(mir(salsaBasic),1,2)}},
@@ -685,123 +695,226 @@ const Anim = (()=>{
     b02:{lider:{fr:bachSide,base:BL},seguidora:{fr:mir(bachSide),base:BF}},
     b03:{lider:{fr:bachFront},seguidora:{fr:mir(bachFront)}},
     b04:{lider:{fr:bachSide,base:BL,partner:1},seguidora:{fr:mir(bachSide),base:BF,partner:1}},
-    b05:{lider:{fr:leadTurn(bachSide,[120,240,360]),base:BL,partner:1},seguidora:{fr:bachTurnF(),base:BF,partner:1}},
-    b06:{general:{fr:cambio,partner:1,base:[CX,CY+45]}},
+    b05:{lider:{fr:leadTurn(bachSide,[-120,-240,-360]),base:BL,partner:1},seguidora:{fr:bachTurnF(),base:BF,partner:1}},
+    b06:{general:{fr:cambio,partner:1,base:[CX,CY+45],cross:1}},
     b07:{general:{fr:mod(bachSide,i=>(i===3||i===7)?{sy:1}:{}),base:BL}},
     b08:{general:{mode:"wave",fr:waveDown}},
     b09:{general:{fr:hammer,partner:1,base:[CX,CY+20]}},
     b10:{general:{fr:bachSide,base:BL}},
-    b11:{general:{mode:"wave",fr:waveLean}},
+    b11:{general:{mode:"wave",fr:waveLean,partner:1,pd:56}},
     b12:{general:{fr:bachBreak,base:BL}}
   };
 
-  function tweener(draw){
-    let cur=null,from=null,to=null,t0=0,dur=1,raf=0;
-    function tick(now){ const k=Math.min(1,(now-t0)/dur), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2; const o={}; for(const key in to) o[key]=from[key]+(to[key]-from[key])*e; cur=o; draw(cur); raf=k<1?requestAnimationFrame(tick):0; }
-    return {
-      snap(s){ if(raf){cancelAnimationFrame(raf);raf=0;} cur=Object.assign({},s); draw(cur); },
-      go(s,d){ from=cur?Object.assign({},cur):Object.assign({},s); to=s; t0=performance.now(); dur=Math.max(60,d||300); if(!raf) raf=requestAnimationFrame(tick); },
-      stop(){ if(raf) cancelAnimationFrame(raf); raf=0; }
-    };
-  }
-  const FOOT="M0,-13 C5.5,-13 6.5,-5 5.5,1 C4.8,8 3.8,12 0,12 C-3.8,12 -4.8,8 -5.5,1 C-6.5,-5 -5.5,-13 0,-13Z";
-  const ring=(el,dbl)=>{ el.classList.remove("go"); void el.getBoundingClientRect(); el.classList.add("go"); if(dbl) setTimeout(()=>{ el.classList.remove("go"); void el.getBoundingClientRect(); el.classList.add("go"); },200); };
+  /* ---------- MODELO DE PERSONA (esqueleto 3D simplificado) ---------- */
+  const L1=45, L2=43, RE=(L1+L2)*0.985;
+  const ELEV=15*Math.PI/180, CE=Math.cos(ELEV), SE=Math.sin(ELEV);
+  const ARM={relax:{e:[-2,6,-25],h:[16,2,-31]}, frame:{e:[10,7,-22],h:[32,1,-15]}, up:{e:[6,5,25],h:[6,-6,50]}};
+  const PAL={
+    salsa:{me:{c:"#ff6b4a",d:"#b8432c",skin:"#ffdacb"},pt:{c:"#ffb347",d:"#b97a22",skin:"#ffe6c7"}},
+    bachata:{me:{c:"#e04f8f",d:"#9c2f63",skin:"#ffd8e7"},pt:{c:"#a77bff",d:"#6f4bc4",skin:"#ebe0ff"}}
+  };
+  const HAIR="#2b1b26", SHOE_L="#f6ece8", SHOE_R="#14090f";
+  const d3=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1],a[2]-b[2]);
 
-  function mountFloor(el,spec,col,pcol){
+  function targetOf(spec,f,start){
     const base=spec.base||[CX,CY];
-    el.innerHTML=`<svg viewBox="30 36 240 242" role="img" aria-label="Animación de los pies vista desde arriba">
-      <defs><radialGradient id="flg"><stop offset="0" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
-      <circle cx="150" cy="157" r="116" fill="url(#flg)" stroke="#3d2d45" stroke-dasharray="3 6"/>
-      <line x1="150" y1="40" x2="150" y2="274" stroke="#3d2d45" stroke-dasharray="2 8"/><line x1="34" y1="157" x2="266" y2="157" stroke="#3d2d45" stroke-dasharray="2 8"/>
-      <text x="34" y="274" fill="#86728a" font-size="9">Vista desde arriba</text>
-      <g class="ag-p" style="${spec.partner?"":"display:none"}"><ellipse rx="25" ry="10" fill="${pcol}" fill-opacity=".16" stroke="${pcol}" stroke-opacity=".55" stroke-width="1.5"/><circle r="8.5" fill="${pcol}" fill-opacity=".45"/><path d="M-4,-8.5 L0,-14.5 L4,-8.5Z" fill="${pcol}" fill-opacity=".75"/></g>
-      <g class="ag-b"><circle class="halo" r="23" fill="none" stroke="${col}" stroke-width="1.5" stroke-dasharray="4 4" opacity="0"/><ellipse rx="30" ry="12" fill="${col}" fill-opacity=".14" stroke="${col}" stroke-opacity=".7" stroke-width="1.5"/><circle r="8.5" fill="${col}" fill-opacity=".55"/><path d="M-4,-8.5 L0,-15 L4,-8.5Z" fill="${col}"/></g>
-      <g class="ag-l"><circle class="tapring" r="18" fill="none" stroke="${col}" stroke-width="2" opacity="0"/><path class="fp" d="${FOOT}" transform="scale(1.25)" stroke="${col}" stroke-width="1.7"/><text class="ft" y="3.5" text-anchor="middle" font-size="8.5" font-weight="700">I</text></g>
-      <g class="ag-r"><circle class="tapring" r="18" fill="none" stroke="${col}" stroke-width="2" opacity="0"/><path class="fp" d="${FOOT}" transform="scale(1.25)" stroke="${col}" stroke-width="1.7"/><text class="ft" y="3.5" text-anchor="middle" font-size="8.5" font-weight="700">D</text></g>
-      <text class="pz" x="266" y="52" text-anchor="end" font-size="11" font-weight="700" fill="#ffcf5c" opacity="0">⏸ PAUSA</text>
-    </svg>`;
-    const q=s=>el.querySelector(s);
-    const gL=q(".ag-l"), gR=q(".ag-r"), gB=q(".ag-b"), gP=q(".ag-p");
-    const set=(g,x,y,r)=>g.setAttribute("transform",`translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${r.toFixed(1)})`);
-    function target(f){
-      const a=f.a||0, c=[base[0]+(f.d?f.d[0]:0), base[1]+(f.d?f.d[1]:0)];
-      const rd=a*Math.PI/180, cs=Math.cos(rd), sn=Math.sin(rd);
-      const tr=([x,y])=>[c[0]+x*cs-y*sn, c[1]+x*sn+y*cs];
-      const L=tr(f.l), R=tr(f.r), mid=[(L[0]+R[0])/2,(L[1]+R[1])/2], W=f.w==="L"?L:R;
-      const b=[mid[0]+(W[0]-mid[0])*.35, mid[1]+(W[1]-mid[1])*.35];
-      const p=f.pp?[base[0]+f.pp[0], base[1]+f.pp[1], f.pp[2]]:[b[0], b[1]-80, 180+(f.pa||0)];
-      return {lx:L[0],ly:L[1],lr:a+(f.rl||0),rx:R[0],ry:R[1],rr:a+(f.rr||0),bx:b[0],by:b[1],ba:a,px:p[0],py:p[1],pa:p[2]};
+    if(spec.mode==="wave"){
+      const s={cx:base[0],cy:base[1],a:0,lx:-sx,ly:0,rx:sx,ry:0,rl:0,rr:0,w:0,tl:0,tr:0,up:0,upR:0,wc:f.c||0,wa:f.a||0,wh:f.h||0,lean:f.lean||0,wave:1};
+      s.px=base[0]; s.py=base[1]-(spec.pd||80); s.pa=180; return s;
     }
-    const tw=tweener(s=>{ set(gL,s.lx,s.ly,s.lr); set(gR,s.rx,s.ry,s.rr); set(gB,s.bx,s.by,s.ba); set(gP,s.px,s.py,s.pa); });
-    const startF=F(Z,Zr,"L");
-    function flags(f){
-      [[gL,f.w==="L"],[gR,f.w==="R"]].forEach(([g,on])=>{
-        const fp=g.querySelector(".fp"), ft=g.querySelector(".ft");
-        fp.setAttribute("fill",on?col:"rgba(20,13,23,.7)"); fp.setAttribute("stroke-dasharray",on?"":"3 2"); ft.setAttribute("fill",on?"#1a0f14":col);
-      });
-      q(".halo").setAttribute("opacity",f.up?1:0);
-      q(".pz").setAttribute("opacity",f.p?1:0);
-      if(f.t) ring((f.t==="L"?gL:gR).querySelector(".tapring"), f.sy);
-    }
-    tw.snap(target(startF)); flags(Object.assign({},startF,{w:"B"}));
-    return {
-      show(i,dur){ const f=spec.fr[i]; if(i===0) tw.snap(target(startF)); tw.go(target(f),dur); flags(f); },
-      info(i){ const f=spec.fr[i]; const pie=x=>x==="L"?"izquierdo":"derecho"; let s;
-        if(f.p) s="Pausa: no se cambia el peso"; else if(f.t) s=`Toque con el pie ${pie(f.t)}, sin peso`+(f.sy?" (síncopa «y»)":""); else s=`Peso en el pie ${pie(f.w)}`;
-        if(f.up) s+=" · mano arriba (halo)"; if(f.a && i>0 && f.a!==(spec.fr[i-1].a||0)) s+=" · girando"; return s; },
-      destroy(){ tw.stop(); }
-    };
+    const a=f.a||0, c=[base[0]+(f.d?f.d[0]:0), base[1]+(f.d?f.d[1]:0)];
+    const s={cx:c[0],cy:c[1],a,lx:f.l[0],ly:f.l[1],rx:f.r[0],ry:f.r[1],rl:f.rl||0,rr:f.rr||0,
+      w:start?0:(f.w==="L"?-1:1),tl:f.t==="L"?1:0,tr:f.t==="R"?1:0,up:f.up?1:0,upR:f.upR?1:0,wc:0,wa:0,wh:0,lean:0,wave:0};
+    const J=skel(s,false);
+    if(f.pp){ s.px=base[0]+f.pp[0]; s.py=base[1]+f.pp[1]; s.pa=f.pp[2]; }
+    else { s.px=J.pel[0]; s.py=J.pel[1]-(spec.pd||80); s.pa=180+(f.pa||0); }
+    return s;
+  }
+  function partnerState(s){
+    return {cx:s.px,cy:s.py,a:s.pa,lx:-sx,ly:0,rx:sx,ry:0,rl:0,rr:0,w:-(s.w||0)*0.7,tl:0,tr:0,up:s.upR||0,upR:s.up||0,wc:0,wa:0,wh:0,lean:0,wave:0,liftL:0,liftR:0};
+  }
+  function skel(s,framePose){
+    const ar=s.a*Math.PI/180, ca=Math.cos(ar), sa=Math.sin(ar);
+    const f=[sa,-ca], r=[ca,sa];
+    const W=(x,y)=>[s.cx+x*ca-y*sa, s.cy+x*sa+y*ca];
+    const Lf=W(s.lx,s.ly), Rf=W(s.rx,s.ry);
+    const tap=(s.tl||0)+(s.tr||0);
+    const k=(0.35+0.15*tap)*s.w, mid=[(Lf[0]+Rf[0])/2,(Lf[1]+Rf[1])/2];
+    const pel=[mid[0]+(Rf[0]-mid[0])*k+f[0]*(s.wh||0), mid[1]+(Rf[1]-mid[1])*k+f[1]*(s.wh||0)];
+    const foot=(P,yo,lift,arc)=>{ const fa=ar+(yo||0)*Math.PI/180, d=[Math.sin(fa),-Math.cos(fa)];
+      return {heel:[P[0]-d[0]*7,P[1]-d[1]*7,2+lift*10+arc], toe:[P[0]+d[0]*12,P[1]+d[1]*12,1+arc*0.5], ank:[P[0]-d[0]*3.5,P[1]-d[1]*3.5,8+lift*10+arc]}; };
+    const fl=foot(Lf,s.rl,s.tl||0,s.liftL||0), fr=foot(Rf,s.rr,s.tr||0,s.liftR||0);
+    const wL=(1-s.w)/2, tilt=4+3*tap, offL=(wL-.5)*tilt, offR=(.5-wL)*tilt;
+    const hLf=[pel[0]-r[0]*9,pel[1]-r[1]*9], hRf=[pel[0]+r[0]*9,pel[1]+r[1]*9];
+    const maxH=(hp,an,off)=>Math.sqrt(Math.max(0,RE*RE-Math.pow(hp[0]-an[0],2)-Math.pow(hp[1]-an[1],2)))+an[2]-off;
+    const H=Math.min(s.wave?87:93, maxH(hLf,fl.ank,offL), maxH(hRf,fr.ank,offR));
+    const hipL=[hLf[0],hLf[1],H+offL], hipR=[hRf[0],hRf[1],H+offR];
+    const knee=(hp,an)=>{ const v=[an[0]-hp[0],an[1]-hp[1],an[2]-hp[2]], dd=Math.hypot(v[0],v[1],v[2])||1, u=v.map(x=>x/dd);
+      if(dd>=L1+L2-0.01) return hp.map((x,i)=>x+u[i]*L1);
+      const aa=(L1*L1-L2*L2+dd*dd)/(2*dd), hh=Math.sqrt(Math.max(0,L1*L1-aa*aa));
+      let b=[f[0],f[1],0]; const dot=b[0]*u[0]+b[1]*u[1]; b=b.map((x,i)=>x-dot*u[i]); const bl=Math.hypot(b[0],b[1],b[2])||1; b=b.map(x=>x/bl);
+      return hp.map((x,i)=>x+u[i]*aa+b[i]*hh); };
+    const kL=knee(hipL,fl.ank), kR=knee(hipR,fr.ank);
+    const Lr=(s.lean||0)*Math.PI/180, cl=Math.cos(Lr), sl=Math.sin(Lr);
+    const cw=(s.wc||0)-(s.wh||0), aw=(s.wa||0)-(s.wh||0);
+    const sp=(fw,up,side)=>{ const fw2=fw*cl+up*sl, up2=-fw*sl+up*cl; return [pel[0]+f[0]*fw2+r[0]*(side||0), pel[1]+f[1]*fw2+r[1]*(side||0), H+up2]; };
+    const shL=sp(cw,47,-17), shR=sp(cw,47,17), abL=sp(aw,24,-13), abR=sp(aw,24,13), neck=sp(cw*.6,56), head=sp(cw*.6+1,69);
+    const pL=[pel[0]-r[0]*11,pel[1]-r[1]*11,H+offL+3], pR=[pel[0]+r[0]*11,pel[1]+r[1]*11,H+offR+3];
+    const baseA=framePose?ARM.frame:ARM.relax;
+    const arm=(sh,side,u)=>{ const bl=(a,b)=>a.map((x,i)=>x+(b[i]-x)*u); const e=bl(baseA.e,ARM.up.e), h=bl(baseA.h,ARM.up.h);
+      const P=o=>{ const fw=o[0], out=o[1]*side, up=o[2], fw2=fw*cl+up*sl, up2=-fw*sl+up*cl; return [sh[0]+f[0]*fw2+r[0]*out, sh[1]+f[1]*fw2+r[1]*out, sh[2]+up2]; };
+      return {el:P(e), ha:P(h)}; };
+    const aL=arm(shL,-1,s.up||0), aR=arm(shR,1,s.upR||0);
+    return {f,r,pel,H,Lf,Rf,fl,fr,hipL,hipR,kL,kR,shL,shR,abL,abR,pL,pR,neck,head,aL,aR};
   }
 
-  function mountWave(el,spec,col){
-    el.innerHTML=`<svg viewBox="40 30 220 240" role="img" aria-label="Animación de la onda corporal vista de perfil">
-      <line x1="40" y1="256" x2="260" y2="256" stroke="#3d2d45" stroke-width="2"/>
-      <text x="44" y="268" fill="#86728a" font-size="9">Vista de perfil (mira a la derecha →)</text>
-      <circle class="glow" r="14" fill="${col}" opacity="0"/>
-      <path class="lb" fill="none" stroke="${col}" stroke-opacity=".55" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-      <path class="lf" fill="none" stroke="${col}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-      <path class="sp" fill="none" stroke="${col}" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
-      <path class="ar" fill="none" stroke="${col}" stroke-opacity=".85" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle class="hd" r="13" fill="${col}"/>
-      <text class="pz" x="256" y="48" text-anchor="end" font-size="11" font-weight="700" fill="#ffcf5c" opacity="0">TOQUE</text>
-    </svg>`;
-    const q=s=>el.querySelector(s);
-    const P=(x,y,ang,o)=>{const r=ang*Math.PI/180,c=Math.cos(r),s=Math.sin(r);return [o[0]+x*c-y*s, o[1]+x*s+y*c];};
-    const pt=p=>p[0].toFixed(1)+" "+p[1].toFixed(1);
-    let curS={c:0,a:0,h:0,lean:0};
-    const tw=tweener(s=>{
-      curS=s; const hip=[150+s.h,172];
-      const abd=P(s.a,-36,s.lean,hip), chest=P(s.c,-70,s.lean,hip), neck=P(s.c*.6,-92,s.lean,hip), head=P(s.c*.6+3,-108,s.lean,hip);
-      const sh=P(s.c+2,-66,s.lean,hip), el2=P(s.c+16,-42,s.lean,hip), hand=P(s.c+38,-50,s.lean,hip);
-      q(".sp").setAttribute("d",`M${pt(hip)} Q${pt(abd)} ${pt(chest)} L${pt(neck)}`);
-      q(".lf").setAttribute("d",`M${pt(hip)} L${pt([156+s.h*.5,214])} L${pt([164,254])} l10 0`);
-      q(".lb").setAttribute("d",`M${pt(hip)} L${pt([142+s.h*.5,214])} L${pt([138,254])} l10 0`);
-      q(".ar").setAttribute("d",`M${pt(sh)} L${pt(el2)} L${pt(hand)}`);
-      q(".hd").setAttribute("cx",head[0]); q(".hd").setAttribute("cy",head[1]);
-      const m=[[Math.abs(s.c),chest],[Math.abs(s.a),abd],[Math.abs(s.h),hip]].sort((x,y)=>y[0]-x[0])[0];
-      const g=q(".glow"); if(m[0]>6){ g.setAttribute("cx",m[1][0]); g.setAttribute("cy",m[1][1]); g.setAttribute("opacity",.28); } else g.setAttribute("opacity",0);
-    });
-    const tg=f=>({c:f.c||0,a:f.a||0,h:f.h||0,lean:f.lean||0});
-    tw.snap(tg({}));
+  let camPref=(()=>{ try{ return localStorage.getItem("sabor-cam")||"auto"; }catch(e){ return "auto"; } })();
+  const CAMS={back:0,front:180,side:90};
+
+  function mountPerson(el,spec,dance){
+    const pal=PAL[dance]||PAL.salsa, partnerOn=!!spec.partner, wave=spec.mode==="wave";
+    const autoYaw = wave?90 : partnerOn?62 : 38;
+    let yaw = camPref==="auto"?autoYaw:CAMS[camPref];
+    // centro y escala de la escena
+    const tg=spec.fr.map(f=>targetOf(spec,f)); tg.push(targetOf(spec,wave?{}:F(Z,Zr,"L"),true));
+    const xs=[], ys=[]; tg.forEach(s=>{ const J=skel(s,partnerOn); [J.Lf,J.Rf,J.pel].forEach(q=>{ xs.push(q[0]); ys.push(q[1]); }); if(partnerOn){ xs.push(s.px); ys.push(s.py); } });
+    const W0=[(Math.min(...xs)+Math.max(...xs))/2,(Math.min(...ys)+Math.max(...ys))/2];
+    const spanF=Math.max(Math.max(...xs)-Math.min(...xs), Math.max(...ys)-Math.min(...ys));
+    const span=spanF+70, mS=Math.min(0.9, 50/Math.max(1,spanF+16));
+    const K=Math.min(1.2, 250/span), GY=270;
+    el.innerHTML=`<svg class="p3d" viewBox="0 0 320 300" role="img" aria-label="Figura humana animada del movimiento">
+      <g class="fl"></g>
+      <ellipse class="tapring tL" rx="14" ry="5" fill="none" stroke="${pal.me.c}" stroke-width="2.5" opacity="0"/>
+      <ellipse class="tapring tR" rx="14" ry="5" fill="none" stroke="${pal.me.c}" stroke-width="2.5" opacity="0"/>
+      <g class="fg"></g><g class="mm"></g>
+      <text class="pz" x="10" y="22" font-size="12" font-weight="700" fill="#ffcf5c" opacity="0"></text>
+    </svg>
+    <div class="camrow"><span class="small dim">Cámara:</span>${[["auto","Auto"],["back","Espalda"],["front","Frente"],["side","Lado"]].map(c=>`<button data-cam="${c[0]}" class="${camPref===c[0]?"on":""}">${c[1]}</button>`).join("")}</div>`;
+    const svg=el.querySelector("svg"), gF=el.querySelector(".fl"), gG=el.querySelector(".fg"), gM=el.querySelector(".mm"), pz=el.querySelector(".pz");
+    const ringL=el.querySelector(".tL"), ringR=el.querySelector(".tR");
+    const proj=p=>{ const yr=yaw*Math.PI/180, cy=Math.cos(yr), sy=Math.sin(yr), dx=p[0]-W0[0], dy=p[1]-W0[1];
+      const X=dx*cy-dy*sy, Zc=dx*sy+dy*cy; return [160+X*K, GY-p[2]*CE*K+Zc*SE*K, Zc]; };
+    const n1=v=>v.toFixed(1);
+    function figure(J,P,items){
+      const pelZ=proj([J.pel[0],J.pel[1],J.H])[2];
+      const add=(type,pts,col,w,bias)=>{ const pp=pts.map(proj); const z=pp.reduce((a,b)=>a+b[2],0)/pp.length+(bias||0); items.push({type,pp,col,w,z}); };
+      const sh=pts=>{ const z=pts.map(proj).reduce((a,b)=>a+b[2],0)/pts.length; return z<pelZ-1?P.d:P.c; };
+      [[J.hipL,J.kL,J.fl,SHOE_L],[J.hipR,J.kR,J.fr,SHOE_R]].forEach(([h,k,fo,shoe])=>{
+        const c=sh([h,fo.ank]); add("l",[h,k],c,12.5); add("l",[k,fo.ank],c,10); add("l",[fo.heel,fo.toe],shoe,6.5,0.6); });
+      add("poly",[J.shL,J.shR,J.abR,J.pR,J.pL,J.abL],P.c,9);
+      [[J.shL,J.aL],[J.shR,J.aR]].forEach(([s,a])=>{ const c=sh([s,a.ha]); add("l",[s,a.el],c,8,0.4); add("l",[a.el,a.ha],c,7,0.5); add("c",[a.ha],P.skin,3.6,0.6); });
+      const hb=[J.head[0],J.head[1],J.head[2]-9];
+      add("l",[J.neck,hb],P.skin,6);
+      add("c",[J.head],P.skin,11);
+      add("c",[[J.head[0]-J.f[0]*3.6,J.head[1]-J.f[1]*3.6,J.head[2]+2.2]],HAIR,10.6);
+      add("c",[[J.head[0]+J.f[0]*10.4,J.head[1]+J.f[1]*10.4,J.head[2]-1]],P.d,2.3);
+    }
+    function floorEl(s,J,JP){
+      const c=proj([W0[0],W0[1],0]);
+      let h=`<ellipse cx="${n1(c[0])}" cy="${n1(c[1])}" rx="${n1(128*K)}" ry="${n1(128*K*SE)}" fill="#ffffff" fill-opacity=".03" stroke="#3d2d45" stroke-dasharray="3 6"/>`;
+      if(dance==="salsa" && !wave){ const a=proj([W0[0],W0[1]-120,0]), b=proj([W0[0],W0[1]+120,0]); h+=`<line x1="${n1(a[0])}" y1="${n1(a[1])}" x2="${n1(b[0])}" y2="${n1(b[1])}" stroke="#3d2d45" stroke-dasharray="2 7"/>`; }
+      const shadow=(Jx,col)=>{ const p=proj([Jx.pel[0],Jx.pel[1],0]); return `<ellipse cx="${n1(p[0])}" cy="${n1(p[1])}" rx="${n1(26*K)}" ry="${n1(26*K*SE+2)}" fill="#000" opacity=".28"/>`; };
+      if(JP) h+=shadow(JP); h+=shadow(J);
+      if(Math.abs(s.w)>0.05){ const fp=s.w<0?J.Lf:J.Rf, p=proj([fp[0],fp[1],0]); h+=`<ellipse cx="${n1(p[0])}" cy="${n1(p[1])}" rx="${n1(15*K)}" ry="${n1(15*K*SE+2)}" fill="${pal.me.c}" opacity="${(Math.abs(s.w)*0.45).toFixed(2)}"/>`; }
+      gF.innerHTML=h;
+      const pl=proj([J.Lf[0],J.Lf[1],0]), pr=proj([J.Rf[0],J.Rf[1],0]);
+      ringL.setAttribute("cx",pl[0]); ringL.setAttribute("cy",pl[1]); ringR.setAttribute("cx",pr[0]); ringR.setAttribute("cy",pr[1]);
+    }
+    function mini(s,J,JP){
+      const ox=280, oy=40, M=(p)=>[ox+(p[0]-W0[0])*mS, oy+(p[1]-W0[1])*mS];
+      const ft=(p,ang,on,stroke)=>{ const q=M(p); return `<ellipse cx="${n1(q[0])}" cy="${n1(q[1])}" rx="2.2" ry="4.4" transform="rotate(${n1(ang)} ${n1(q[0])} ${n1(q[1])})" fill="${on?pal.me.c:"#140d17"}" stroke="${stroke}" stroke-width="1"/>`; };
+      const yr=yaw*Math.PI/180, cam=[ox+Math.sin(yr)*31, oy+Math.cos(yr)*31];
+      let h=`<rect x="${ox-35}" y="${oy-35}" width="70" height="70" rx="10" fill="#140d17" fill-opacity=".75" stroke="#3d2d45"/>`;
+      h+=`<path d="M${n1(cam[0])},${n1(cam[1])} l${n1(-Math.sin(yr)*7-Math.cos(yr)*4)},${n1(-Math.cos(yr)*7+Math.sin(yr)*4)} l${n1(Math.cos(yr)*8)},${n1(-Math.sin(yr)*8)}Z" fill="#86728a"><title>Cámara</title></path>`;
+      if(JP){ const q=M(JP.pel); h+=`<circle cx="${n1(q[0])}" cy="${n1(q[1])}" r="3.5" fill="${pal.pt.c}" opacity=".8"/>`; }
+      h+=ft(J.Lf,s.a+(s.rl||0),s.w<-0.05,SHOE_L)+ft(J.Rf,s.a+(s.rr||0),s.w>0.05,"#86728a");
+      const q=M(J.pel), fq=[q[0]+J.f[0]*7,q[1]+J.f[1]*7];
+      h+=`<line x1="${n1(q[0])}" y1="${n1(q[1])}" x2="${n1(fq[0])}" y2="${n1(fq[1])}" stroke="${pal.me.c}" stroke-width="1.6"/>`;
+      h+=`<text x="${ox}" y="${oy+46}" text-anchor="middle" font-size="7.5" fill="#86728a">pies · desde arriba</text>`;
+      gM.innerHTML=h;
+    }
+    let cur=null;
+    function draw(){
+      const s=cur; const J=skel(s,partnerOn); const JP=partnerOn?skel(partnerState(s),true):null;
+      floorEl(s,J,JP);
+      const items=[]; if(JP) figure(JP,pal.pt,items); figure(J,pal.me,items);
+      items.sort((a,b)=>a.z-b.z);
+      gG.innerHTML=items.map(it=>{
+        const p=it.pp, w=n1(it.w*K);
+        if(it.type==="l") return `<line x1="${n1(p[0][0])}" y1="${n1(p[0][1])}" x2="${n1(p[1][0])}" y2="${n1(p[1][1])}" stroke="${it.col}" stroke-width="${w}" stroke-linecap="round"/>`;
+        if(it.type==="c") return `<circle cx="${n1(p[0][0])}" cy="${n1(p[0][1])}" r="${w}" fill="${it.col}"/>`;
+        return `<polygon points="${p.map(q=>n1(q[0])+","+n1(q[1])).join(" ")}" fill="${it.col}" stroke="${it.col}" stroke-width="${w}" stroke-linejoin="round"/>`;
+      }).join("");
+      mini(s,J,JP);
+    }
+    // interpolación con arco de pie al pisar
+    let from=null,to=null,t0=0,dur=300,raf=0,dL=0,dR=0;
+    const wf=s=>{ const ar=s.a*Math.PI/180, ca=Math.cos(ar), sa=Math.sin(ar); return [[s.cx+s.lx*ca-s.ly*sa, s.cy+s.lx*sa+s.ly*ca],[s.cx+s.rx*ca-s.ry*sa, s.cy+s.rx*sa+s.ry*ca]]; };
+    function tick(now){
+      const k=Math.min(1,(now-t0)/dur), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2, o={};
+      for(const key in to) o[key]=from[key]+(to[key]-from[key])*e;
+      const arc=Math.sin(Math.PI*k); o.liftL=arc*Math.min(9,dL*0.3); o.liftR=arc*Math.min(9,dR*0.3);
+      cur=o; draw(); raf=k<1?requestAnimationFrame(tick):0;
+    }
+    function snap(s){ if(raf){ cancelAnimationFrame(raf); raf=0; } cur=Object.assign({liftL:0,liftR:0},s); draw(); }
+    function go(s,d){ from=Object.assign({},cur); to=Object.assign({},s,{liftL:0,liftR:0}); from.liftL=0; from.liftR=0;
+      const a=wf(from), b=wf(to); dL=Math.hypot(a[0][0]-b[0][0],a[0][1]-b[0][1]); dR=Math.hypot(a[1][0]-b[1][0],a[1][1]-b[1][1]);
+      t0=performance.now(); dur=Math.max(60,d||300); if(!raf) raf=requestAnimationFrame(tick); }
+    const startT=tg[tg.length-1];
+    snap(startT);
+    // cámara: botones y arrastre
+    el.querySelectorAll("[data-cam]").forEach(b=>b.onclick=()=>{ camPref=b.dataset.cam; try{ localStorage.setItem("sabor-cam",camPref); }catch(e){}
+      yaw=camPref==="auto"?autoYaw:CAMS[camPref]; el.querySelectorAll("[data-cam]").forEach(x=>x.classList.toggle("on",x===b)); draw(); });
+    let drag=null;
+    svg.addEventListener("pointerdown",e=>{ drag={x:e.clientX,y:yaw}; try{ svg.setPointerCapture(e.pointerId); }catch(_){} svg.classList.add("drag"); });
+    svg.addEventListener("pointermove",e=>{ if(!drag) return; yaw=drag.y-(e.clientX-drag.x)*0.7; el.querySelectorAll("[data-cam]").forEach(x=>x.classList.remove("on")); if(!raf) draw(); });
+    const end=()=>{ drag=null; svg.classList.remove("drag"); };
+    svg.addEventListener("pointerup",end); svg.addEventListener("pointercancel",end);
+    const ring=(r,dbl)=>{ r.classList.remove("go"); void r.getBoundingClientRect(); r.classList.add("go"); if(dbl) setTimeout(()=>{ r.classList.remove("go"); void r.getBoundingClientRect(); r.classList.add("go"); },200); };
     return {
-      show(i,dur){ const f=spec.fr[i]; if(i===0) tw.snap(tg({})); tw.go(tg(f),dur); q(".pz").setAttribute("opacity",f.t?1:0); },
-      info(i){ const f=spec.fr[i]; if(f.lean) return f.lean<-15?"Inclinación hacia atrás: abdomen activo, cuello alineado":"Regresando al eje";
-        if(f.t) return "Toque: la onda hace una breve pausa";
-        const m=[["el pecho",Math.abs(f.c||0)],["el abdomen",Math.abs(f.a||0)],["la cadera",Math.abs(f.h||0)]].sort((x,y)=>y[1]-x[1])[0];
-        return "Lidera "+m[0]+(i>=4?" (onda hacia arriba)":" (onda hacia abajo)"); },
-      destroy(){ tw.stop(); }
+      mode: wave?"wave":"floor", partner: partnerOn,
+      show(i,d){ const f=spec.fr[i]; if(i===0) snap(startT); go(tg[i],d);
+        const lbl=f.p?"⏸ PAUSA":f.t?"👟 TOQUE":""; pz.textContent=lbl; pz.setAttribute("opacity",lbl?1:0);
+        if(!wave && f.t) ring(f.t==="L"?ringL:ringR,f.sy); },
+      info(i){ const f=spec.fr[i];
+        if(wave){ if(f.lean) return f.lean<-15?"Inclinación hacia atrás: abdomen activo, cuello alineado":"Regresando al eje";
+          if(f.t) return "Toque: la onda hace una breve pausa";
+          const m=[["el pecho",Math.abs(f.c||0)],["el abdomen",Math.abs(f.a||0)],["la cadera",Math.abs(f.h||0)]].sort((x,y)=>y[1]-x[1])[0];
+          return "Lidera "+m[0]+(i>=4?" (onda hacia arriba)":" (onda hacia abajo)"); }
+        const pie=x=>x==="L"?"izquierdo":"derecho"; let s;
+        if(f.p) s="Pausa: no se cambia el peso"; else if(f.t) s=`Toque con el pie ${pie(f.t)}, sin peso`+(f.sy?" (síncopa «y»)":""); else s=`Peso en el pie ${pie(f.w)}`;
+        if(f.up) s+=" · mano izquierda arriba (halo)"; if(f.upR) s+=" · mano derecha arriba";
+        const prevA=i>0?(spec.fr[i-1].a||0):0; if((f.a||0)!==prevA) s+=((f.a||0)>prevA?" · girando a la derecha":" · girando a la izquierda");
+        return s; },
+      destroy(){ if(raf) cancelAnimationFrame(raf); raf=0; }
     };
   }
 
   function mount(el,id,role,dance){
     const set=A[id]||{}; const spec=set[role]||set.general;
-    if(!spec){ el.innerHTML=""; return {show(){},info(){return "";},destroy(){}}; }
-    const col=dance==="salsa"?"#ff6b4a":"#e04f8f", pcol=dance==="salsa"?"#ffb347":"#a77bff";
-    const c = spec.mode==="wave" ? mountWave(el,spec,col) : mountFloor(el,spec,col,pcol);
-    c.mode = spec.mode||"floor"; c.partner=!!spec.partner; return c;
+    if(!spec){ el.innerHTML=""; return {mode:"none",partner:false,show(){},info(){return "";},destroy(){}}; }
+    return mountPerson(el,spec,dance);
   }
-  return {mount};
+  /* Verificación biomecánica (usada en pruebas): métricas por tiempo */
+  function inspect(id,role){
+    const set=A[id]||{}; const spec=set[role]||set.general; if(!spec) return null;
+    const out=[]; let prev=null;
+    spec.fr.forEach((f,i)=>{
+      const s=targetOf(spec,f), J=skel(s,!!spec.partner);
+      const m={i, thighL:d3(J.hipL,J.kL), shinL:d3(J.kL,J.fl.ank), thighR:d3(J.hipR,J.kR), shinR:d3(J.kR,J.fr.ank), H:J.H,
+        feetGap:Math.hypot(J.Lf[0]-J.Rf[0],J.Lf[1]-J.Rf[1]),
+        kneeFwdL:((J.kL[0]-(J.hipL[0]+J.fl.ank[0])/2)*J.f[0]+(J.kL[1]-(J.hipL[1]+J.fl.ank[1])/2)*J.f[1]),
+        kneeFwdR:((J.kR[0]-(J.hipR[0]+J.fr.ank[0])/2)*J.f[0]+(J.kR[1]-(J.hipR[1]+J.fr.ank[1])/2)*J.f[1]),
+        headH:J.head[2], dA: prev? Math.abs((f.a||0)-(prev.a||0)) : Math.abs(f.a||0)};
+      if(spec.mode!=="wave"){ const w=f.w==="L"?J.Lf:J.Rf, o=f.w==="L"?J.Rf:J.Lf; m.pelToW=Math.hypot(J.pel[0]-w[0],J.pel[1]-w[1]); m.pelToO=Math.hypot(J.pel[0]-o[0],J.pel[1]-o[1]); }
+      if(spec.partner){ const JP=skel(partnerState(s),true); m.partnerDist=Math.hypot(J.pel[0]-JP.pel[0],J.pel[1]-JP.pel[1]); }
+      out.push(m); prev=f;
+    });
+    return {cross:!!spec.cross, wave:spec.mode==="wave", partner:!!spec.partner, frames:out};
+  }
+  return {mount, inspect, roles:id=>Object.keys(A[id]||{})};
 })();
+
 
 /* Biblioteca de figuras para memorización (cada figura = 8 tiempos) */
 const FIGS = {
@@ -823,7 +936,7 @@ const FIGS = {
     {id:"bf1",n:"Básico lateral",e:"↔️",d:"Lado-junta-lado-toque, a la izquierda y a la derecha.",cue:"Toque suave en 4 y 8."},
     {id:"bf2",n:"Básico frontal",e:"↕️",d:"Adelante 1-2-3 con toque; atrás 5-6-7 con toque.",cue:"Pasos cortos, torso estable."},
     {id:"bf3",n:"Box step",e:"⬜",d:"Los pies dibujan un cuadrado en dos medias frases.",cue:"Lateral + frontal."},
-    {id:"bf4",n:"Giro simple",e:"↻",d:"Ella gira a su derecha en 5-6-7 y toca en el 8.",cue:"Halo en el 5."},
+    {id:"bf4",n:"Giro simple",e:"↻",d:"Ella gira en 5-6-7 hacia donde viaja el básico y toca en el 8.",cue:"Halo en el 5."},
     {id:"bf5",n:"Giro del líder",e:"🌀",d:"El líder gira en 5-6-7 pasando la mano sobre su cabeza.",cue:"Toque en el 8, de frente."},
     {id:"bf6",n:"Cambio de lado",e:"⇄",d:"Los dos se cruzan e intercambian posiciones.",cue:"Gira el torso para no chocar."},
     {id:"bf7",n:"Hammerlock",e:"🔒",d:"Su brazo queda detrás de su espalda; salida con giro.",cue:"Brazo doblado y relajado."},
@@ -1173,7 +1286,7 @@ function renderLesson(id){
           <button class="btn ${isB?"pink":"primary"}" id="playBtn">▶ Reproducir</button>
           <label class="row small muted">Tempo <input type="range" id="bpm" min="70" max="${isB?160:220}" value="${L.bpm}"> <b id="bpmV" style="color:var(--text)">${L.bpm}</b> BPM</label>
         </div>
-        <p class="small dim" style="margin:10px 0 0">La figura se mueve sincronizada con el ritmo. Toca un número del contador para ver esa posición o usa ◀ ▶ para avanzar tiempo a tiempo. Practica lento y sube el tempo cuando el paso salga sin pensar; el tiempo que suena se suma a tus minutos de práctica.</p>
+        <p class="small dim" style="margin:10px 0 0">La persona de referencia baila sincronizada con el ritmo; arrástrala para verla desde cualquier ángulo o elige Espalda (ideal para imitar), Frente o Lado. Toca un número del contador para ver esa posición o usa ◀ ▶ para avanzar tiempo a tiempo. Practica lento y sube el tempo cuando el paso salga sin pensar; el tiempo que suena se suma a tus minutos de práctica.</p>
         <p class="small dim" style="margin:6px 0 0">I = izquierdo · D = derecho</p>
       </div>
       <div class="figbox">
@@ -1226,9 +1339,7 @@ function renderLesson(id){
     if(lessonAnim) lessonAnim.destroy();
     lessonAnim = Anim.mount($("#fig"), id, role, L.dance);
     fi=-1; $("#fCount").textContent="–"; $("#fLbl").textContent=""; $("#fInfo").textContent="Pulsa ▶ o un número del contador";
-    $("#fLegend").innerHTML = lessonAnim.mode==="wave"
-      ? `<span>Punto brillante = parte del cuerpo que lidera</span><span>Silueta de perfil</span>`
-      : `<span><i style="background:${isB?"#e04f8f":"#ff6b4a"}"></i>Pie con peso</span><span><i style="border:1.5px dashed ${isB?"#e04f8f":"#ff6b4a"}"></i>Pie libre</span><span>◎ Toque</span>${lessonAnim.partner?`<span><i style="background:${isB?"#a77bff":"#ffb347"};opacity:.6"></i>Pareja</span>`:""}<span>▲ = hacia dónde mira</span>`;
+    $("#fLegend").innerHTML = `<span>👆 Arrastra la figura para girar la cámara</span><span><i style="background:#f6ece8"></i>Zapato izquierdo</span><span><i style="background:#14090f;border:1px solid #86728a"></i>Zapato derecho</span><span><i style="background:${isB?"#e04f8f":"#ff6b4a"};opacity:.55;border-radius:50%"></i>Brillo en el piso = pie con peso</span>${lessonAnim.partner?`<span><i style="background:${isB?"#a77bff":"#ffb347"}"></i>Pareja</span>`:""}<span>▢ Recuadro: pies vistos desde arriba</span>`;
   }
   function showFrame(i,dur){
     fi=i;
