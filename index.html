@@ -37,13 +37,13 @@ header.top{position:sticky;top:0;z-index:20;background:rgba(20,13,23,.85);backdr
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:800;font-size:1.3rem;letter-spacing:.3px}
 .brand .dot{width:30px;height:30px;border-radius:50%;background:conic-gradient(var(--salsa),var(--salsa2),var(--bachata),var(--bachata2),var(--salsa));box-shadow:0 0 18px rgba(255,107,74,.5)}
 nav.tabs{margin-left:auto;display:flex;gap:4px}
-nav.tabs a{text-decoration:none;padding:8px 14px;border-radius:999px;color:var(--muted);font-weight:500;font-size:.95rem;transition:.2s}
+nav.tabs a{text-decoration:none;padding:8px 12px;border-radius:999px;color:var(--muted);font-weight:500;font-size:.95rem;transition:.2s}
 nav.tabs a:hover{color:var(--text);background:var(--card)}
 nav.tabs a.active{color:#1a0f14;background:linear-gradient(135deg,var(--salsa2),var(--salsa));font-weight:600}
 @media (max-width:720px){
   header.top{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg)}
   nav.tabs{position:fixed;bottom:0;left:0;right:0;justify-content:space-around;background:rgba(20,13,23,.96);border-top:1px solid var(--line);padding:8px 6px calc(8px + env(safe-area-inset-bottom));margin:0}
-  nav.tabs a{font-size:.8rem;padding:8px 10px;display:flex;flex-direction:column;align-items:center;gap:2px}
+  nav.tabs a{font-size:.66rem;padding:6px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;text-align:center}
   body{padding-bottom:80px}
 }
 nav.tabs a .ic{font-size:1.1rem;line-height:1}
@@ -191,6 +191,77 @@ details.tcard .body{padding-bottom:16px}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 footer{text-align:center;color:var(--dim);font-size:.8rem;padding:20px 0 30px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.lesson-top{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;align-items:start}
+@media (max-width:900px){.lesson-top{grid-template-columns:1fr}.lesson-top .figbox{order:-1}.figbox svg{max-height:300px}}
+.figbox{background:radial-gradient(circle at 50% 45%,rgba(255,179,71,.08),transparent 70%),var(--bg2);border:1px solid var(--line);border-radius:14px;padding:10px}
+.bach .figbox{background:radial-gradient(circle at 50% 45%,rgba(224,79,143,.1),transparent 70%),var(--bg2)}
+.figbox svg{width:100%;height:auto;display:block;max-height:360px}
+.figcap{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:.88rem}
+.figcap b{font-family:var(--display);font-size:1.15rem}
+.legend{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;font-size:.74rem;color:var(--dim);margin-top:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.cnt{cursor:pointer}
+.tapring{transform-box:fill-box;transform-origin:center}
+.tapring.go{animation:ring .5s ease-out}
+@keyframes ring{0%{opacity:1;transform:scale(.5)}100%{opacity:0;transform:scale(1.7)}}
+.ex-card{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:18px;border-radius:14px;background:var(--card);border:1px solid var(--line);text-decoration:none;transition:.2s;min-height:180px}
+.ex-card:hover{transform:translateY(-2px);border-color:var(--muted)}
+.ex-card .e{font-size:2rem;line-height:1}
+.ex-card .tt{font-weight:700;font-size:1.05rem}
+.ex-card .ds{font-size:.86rem;color:var(--muted);flex:1}
+.tapbtn{width:100%;min-height:140px;border-radius:24px;border:none;font-family:var(--display);font-size:2.2rem;font-weight:800;color:#1a0f14;background:linear-gradient(135deg,var(--salsa2),var(--salsa));box-shadow:0 10px 30px rgba(255,107,74,.25);transition:transform .06s;touch-action:manipulation;user-select:none;-webkit-user-select:none;margin-top:6px}
+.bach .tapbtn{background:linear-gradient(135deg,var(--bachata2),var(--bachata));color:#fff}
+.tapbtn.hit{transform:scale(.97);filter:brightness(1.15)}
+.tapbtn:disabled{opacity:.35;cursor:not-allowed}
+.fbline{min-height:1.6em;text-align:center;font-weight:600;margin:12px 0}
+.res-list{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.res-list span{padding:4px 10px;border-radius:99px;font-size:.8rem;font-weight:600;background:var(--card2);border:1px solid var(--line)}
+.res-list .g{color:var(--ok);border-color:rgba(95,211,154,.4)}
+.res-list .b{color:var(--bad);border-color:rgba(255,107,122,.4)}
+.res-list .m{color:var(--warn);border-color:rgba(255,207,92,.4)}
+.figbtns{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+.figbtn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 8px;border-radius:14px;border:1px solid var(--line);background:var(--card2);color:var(--text);font-weight:600;font-size:.84rem;transition:.12s;text-align:center}
+.figbtn .e{font-size:1.6rem;line-height:1.1}
+.figbtn:hover:not(:disabled){border-color:var(--muted)}
+.figbtn:disabled{cursor:default}
+.figbtn.lit{background:linear-gradient(135deg,var(--salsa2),var(--salsa));color:#1a0f14;border-color:transparent;transform:scale(1.06)}
+.bach .figbtn.lit{background:linear-gradient(135deg,var(--bachata2),var(--bachata));color:#fff}
+.figbtn.bad{border-color:var(--bad);animation:shake .3s}
+.figbtn.good{border-color:var(--ok);opacity:.45}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.rt-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;background:var(--card2);border:1px solid var(--line);margin:6px 0}
+.rt-item .k{font-family:var(--display);color:var(--dim);width:22px}
+.rt-item .nm{flex:1;font-weight:600}
+.iconbtn{border:1px solid var(--line);background:transparent;color:var(--muted);width:34px;height:34px;border-radius:9px;flex-shrink:0}
+.iconbtn:hover{color:var(--text);border-color:var(--muted)}
+.prompter{text-align:center;padding:22px 12px;min-height:240px}
+.prompter .now{font-family:var(--display);font-size:clamp(1.7rem,6vw,2.8rem);font-weight:800;margin:8px 0 12px}
+.prompter .now .e{display:block;font-size:3rem;line-height:1.2}
+.prompter .nx{color:var(--muted)}
+.flash{perspective:1000px;max-width:420px;margin:0 auto}
+.flash-in{position:relative;min-height:240px;transition:transform .5s;transform-style:preserve-3d;cursor:pointer}
+.flash.flip .flash-in{transform:rotateY(180deg)}
+.flash-f,.flash-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;border:1px solid var(--line);background:linear-gradient(180deg,var(--card2),var(--bg2));display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+.flash-b{transform:rotateY(180deg)}
+.flash-f .e{font-size:3.4rem}
+.boxes{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px}
+.boxes div{text-align:center;padding:8px 4px;border-radius:10px;background:var(--card2);border:1px solid var(--line);font-size:.72rem;color:var(--muted)}
+.boxes b{display:block;font-size:1.25rem;color:var(--text);font-family:var(--display)}
+.slots{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.slots span{min-width:40px;padding:6px 10px;border-radius:10px;border:1px dashed var(--line);font-size:.85rem;color:var(--dim);text-align:center}
+.slots span.f{border-style:solid;border-color:rgba(95,211,154,.5);color:var(--text)}
+.timerbar{height:6px;border-radius:99px;background:var(--card2);overflow:hidden;margin:8px 0 12px}
+.timerbar i{display:block;height:100%;background:var(--warn);transition:width .9s linear}
+.mini-scores{display:grid;grid-template-columns:1fr auto auto;gap:8px 14px;font-size:.86rem;align-items:center}
+.mini-scores .h{color:var(--dim);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
+.ans-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+@media (max-width:560px){.ans-grid{grid-template-columns:repeat(4,1fr)}}
+.ans-grid button{padding:14px 0;border-radius:12px;border:1px solid var(--line);background:var(--card2);color:var(--text);font-family:var(--display);font-size:1.3rem;font-weight:800}
+.ans-grid button.right{background:rgba(95,211,154,.18);border-color:var(--ok)}
+.ans-grid button.wrong{background:rgba(255,107,122,.18);border-color:var(--bad)}
+.btn.ok{background:var(--ok);color:#0d2117;border:none}
+.hidden-count .counter{filter:blur(7px);opacity:.3}
+kbd{background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:.78rem;font-family:inherit}
 </style>
 </head>
 <body>
@@ -201,6 +272,8 @@ footer{text-align:center;color:var(--dim);font-size:.8rem;padding:20px 0 30px}
     <nav class="tabs" id="tabs">
       <a href="#dashboard" data-r="dashboard"><span class="ic">📊</span>Progreso</a>
       <a href="#lecciones" data-r="lecciones"><span class="ic">🎓</span>Lecciones</a>
+      <a href="#memoria" data-r="memoria"><span class="ic">🧠</span>Memoria</a>
+      <a href="#musicalidad" data-r="musicalidad"><span class="ic">🎧</span>Musicalidad</a>
       <a href="#teoria" data-r="teoria"><span class="ic">📖</span>Teoría</a>
       <a href="#practica" data-r="practica"><span class="ic">🥁</span>Práctica</a>
     </nav>
@@ -211,6 +284,8 @@ footer{text-align:center;color:var(--dim);font-size:.8rem;padding:20px 0 30px}
   <section class="view" id="v-dashboard"></section>
   <section class="view" id="v-lecciones"></section>
   <section class="view" id="v-leccion"></section>
+  <section class="view" id="v-memoria"></section>
+  <section class="view" id="v-musicalidad"></section>
   <section class="view" id="v-teoria"></section>
   <section class="view" id="v-practica"></section>
 </main>
@@ -527,13 +602,264 @@ const THEORY = [
 ];
 
 /* =========================================================
+   FIGURA ANIMADA + BIBLIOTECA DE FIGURAS
+   ========================================================= */
+const Anim = (()=>{
+  const sx=11, CX=150, CY=165;
+  const F=(l,r,w,o)=>Object.assign({l,r,w},o||{});
+  const swap=w=>w==="L"?"R":"L";
+  const mir=fr=>fr.map(f=>Object.assign({},f,{l:[-f.r[0],-f.r[1]],r:[-f.l[0],-f.l[1]],w:swap(f.w),t:f.t?swap(f.t):undefined,rl:f.rr?-f.rr:undefined,rr:f.rl?-f.rl:undefined}));
+  const mod=(fr,fn)=>fr.map((f,i)=>Object.assign({},f,fn(i)||{}));
+  const Z=[-sx,0], Zr=[sx,0];
+  const inPlace=ws=>ws.map(x=>F(Z,Zr,x[0],x[1]||{}));
+
+  /* ---------- SALSA ---------- */
+  const salsaBasic=[F([-sx,-36],Zr,"L"),F([-sx,-36],Zr,"R"),F(Z,Zr,"L"),F(Z,Zr,"L",{p:1}),F(Z,[sx,36],"R"),F(Z,[sx,36],"L"),F(Z,Zr,"R"),F(Z,Zr,"R",{p:1})];
+  const salsaSide=[F([-44,0],Zr,"L"),F([-44,0],Zr,"R"),F(Z,Zr,"L"),F(Z,Zr,"L",{p:1}),F(Z,[44,0],"R"),F(Z,[44,0],"L"),F(Z,Zr,"R"),F(Z,Zr,"R",{p:1})];
+  const on2=[F(Z,Zr,"L",{p:1}),F(Z,[sx,36],"R"),F(Z,[sx,36],"L"),F(Z,Zr,"R"),F(Z,Zr,"R",{p:1}),F([-sx,-36],Zr,"L"),F([-sx,-36],Zr,"R"),F(Z,Zr,"L")];
+  const crossOver=[F([12,-16],Zr,"L",{rl:15}),F([12,-16],Zr,"R",{rl:15}),F(Z,Zr,"L"),F(Z,Zr,"L",{p:1}),F(Z,[-12,-16],"R",{rr:-15}),F(Z,[-12,-16],"L",{rr:-15}),F(Z,Zr,"R"),F(Z,Zr,"R",{p:1})];
+  function turn(prep,dir,n,o){
+    o=o||{}; const fr=prep.slice(0,4).map(f=>Object.assign({},f)); const A=dir*360*n;
+    fr.push(F([-sx,-4],[sx,4],"L",{a:A/2}));
+    fr.push(F(Z,Zr,"R",{a:A}));
+    fr.push(F(Z,Zr,"L",{a:A}));
+    fr.push(F(Z,Zr,"L",{a:A,p:1}));
+    return fr;
+  }
+  const leadTurn=(fr,an)=>mod(fr,i=>i===4?{up:1,pa:an[0]}:i===5?{up:1,pa:an[1]}:i>=6?{pa:an[2]}:{});
+  const cblL=[
+    F([-sx,-30],Zr,"L",{pp:[0,-74,180]}),
+    F(Z,Zr,"R",{a:-90,d:[-8,-6],pp:[0,-45,180]}),
+    F(Z,[sx,8],"L",{a:-90,d:[-32,0],pp:[0,-12,180]}),
+    F(Z,[sx,8],"L",{a:-90,d:[-32,0],p:1,pp:[0,14,180]}),
+    F(Z,Zr,"R",{a:-150,d:[-18,0],pp:[0,46,270]}),
+    F(Z,Zr,"L",{a:-180,d:[-4,0],pp:[0,74,360]}),
+    F(Z,Zr,"R",{a:-180,pp:[0,80,360]}),
+    F(Z,Zr,"R",{a:-180,p:1,pp:[0,80,360]})];
+  const cblF=[
+    F(Z,[sx,30],"R",{pp:[0,-80,180]}),
+    F([-sx,-16],Zr,"L",{d:[0,-30],pp:[22,-84,90]}),
+    F(Z,[sx,-16],"R",{d:[0,-62],pp:[34,-80,90]}),
+    F(Z,Zr,"R",{d:[0,-80],p:1,pp:[34,-80,90]}),
+    F(Z,Zr,"L",{a:90,d:[0,-112],pp:[24,-84,40]}),
+    F(Z,Zr,"R",{a:180,d:[0,-140],pp:[6,-80,0]}),
+    F(Z,Zr,"L",{a:180,d:[0,-150],pp:[0,-80,0]}),
+    F(Z,Zr,"L",{a:180,d:[0,-150],p:1,pp:[0,-80,0]})];
+
+  /* ---------- BACHATA ---------- */
+  const bachSide=[F([-42,0],[12,0],"L"),F([-42,0],[-18,0],"R"),F([-72,0],[-18,0],"L"),F([-72,0],[-48,-5],"L",{t:"R"}),F([-72,0],[-18,0],"R"),F([-42,0],[-18,0],"L"),F([-42,0],[12,0],"R"),F([-12,-5],[12,0],"R",{t:"L"})];
+  const bachFront=[F([-sx,-34],Zr,"L"),F([-sx,-34],Zr,"R"),F(Z,Zr,"L"),F(Z,[sx,-6],"L",{t:"R"}),F(Z,[sx,34],"R"),F(Z,[sx,34],"L"),F(Z,Zr,"R"),F([-sx,-6],Zr,"R",{t:"L"})];
+  const bachTurnF=()=>mir(bachSide).slice(0,4).concat([
+    F(Z,Zr,"R",{a:120,d:[50,0]}),F(Z,Zr,"L",{a:240,d:[28,0]}),F(Z,Zr,"R",{a:360,d:[6,0]}),F(Z,[sx,-5],"R",{a:360,d:[6,0],t:"L"})]);
+  const cambio=[
+    F(Z,Zr,"L",{a:60,d:[12,-25],pp:[-12,-55,240]}),
+    F(Z,Zr,"R",{a:120,d:[12,-55],pp:[-12,-25,300]}),
+    F(Z,Zr,"L",{a:180,d:[0,-80],pp:[0,0,360]}),
+    F(Z,Zr,"L",{a:180,d:[0,-80],pp:[0,0,360],t:"R"}),
+    F(Z,Zr,"R",{a:300,d:[0,-80],pp:[0,0,360],up:1}),
+    F(Z,Zr,"L",{a:420,d:[0,-80],pp:[0,0,360],up:1}),
+    F(Z,Zr,"R",{a:540,d:[0,-80],pp:[0,0,360]}),
+    F(Z,Zr,"R",{a:540,d:[0,-80],pp:[0,0,360],t:"L"})];
+  const hammer=[F([-sx,-10],Zr,"L"),F(Z,Zr,"R",{a:90,d:[4,-6]}),F(Z,Zr,"L",{a:180,d:[6,-10]}),F(Z,Zr,"L",{a:180,d:[6,-10],t:"R"}),F(Z,Zr,"R",{a:270,d:[4,-6]}),F(Z,Zr,"L",{a:360}),F(Z,Zr,"R",{a:360}),F(Z,Zr,"R",{a:360,t:"L"})];
+  const bachBreak=bachSide.slice(0,4).concat([F([-72,0],[-48,-5],"L",{p:1}),F([-72,0],[-48,-5],"L",{p:1}),F([-72,0],[-42,0],"R"),F([-66,-5],[-42,0],"R",{t:"L"})]);
+  const waveDown=[{c:12,a:2,h:-2},{c:4,a:12,h:0},{c:-2,a:4,h:12},{c:0,a:0,h:4,t:1},{c:-2,a:4,h:12},{c:2,a:12,h:2},{c:12,a:2,h:-2},{c:0,a:0,h:0,t:1}];
+  const waveLean=waveDown.slice(0,4).concat([{c:0,a:0,h:6,lean:-22},{c:-4,a:0,h:8,lean:-30},{c:4,a:2,h:2,lean:-8},{c:0,a:0,h:0,t:1}]);
+
+  const SW=[["L"],["R"],["L"],["L",{p:1}],["R"],["L"],["R"],["R",{p:1}]];
+  const BW=[["L"],["R"],["L"],["L",{t:"R"}],["R"],["L"],["R"],["R",{t:"L"}]];
+  const BL=[CX+30,CY], BF=[CX-30,CY];
+  const A = {
+    s01:{general:{fr:inPlace(SW)}},
+    s02:{lider:{fr:salsaBasic},seguidora:{fr:mir(salsaBasic)}},
+    s03:{lider:{fr:salsaSide},seguidora:{fr:mir(salsaSide)}},
+    s04:{lider:{fr:salsaBasic,partner:1},seguidora:{fr:mir(salsaBasic),partner:1}},
+    s05:{lider:{fr:leadTurn(salsaBasic,[180,360,360]),partner:1},seguidora:{fr:turn(mir(salsaBasic),1,1),partner:1}},
+    s06:{lider:{fr:cblL,partner:1,base:[CX,CY+15]},seguidora:{fr:cblF,partner:1,base:[CX,CY+65]}},
+    s07:{general:{fr:turn(mir(salsaBasic),-1,1)}},
+    s08:{general:{fr:crossOver}},
+    s09:{general:{fr:turn(salsaBasic,1,1)}},
+    s10:{general:{fr:on2}},
+    s11:{general:{fr:turn(mir(salsaBasic),1,2)}},
+    s12:{general:{fr:salsaBasic}},
+    b01:{general:{fr:inPlace(BW)}},
+    b02:{lider:{fr:bachSide,base:BL},seguidora:{fr:mir(bachSide),base:BF}},
+    b03:{lider:{fr:bachFront},seguidora:{fr:mir(bachFront)}},
+    b04:{lider:{fr:bachSide,base:BL,partner:1},seguidora:{fr:mir(bachSide),base:BF,partner:1}},
+    b05:{lider:{fr:leadTurn(bachSide,[120,240,360]),base:BL,partner:1},seguidora:{fr:bachTurnF(),base:BF,partner:1}},
+    b06:{general:{fr:cambio,partner:1,base:[CX,CY+45]}},
+    b07:{general:{fr:mod(bachSide,i=>(i===3||i===7)?{sy:1}:{}),base:BL}},
+    b08:{general:{mode:"wave",fr:waveDown}},
+    b09:{general:{fr:hammer,partner:1,base:[CX,CY+20]}},
+    b10:{general:{fr:bachSide,base:BL}},
+    b11:{general:{mode:"wave",fr:waveLean}},
+    b12:{general:{fr:bachBreak,base:BL}}
+  };
+
+  function tweener(draw){
+    let cur=null,from=null,to=null,t0=0,dur=1,raf=0;
+    function tick(now){ const k=Math.min(1,(now-t0)/dur), e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2; const o={}; for(const key in to) o[key]=from[key]+(to[key]-from[key])*e; cur=o; draw(cur); raf=k<1?requestAnimationFrame(tick):0; }
+    return {
+      snap(s){ if(raf){cancelAnimationFrame(raf);raf=0;} cur=Object.assign({},s); draw(cur); },
+      go(s,d){ from=cur?Object.assign({},cur):Object.assign({},s); to=s; t0=performance.now(); dur=Math.max(60,d||300); if(!raf) raf=requestAnimationFrame(tick); },
+      stop(){ if(raf) cancelAnimationFrame(raf); raf=0; }
+    };
+  }
+  const FOOT="M0,-13 C5.5,-13 6.5,-5 5.5,1 C4.8,8 3.8,12 0,12 C-3.8,12 -4.8,8 -5.5,1 C-6.5,-5 -5.5,-13 0,-13Z";
+  const ring=(el,dbl)=>{ el.classList.remove("go"); void el.getBoundingClientRect(); el.classList.add("go"); if(dbl) setTimeout(()=>{ el.classList.remove("go"); void el.getBoundingClientRect(); el.classList.add("go"); },200); };
+
+  function mountFloor(el,spec,col,pcol){
+    const base=spec.base||[CX,CY];
+    el.innerHTML=`<svg viewBox="30 36 240 242" role="img" aria-label="Animación de los pies vista desde arriba">
+      <defs><radialGradient id="flg"><stop offset="0" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+      <circle cx="150" cy="157" r="116" fill="url(#flg)" stroke="#3d2d45" stroke-dasharray="3 6"/>
+      <line x1="150" y1="40" x2="150" y2="274" stroke="#3d2d45" stroke-dasharray="2 8"/><line x1="34" y1="157" x2="266" y2="157" stroke="#3d2d45" stroke-dasharray="2 8"/>
+      <text x="34" y="274" fill="#86728a" font-size="9">Vista desde arriba</text>
+      <g class="ag-p" style="${spec.partner?"":"display:none"}"><ellipse rx="25" ry="10" fill="${pcol}" fill-opacity=".16" stroke="${pcol}" stroke-opacity=".55" stroke-width="1.5"/><circle r="8.5" fill="${pcol}" fill-opacity=".45"/><path d="M-4,-8.5 L0,-14.5 L4,-8.5Z" fill="${pcol}" fill-opacity=".75"/></g>
+      <g class="ag-b"><circle class="halo" r="23" fill="none" stroke="${col}" stroke-width="1.5" stroke-dasharray="4 4" opacity="0"/><ellipse rx="30" ry="12" fill="${col}" fill-opacity=".14" stroke="${col}" stroke-opacity=".7" stroke-width="1.5"/><circle r="8.5" fill="${col}" fill-opacity=".55"/><path d="M-4,-8.5 L0,-15 L4,-8.5Z" fill="${col}"/></g>
+      <g class="ag-l"><circle class="tapring" r="18" fill="none" stroke="${col}" stroke-width="2" opacity="0"/><path class="fp" d="${FOOT}" transform="scale(1.25)" stroke="${col}" stroke-width="1.7"/><text class="ft" y="3.5" text-anchor="middle" font-size="8.5" font-weight="700">I</text></g>
+      <g class="ag-r"><circle class="tapring" r="18" fill="none" stroke="${col}" stroke-width="2" opacity="0"/><path class="fp" d="${FOOT}" transform="scale(1.25)" stroke="${col}" stroke-width="1.7"/><text class="ft" y="3.5" text-anchor="middle" font-size="8.5" font-weight="700">D</text></g>
+      <text class="pz" x="266" y="52" text-anchor="end" font-size="11" font-weight="700" fill="#ffcf5c" opacity="0">⏸ PAUSA</text>
+    </svg>`;
+    const q=s=>el.querySelector(s);
+    const gL=q(".ag-l"), gR=q(".ag-r"), gB=q(".ag-b"), gP=q(".ag-p");
+    const set=(g,x,y,r)=>g.setAttribute("transform",`translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${r.toFixed(1)})`);
+    function target(f){
+      const a=f.a||0, c=[base[0]+(f.d?f.d[0]:0), base[1]+(f.d?f.d[1]:0)];
+      const rd=a*Math.PI/180, cs=Math.cos(rd), sn=Math.sin(rd);
+      const tr=([x,y])=>[c[0]+x*cs-y*sn, c[1]+x*sn+y*cs];
+      const L=tr(f.l), R=tr(f.r), mid=[(L[0]+R[0])/2,(L[1]+R[1])/2], W=f.w==="L"?L:R;
+      const b=[mid[0]+(W[0]-mid[0])*.35, mid[1]+(W[1]-mid[1])*.35];
+      const p=f.pp?[base[0]+f.pp[0], base[1]+f.pp[1], f.pp[2]]:[b[0], b[1]-80, 180+(f.pa||0)];
+      return {lx:L[0],ly:L[1],lr:a+(f.rl||0),rx:R[0],ry:R[1],rr:a+(f.rr||0),bx:b[0],by:b[1],ba:a,px:p[0],py:p[1],pa:p[2]};
+    }
+    const tw=tweener(s=>{ set(gL,s.lx,s.ly,s.lr); set(gR,s.rx,s.ry,s.rr); set(gB,s.bx,s.by,s.ba); set(gP,s.px,s.py,s.pa); });
+    const startF=F(Z,Zr,"L");
+    function flags(f){
+      [[gL,f.w==="L"],[gR,f.w==="R"]].forEach(([g,on])=>{
+        const fp=g.querySelector(".fp"), ft=g.querySelector(".ft");
+        fp.setAttribute("fill",on?col:"rgba(20,13,23,.7)"); fp.setAttribute("stroke-dasharray",on?"":"3 2"); ft.setAttribute("fill",on?"#1a0f14":col);
+      });
+      q(".halo").setAttribute("opacity",f.up?1:0);
+      q(".pz").setAttribute("opacity",f.p?1:0);
+      if(f.t) ring((f.t==="L"?gL:gR).querySelector(".tapring"), f.sy);
+    }
+    tw.snap(target(startF)); flags(Object.assign({},startF,{w:"B"}));
+    return {
+      show(i,dur){ const f=spec.fr[i]; if(i===0) tw.snap(target(startF)); tw.go(target(f),dur); flags(f); },
+      info(i){ const f=spec.fr[i]; const pie=x=>x==="L"?"izquierdo":"derecho"; let s;
+        if(f.p) s="Pausa: no se cambia el peso"; else if(f.t) s=`Toque con el pie ${pie(f.t)}, sin peso`+(f.sy?" (síncopa «y»)":""); else s=`Peso en el pie ${pie(f.w)}`;
+        if(f.up) s+=" · mano arriba (halo)"; if(f.a && i>0 && f.a!==(spec.fr[i-1].a||0)) s+=" · girando"; return s; },
+      destroy(){ tw.stop(); }
+    };
+  }
+
+  function mountWave(el,spec,col){
+    el.innerHTML=`<svg viewBox="40 30 220 240" role="img" aria-label="Animación de la onda corporal vista de perfil">
+      <line x1="40" y1="256" x2="260" y2="256" stroke="#3d2d45" stroke-width="2"/>
+      <text x="44" y="268" fill="#86728a" font-size="9">Vista de perfil (mira a la derecha →)</text>
+      <circle class="glow" r="14" fill="${col}" opacity="0"/>
+      <path class="lb" fill="none" stroke="${col}" stroke-opacity=".55" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="lf" fill="none" stroke="${col}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="sp" fill="none" stroke="${col}" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="ar" fill="none" stroke="${col}" stroke-opacity=".85" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle class="hd" r="13" fill="${col}"/>
+      <text class="pz" x="256" y="48" text-anchor="end" font-size="11" font-weight="700" fill="#ffcf5c" opacity="0">TOQUE</text>
+    </svg>`;
+    const q=s=>el.querySelector(s);
+    const P=(x,y,ang,o)=>{const r=ang*Math.PI/180,c=Math.cos(r),s=Math.sin(r);return [o[0]+x*c-y*s, o[1]+x*s+y*c];};
+    const pt=p=>p[0].toFixed(1)+" "+p[1].toFixed(1);
+    let curS={c:0,a:0,h:0,lean:0};
+    const tw=tweener(s=>{
+      curS=s; const hip=[150+s.h,172];
+      const abd=P(s.a,-36,s.lean,hip), chest=P(s.c,-70,s.lean,hip), neck=P(s.c*.6,-92,s.lean,hip), head=P(s.c*.6+3,-108,s.lean,hip);
+      const sh=P(s.c+2,-66,s.lean,hip), el2=P(s.c+16,-42,s.lean,hip), hand=P(s.c+38,-50,s.lean,hip);
+      q(".sp").setAttribute("d",`M${pt(hip)} Q${pt(abd)} ${pt(chest)} L${pt(neck)}`);
+      q(".lf").setAttribute("d",`M${pt(hip)} L${pt([156+s.h*.5,214])} L${pt([164,254])} l10 0`);
+      q(".lb").setAttribute("d",`M${pt(hip)} L${pt([142+s.h*.5,214])} L${pt([138,254])} l10 0`);
+      q(".ar").setAttribute("d",`M${pt(sh)} L${pt(el2)} L${pt(hand)}`);
+      q(".hd").setAttribute("cx",head[0]); q(".hd").setAttribute("cy",head[1]);
+      const m=[[Math.abs(s.c),chest],[Math.abs(s.a),abd],[Math.abs(s.h),hip]].sort((x,y)=>y[0]-x[0])[0];
+      const g=q(".glow"); if(m[0]>6){ g.setAttribute("cx",m[1][0]); g.setAttribute("cy",m[1][1]); g.setAttribute("opacity",.28); } else g.setAttribute("opacity",0);
+    });
+    const tg=f=>({c:f.c||0,a:f.a||0,h:f.h||0,lean:f.lean||0});
+    tw.snap(tg({}));
+    return {
+      show(i,dur){ const f=spec.fr[i]; if(i===0) tw.snap(tg({})); tw.go(tg(f),dur); q(".pz").setAttribute("opacity",f.t?1:0); },
+      info(i){ const f=spec.fr[i]; if(f.lean) return f.lean<-15?"Inclinación hacia atrás: abdomen activo, cuello alineado":"Regresando al eje";
+        if(f.t) return "Toque: la onda hace una breve pausa";
+        const m=[["el pecho",Math.abs(f.c||0)],["el abdomen",Math.abs(f.a||0)],["la cadera",Math.abs(f.h||0)]].sort((x,y)=>y[1]-x[1])[0];
+        return "Lidera "+m[0]+(i>=4?" (onda hacia arriba)":" (onda hacia abajo)"); },
+      destroy(){ tw.stop(); }
+    };
+  }
+
+  function mount(el,id,role,dance){
+    const set=A[id]||{}; const spec=set[role]||set.general;
+    if(!spec){ el.innerHTML=""; return {show(){},info(){return "";},destroy(){}}; }
+    const col=dance==="salsa"?"#ff6b4a":"#e04f8f", pcol=dance==="salsa"?"#ffb347":"#a77bff";
+    const c = spec.mode==="wave" ? mountWave(el,spec,col) : mountFloor(el,spec,col,pcol);
+    c.mode = spec.mode||"floor"; c.partner=!!spec.partner; return c;
+  }
+  return {mount};
+})();
+
+/* Biblioteca de figuras para memorización (cada figura = 8 tiempos) */
+const FIGS = {
+  salsa:[
+    {id:"sf1",n:"Básico frontal",e:"↕️",d:"Adelante en 1-2-3, atrás en 5-6-7.",cue:"El líder rompe adelante con el izquierdo en el 1."},
+    {id:"sf2",n:"Básico lateral",e:"↔️",d:"Quiebre al costado en el 1 y en el 5.",cue:"Úsalo para esperar la siguiente frase."},
+    {id:"sf3",n:"Giro a la derecha",e:"↻",d:"Preparación en 1-2-3; ella gira a su derecha en 5-6-7.",cue:"Halo en el 5."},
+    {id:"sf4",n:"Giro a la izquierda",e:"↺",d:"Ella gira a su izquierda en 5-6-7, normalmente dentro de un CBL.",cue:"Contragiro de hombros antes de girar."},
+    {id:"sf5",n:"Cross Body Lead",e:"⇄",d:"El líder abre el camino y ella cruza al otro lado de la línea.",cue:"El líder libera el camino en el 3."},
+    {id:"sf6",n:"CBL con inside turn",e:"🔄",d:"Cross Body Lead en el que ella gira a su izquierda al pasar.",cue:"Prep en el 1, giro en 5-6-7."},
+    {id:"sf7",n:"Copa",e:"🍷",d:"Ella viene hacia el líder y regresa girando.",cue:"Dibuja la forma de una copa."},
+    {id:"sf8",n:"Giro del líder",e:"🌀",d:"El líder gira sobre su eje y retoma la conexión.",cue:"Recupera la mano en el 8."},
+    {id:"sf9",n:"Cross-over",e:"✖️",d:"Shine: cruce por delante en el 1 y en el 5.",cue:"Brazos activos, la cadera acompaña."},
+    {id:"sf10",n:"Suzie Q",e:"〰️",d:"Shine con cruce y paso abierto, desplazándose al costado.",cue:"Los talones giran juntos."},
+    {id:"sf11",n:"Doble giro",e:"⭕",d:"Dos vueltas completas en 5-6-7.",cue:"Spotting rápido, brazos cerca del cuerpo."},
+    {id:"sf12",n:"Dile que no",e:"🙅",d:"Figura base de casino (salsa cubana) para cambiar de posición.",cue:"Abre a la pareja hacia tu derecha."}
+  ],
+  bachata:[
+    {id:"bf1",n:"Básico lateral",e:"↔️",d:"Lado-junta-lado-toque, a la izquierda y a la derecha.",cue:"Toque suave en 4 y 8."},
+    {id:"bf2",n:"Básico frontal",e:"↕️",d:"Adelante 1-2-3 con toque; atrás 5-6-7 con toque.",cue:"Pasos cortos, torso estable."},
+    {id:"bf3",n:"Box step",e:"⬜",d:"Los pies dibujan un cuadrado en dos medias frases.",cue:"Lateral + frontal."},
+    {id:"bf4",n:"Giro simple",e:"↻",d:"Ella gira a su derecha en 5-6-7 y toca en el 8.",cue:"Halo en el 5."},
+    {id:"bf5",n:"Giro del líder",e:"🌀",d:"El líder gira en 5-6-7 pasando la mano sobre su cabeza.",cue:"Toque en el 8, de frente."},
+    {id:"bf6",n:"Cambio de lado",e:"⇄",d:"Los dos se cruzan e intercambian posiciones.",cue:"Gira el torso para no chocar."},
+    {id:"bf7",n:"Hammerlock",e:"🔒",d:"Su brazo queda detrás de su espalda; salida con giro.",cue:"Brazo doblado y relajado."},
+    {id:"bf8",n:"Onda corporal",e:"🌊",d:"Onda de pecho a cadera en 4 tiempos.",cue:"Rodillas flexionadas."},
+    {id:"bf9",n:"Síncopa dominicana",e:"⚡",d:"Paso extra en «3 y 4» con footwork rápido.",cue:"Escucha el bongó."},
+    {id:"bf10",n:"Cambré",e:"🌙",d:"Inclinación controlada del torso de la seguidora.",cue:"Abdomen activo, nunca forzar."},
+    {id:"bf11",n:"Paseo",e:"🚶",d:"Caminata en pareja hacia adelante manteniendo el toque.",cue:"Mismo largo de paso los dos."},
+    {id:"bf12",n:"Toque doble",e:"👟",d:"Doble toque en 4 y 8 como adorno de pies.",cue:"Sin transferir peso."}
+  ]
+};
+const figById = id => FIGS.salsa.concat(FIGS.bachata).find(f=>f.id===id);
+const danceSeg = (id,val)=>`<div class="seg dance" id="${id}"><button data-v="salsa" class="${val==="salsa"?"on":""}">🎺 Salsa</button><button data-v="bachata" class="${val==="bachata"?"on":""}">🎸 Bachata</button></div>`;
+function bindDance(id,val,cb){ document.querySelectorAll("#"+id+" button").forEach(b=>b.onclick=()=>{ if(b.dataset.v!==val) cb(b.dataset.v); }); }
+const backLink = h=>`<a href="${h}" class="small muted" style="text-decoration:none">← Volver</a>`;
+const btnCls = d=> d==="salsa"?"primary":"pink";
+const modeOf = d=> d==="salsa"?"salsa":"bachata";
+function rerender(fn){ runCleanup(); Audio.stop(); Audio.setMute(false); fn(); }
+
+/* =========================================================
    ESTADO (localStorage)
    ========================================================= */
 const KEY = "sabor-progress-v1";
-const blank = ()=>({v:1,name:"",completed:{},quiz:{},checks:{},practice:[],theory:{},activity:[],last:null});
+const blankMemo = ()=>({routines:[],simon:{salsa:0,bachata:0},order:{salsa:0,bachata:0},cards:{},sessions:0,hist:[]});
+const blankMusic = ()=>({best:{},sessions:0,hist:[]});
+const blank = ()=>({v:2,name:"",completed:{},quiz:{},checks:{},practice:[],theory:{},activity:[],last:null,memo:blankMemo(),music:blankMusic()});
+function normalize(d){
+  const s = Object.assign(blank(), d||{});
+  s.memo = Object.assign(blankMemo(), s.memo||{});
+  s.memo.simon = Object.assign({salsa:0,bachata:0}, s.memo.simon||{});
+  s.memo.order = Object.assign({salsa:0,bachata:0}, s.memo.order||{});
+  s.music = Object.assign(blankMusic(), s.music||{});
+  return s;
+}
 let S = load();
 function load(){
-  try{ const raw = localStorage.getItem(KEY); if(raw){ return Object.assign(blank(), JSON.parse(raw)); } }catch(e){}
+  try{ const raw = localStorage.getItem(KEY); if(raw){ return normalize(JSON.parse(raw)); } }catch(e){}
   return blank();
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
@@ -545,6 +871,8 @@ function activeDays(){
   Object.values(S.completed).forEach(d=>set.add(d));
   S.practice.forEach(x=>set.add(x.date));
   S.activity.forEach(a=>set.add(dayKey(new Date(a.d))));
+  S.memo.hist.forEach(a=>set.add(dayKey(new Date(a.d))));
+  S.music.hist.forEach(a=>set.add(dayKey(new Date(a.d))));
   return set;
 }
 function streak(){
@@ -566,16 +894,46 @@ function levelUnlocked(dance, levelIdx){
   const prev = lessonsOf(dance, LEVELS[levelIdx-1].id);
   return doneCount(prev) >= 2;
 }
+function memoLog(kind,score,text){
+  S.memo.sessions++;
+  S.memo.hist.unshift({d:new Date().toISOString(),k:kind,s:score});
+  S.memo.hist = S.memo.hist.slice(0,80);
+  log(text); save();
+}
+function musicLog(game,dance,score,text){
+  S.music.sessions++;
+  const k = game+"-"+dance;
+  if(S.music.best[k]==null || score > S.music.best[k]) S.music.best[k] = score;
+  S.music.hist.unshift({d:new Date().toISOString(),g:game,dn:dance,s:score});
+  S.music.hist = S.music.hist.slice(0,80);
+  log(text); save();
+}
+/* limpieza de temporizadores/juegos al cambiar de vista */
+let cleanups = [];
+let tapHandler = null;
+function onCleanup(fn){ cleanups.push(fn); }
+function runCleanup(){ cleanups.forEach(f=>{ try{ f(); }catch(e){} }); cleanups=[]; tapHandler=null; }
+function T(fn,ms){ const id=setTimeout(fn,ms); onCleanup(()=>clearTimeout(id)); return id; }
+document.addEventListener("keydown",e=>{
+  if(!tapHandler) return;
+  const tag = (document.activeElement && document.activeElement.tagName)||"";
+  if((e.code==="Space"||e.key===" ") && !/INPUT|SELECT|TEXTAREA/.test(tag)){
+    e.preventDefault(); if(e.repeat) return;
+    const b=document.querySelector(".tapbtn"); if(b){ b.classList.add("hit"); setTimeout(()=>b.classList.remove("hit"),90); }
+    tapHandler();
+  }
+});
 
 /* =========================================================
    AUDIO: motor de ritmo (Web Audio)
    ========================================================= */
 const Audio = (()=>{
-  let ctx=null, timer=null, nextTime=0, step=0, bpm=120, mode="salsa", onCount=null, vol=0.8, clave="32";
+  let ctx=null, timer=null, nextTime=0, step=0, bpm=120, mode="salsa", onCount=null, onStep=null, vol=0.8, clave="32";
+  let muted=false, cue=false, ping=-1, beats=[];
   const CLAVE = {"32":[0,3,6,10,12],"23":[2,4,8,11,14],"rumba32":[0,3,7,10,12]};
   function ensure(){ if(!ctx){ const C = window.AudioContext||window.webkitAudioContext; if(!C) return null; ctx = new C(); } if(ctx.state==="suspended") ctx.resume(); return ctx; }
-  function env(node,t,a,d,peak){ node.gain.setValueAtTime(0.0001,t); node.gain.exponentialRampToValueAtTime(peak*vol,t+a); node.gain.exponentialRampToValueAtTime(0.0001,t+a+d); }
-  function tone(t,freq,type,d,peak){ const o=ctx.createOscillator(), g=ctx.createGain(); o.type=type; o.frequency.setValueAtTime(freq,t); env(g,t,0.002,d,peak); o.connect(g).connect(ctx.destination); o.start(t); o.stop(t+d+0.05); }
+  function env(node,t,a,d,peak,force){ const pk=Math.max(0.0002, peak*vol*((muted&&!force)?0:1)); node.gain.setValueAtTime(0.0001,t); node.gain.exponentialRampToValueAtTime(pk,t+a); node.gain.exponentialRampToValueAtTime(0.0001,t+a+d); }
+  function tone(t,freq,type,d,peak,force){ const o=ctx.createOscillator(), g=ctx.createGain(); o.type=type; o.frequency.setValueAtTime(freq,t); env(g,t,0.002,d,peak,force); o.connect(g).connect(ctx.destination); o.start(t); o.stop(t+d+0.05); }
   function noise(t,d,peak,hp){ const len=Math.floor(ctx.sampleRate*d); const b=ctx.createBuffer(1,len,ctx.sampleRate); const ch=b.getChannelData(0); for(let i=0;i<len;i++) ch[i]=Math.random()*2-1; const s=ctx.createBufferSource(); s.buffer=b; const f=ctx.createBiquadFilter(); f.type="highpass"; f.frequency.value=hp||5000; const g=ctx.createGain(); env(g,t,0.001,d,peak); s.connect(f).connect(g).connect(ctx.destination); s.start(t); }
   const S_ = {
     clave:t=>{tone(t,2500,"sine",0.06,0.5);tone(t,1700,"triangle",0.05,0.25);},
@@ -584,10 +942,15 @@ const Audio = (()=>{
     bass:t=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(60,t+0.2);env(g,t,0.004,0.25,0.8);o.connect(g).connect(ctx.destination);o.start(t);o.stop(t+0.3);},
     guira:(t,acc)=>noise(t,acc?0.09:0.05,acc?0.35:0.18,6000),
     bongo:t=>{tone(t,520,"sine",0.09,0.45);},
-    tick:(t,acc)=>tone(t,acc?1500:1000,"sine",0.04,acc?0.4:0.22)
+    tick:(t,acc)=>tone(t,acc?1500:1000,"sine",0.04,acc?0.4:0.22),
+    piano:t=>{[392,494,587,784].forEach((f,i)=>tone(t+i*0.012,f,"triangle",0.35,0.13));},
+    ping:t=>{tone(t,2093,"sine",0.18,0.55);tone(t,3136,"sine",0.12,0.2);}
   };
   function schedule(s,t){
     const beat = s%2===0 ? s/2 : -1; // 0..7 en tiempos, -1 en «y»
+    if(beat>=0){ beats.push({beat,t}); if(beats.length>96) beats.shift(); }
+    if(cue && s===0) S_.piano(t);
+    if(ping>=0 && beat===ping) S_.ping(t);
     if(mode==="salsa"||mode==="on2"||mode==="clave"){
       if(CLAVE[clave].includes(s)) S_.clave(t);
       if(mode!=="clave"){
@@ -599,19 +962,28 @@ const Audio = (()=>{
     } else if(mode==="bachata"){
       S_.guira(t, beat>=0);
       if(beat===0||beat===4) S_.bass(t);
-      if(beat===3||beat===7) S_.bongo(t);
-      if(beat===3||beat===7) S_.tick(t,false);
+      if(beat===3||beat===7){ S_.bongo(t); S_.tick(t,false); }
+    } else if(mode==="bachmambo"){
+      S_.guira(t, beat>=0);
+      if(beat===0||beat===4) S_.bass(t);
+      if(beat>=0) S_.bell(t, beat===0||beat===4);
+      if(s%2===1) S_.bell(t,false);
     } else { if(beat>=0) S_.tick(t,beat===0); }
-    if(beat>=0 && onCount){ const delay=Math.max(0,(t-ctx.currentTime)*1000); setTimeout(()=>{ if(timer) onCount(beat); }, delay); }
-    if(onStep){ const delay=Math.max(0,(t-ctx.currentTime)*1000); setTimeout(()=>{ if(timer && onStep) onStep(s); }, delay); }
+    const delay=Math.max(0,(t-ctx.currentTime)*1000);
+    if(beat>=0 && onCount){ const cb=onCount; setTimeout(()=>{ if(timer && cb===onCount) cb(beat); }, delay); }
+    if(onStep){ const cb=onStep; setTimeout(()=>{ if(timer && cb===onStep) cb(s); }, delay); }
   }
-  let onStep=null;
   function loop(){ const spb = 60/bpm/2; while(nextTime < ctx.currentTime+0.12){ schedule(step,nextTime); nextTime+=spb; step=(step+1)%16; } }
   return {
-    start(opts){ if(!ensure()) { toast("Tu navegador no soporta audio web"); return false; } this.stop(); bpm=opts.bpm||bpm; mode=opts.mode||mode; clave=opts.clave||"32"; onCount=opts.onCount||null; onStep=opts.onStep||null; step=0; nextTime=ctx.currentTime+0.08; timer=setInterval(loop,25); loop(); return true; },
+    start(opts){ if(!ensure()) { toast("Tu navegador no soporta audio web"); return false; } this.stop(); bpm=opts.bpm||bpm; mode=opts.mode||mode; clave=opts.clave||"32"; onCount=opts.onCount||null; onStep=opts.onStep||null; step=opts.startStep||0; cue=!!opts.cue; ping=(opts.ping==null)?-1:opts.ping; muted=false; beats=[]; nextTime=ctx.currentTime+0.08; timer=setInterval(loop,25); loop(); return true; },
     stop(){ if(timer){ clearInterval(timer); timer=null; } onCount=null; onStep=null; },
-    setBpm(b){ bpm=b; }, setVol(v){ vol=v; }, setClave(c){ clave=c; },
+    setBpm(b){ bpm=b; }, setVol(v){ vol=v; }, setClave(c){ clave=c; }, setMute(m){ muted=!!m; }, setPing(p){ ping=p; },
     running(){ return !!timer; },
+    now(){ return ctx? ctx.currentTime : 0; },
+    latency(){ if(!ctx) return 0.02; const l=(ctx.outputLatency||0)+(ctx.baseLatency||0); return l>0? l : 0.02; },
+    beatsLog(){ return beats.slice(); },
+    nearest(tA){ let best=null; beats.forEach(b=>{ const d=tA-b.t; if(!best || Math.abs(d)<Math.abs(best.diff)) best={beat:b.beat,t:b.t,diff:d}; }); return best; },
+    beep(freq,d){ if(!ensure()) return; tone(ctx.currentTime+0.01,freq,"triangle",d||0.25,0.35,true); tone(ctx.currentTime+0.01,freq*2,"sine",(d||0.25)*0.6,0.08,true); },
     hit(name){ if(!ensure()) return; const t=ctx.currentTime+0.01; if(name==="clave"){S_.clave(t);} else if(name==="campana"){S_.bell(t,true);} else if(name==="conga"){S_.conga(t);} else if(name==="guira"){ for(let i=0;i<4;i++) S_.guira(t+i*0.12,i===0);} else if(name==="bongo"){S_.bongo(t);S_.bongo(t+0.12);} else if(name==="bajo"){S_.bass(t);} }
   };
 })();
@@ -639,6 +1011,10 @@ const BADGES = [
  {e:"🗓️",t:"Semana de baile",d:"Racha de 7 días",ok:()=>streak()>=7},
  {e:"🧠",t:"Musical",d:"Lee toda la teoría",ok:()=>THEORY.every(t=>S.theory[t.id])},
  {e:"🎯",t:"Buen oído",d:"Promedio de quiz ≥ 90%",ok:()=>{const q=quizAvg();return q!==null && Object.keys(S.quiz).length>=4 && q>=90;}},
+ {e:"🐘",t:"Memoria de elefante",d:"8 figuras en Simón",ok:()=>Math.max(S.memo.simon.salsa,S.memo.simon.bachata)>=8},
+ {e:"📝",t:"Coreógrafo/a",d:"Crea una rutina y ensáyala",ok:()=>S.memo.routines.length>0 && S.memo.hist.some(x=>x.k==="ensayo")},
+ {e:"👂",t:"Oído musical",d:"80% en Encuentra el 1",ok:()=>Math.max(S.music.best["find1-salsa"]||0,S.music.best["find1-bachata"]||0)>=80},
+ {e:"🎚️",t:"Metrónomo humano",d:"85% en Sigue el pulso",ok:()=>Math.max(S.music.best["pulse-salsa"]||0,S.music.best["pulse-bachata"]||0)>=85},
  {e:"👑",t:"Maestría",d:"Completa las 24 lecciones",ok:()=>Object.keys(S.completed).length>=LESSONS.length}
 ];
 function nextLesson(){
@@ -674,7 +1050,7 @@ function renderDashboard(){
   <div class="hero">
     <div class="card"><div class="bg-art"></div>
       <div class="hi" style="font-family:var(--display);font-weight:800">${hello}</div>
-      <p class="muted" style="max-width:46ch">Aprende salsa y bachata paso a paso: teoría, contador interactivo con ritmo real y un registro de todo lo que avanzas.</p>
+      <p class="muted" style="max-width:46ch">Aprende salsa y bachata paso a paso: teoría, imagen animada de cada paso, ejercicios de memorización y musicalidad, y un registro de todo lo que avanzas.</p>
       ${nl ? `<div class="row" style="margin-top:14px;position:relative">
         <a class="btn ${nl.dance==="salsa"?"primary":"pink"}" href="#leccion/${nl.id}">▶ Continuar: ${esc(nl.title)}</a>
         <span class="chip ${nl.dance}">${DANCES[nl.dance].name} · ${levelName(nl.level)}</span></div>`
@@ -718,6 +1094,7 @@ function renderDashboard(){
     </div>
   </div>
 
+  ${dashExtra()}
   <div class="card" style="margin-bottom:18px">
     <h3>Insignias</h3>
     <div class="badges">${BADGES.map(b=>`<div class="badge ${b.ok()?"on":""}"><div class="e">${b.e}</div><div class="t">${b.t}</div><div class="d">${b.d}</div></div>`).join("")}</div>
@@ -740,7 +1117,7 @@ function renderDashboard(){
 }
 $("#importFile").addEventListener("change",e=>{
   const f=e.target.files[0]; if(!f) return; const r=new FileReader();
-  r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d || typeof d!=="object" || !("completed" in d)) throw 0; S=Object.assign(blank(),d); save(); route(); toast("Progreso importado"); }catch(err){ toast("Archivo no válido"); } };
+  r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d || typeof d!=="object" || !("completed" in d)) throw 0; S=normalize(d); save(); route(); toast("Progreso importado"); }catch(err){ toast("Archivo no válido"); } };
   r.readAsText(f); e.target.value="";
 });
 
@@ -763,6 +1140,7 @@ function renderLessons(){
 /* =========================================================
    LECCIÓN
    ========================================================= */
+let lessonStop=null, lessonAnim=null;
 function renderLesson(id){
   const L = LESSONS.find(l=>l.id===id); if(!L){ location.hash="#lecciones"; return; }
   curDance = L.dance; S.last=id; save();
@@ -785,16 +1163,29 @@ function renderLesson(id){
   </div>
 
   <div class="card" style="margin-bottom:16px">
-    <div class="row"><h3 style="margin:0">Contador interactivo</h3><span class="spacer"></span>
+    <div class="row"><h3 style="margin:0">Contador e imagen de referencia</h3><span class="spacer"></span>
       ${roles.length>1?`<div class="seg" id="roleSeg">${roles.map(r=>`<button data-v="${r[0]}">${r[1]}</button>`).join("")}</div>`:""}
     </div>
-    <div class="counter" id="counter"></div>
-    <div class="controls">
-      <button class="btn ${isB?"pink":"primary"}" id="playBtn">▶ Reproducir</button>
-      <label class="row small muted">Tempo <input type="range" id="bpm" min="80" max="${isB?160:220}" value="${L.bpm}"> <b id="bpmV" style="color:var(--text)">${L.bpm}</b> BPM</label>
-      <span class="spacer"></span><span class="small dim">I = izquierdo · D = derecho</span>
+    <div class="lesson-top" style="margin-top:12px">
+      <div>
+        <div class="counter" id="counter"></div>
+        <div class="controls">
+          <button class="btn ${isB?"pink":"primary"}" id="playBtn">▶ Reproducir</button>
+          <label class="row small muted">Tempo <input type="range" id="bpm" min="70" max="${isB?160:220}" value="${L.bpm}"> <b id="bpmV" style="color:var(--text)">${L.bpm}</b> BPM</label>
+        </div>
+        <p class="small dim" style="margin:10px 0 0">La figura se mueve sincronizada con el ritmo. Toca un número del contador para ver esa posición o usa ◀ ▶ para avanzar tiempo a tiempo. Practica lento y sube el tempo cuando el paso salga sin pensar; el tiempo que suena se suma a tus minutos de práctica.</p>
+        <p class="small dim" style="margin:6px 0 0">I = izquierdo · D = derecho</p>
+      </div>
+      <div class="figbox">
+        <div id="fig"></div>
+        <div class="figcap">
+          <button class="iconbtn" id="fPrev" aria-label="Tiempo anterior">◀</button>
+          <div style="text-align:center;flex:1"><b id="fCount">–</b> <span id="fLbl" class="muted"></span><div class="small dim" id="fInfo">Pulsa ▶ o un número del contador</div></div>
+          <button class="iconbtn" id="fNext" aria-label="Tiempo siguiente">▶</button>
+        </div>
+        <div class="legend" id="fLegend"></div>
+      </div>
     </div>
-    <p class="small dim" style="margin:10px 0 0">Practica primero lento y sube el tempo cuando el paso salga sin pensar. El tiempo que el contador suena se suma a tus minutos de práctica.</p>
   </div>
 
   <div class="lesson-grid">
@@ -828,24 +1219,41 @@ function renderLesson(id){
     ${next?`<a class="btn ghost" href="#leccion/${next.id}">${esc(next.title)} →</a>`:`<a class="btn ghost" href="#dashboard">Ver mi progreso →</a>`}
   </div>`;
 
-  // contador
+  let fi=-1;
+  const bpmIn=$("#bpm");
+  const beatMs = ()=> Math.min(420, 60000/(+bpmIn.value)*0.8);
+  function mountAnim(){
+    if(lessonAnim) lessonAnim.destroy();
+    lessonAnim = Anim.mount($("#fig"), id, role, L.dance);
+    fi=-1; $("#fCount").textContent="–"; $("#fLbl").textContent=""; $("#fInfo").textContent="Pulsa ▶ o un número del contador";
+    $("#fLegend").innerHTML = lessonAnim.mode==="wave"
+      ? `<span>Punto brillante = parte del cuerpo que lidera</span><span>Silueta de perfil</span>`
+      : `<span><i style="background:${isB?"#e04f8f":"#ff6b4a"}"></i>Pie con peso</span><span><i style="border:1.5px dashed ${isB?"#e04f8f":"#ff6b4a"}"></i>Pie libre</span><span>◎ Toque</span>${lessonAnim.partner?`<span><i style="background:${isB?"#a77bff":"#ffb347"};opacity:.6"></i>Pareja</span>`:""}<span>▲ = hacia dónde mira</span>`;
+  }
+  function showFrame(i,dur){
+    fi=i;
+    $$("#counter .cnt").forEach((c,k)=>c.classList.toggle("on",k===i));
+    lessonAnim.show(i,dur||beatMs());
+    const x=L.pattern[role][i];
+    $("#fCount").textContent=i+1; $("#fLbl").textContent="· "+x.l; $("#fInfo").textContent=lessonAnim.info(i);
+  }
   function drawCounter(){
     const pat = L.pattern[role];
     $("#counter").innerHTML = pat.map((x,i)=>`<div class="cnt ${x.t==="p"?"pause":""} ${x.t==="t"?"tap":""}" data-i="${i}"><span class="n">${i+1}</span>${x.f?`<span class="ft">${x.f}</span>`:""}<span class="lbl">${esc(x.l)}</span></div>`).join("");
+    $$("#counter .cnt").forEach(c=>c.onclick=()=>{ if(Audio.running()) stopLessonAudio(); showFrame(+c.dataset.i,380); });
   }
-  drawCounter();
-  if(roles.length>1){ $$("#roleSeg button").forEach(b=>{ b.classList.toggle("on",b.dataset.v===role); b.onclick=()=>{ role=b.dataset.v; $$("#roleSeg button").forEach(x=>x.classList.toggle("on",x===b)); drawCounter(); }; }); }
-  const bpmIn=$("#bpm");
+  drawCounter(); mountAnim();
+  if(roles.length>1){ $$("#roleSeg button").forEach(b=>{ b.classList.toggle("on",b.dataset.v===role); b.onclick=()=>{ role=b.dataset.v; $$("#roleSeg button").forEach(x=>x.classList.toggle("on",x===b)); if(Audio.running()) stopLessonAudio(); drawCounter(); mountAnim(); }; }); }
+  $("#fPrev").onclick=()=>{ if(Audio.running()) stopLessonAudio(); showFrame(fi<=0?7:fi-1,380); };
+  $("#fNext").onclick=()=>{ if(Audio.running()) stopLessonAudio(); showFrame((fi+1)%8,380); };
   bpmIn.oninput=()=>{ $("#bpmV").textContent=bpmIn.value; Audio.setBpm(+bpmIn.value); };
   let playStart=0;
   $("#playBtn").onclick=()=>{
     if(Audio.running()){ stopLessonAudio(); return; }
-    const ok = Audio.start({bpm:+bpmIn.value, mode:L.mode, onCount:b=>{ $$("#counter .cnt").forEach((c,i)=>c.classList.toggle("on",i===b)); }});
+    const ok = Audio.start({bpm:+bpmIn.value, mode:L.mode, onCount:b=>showFrame(b)});
     if(ok){ playStart=Date.now(); $("#playBtn").textContent="■ Detener"; lessonStop = ()=>{ const m=Math.floor((Date.now()-playStart)/60000); if(m>=1){ addPractice(m,L.dance,"Lección: "+L.title); } }; }
   };
-  // checklist
   $$("#checks input").forEach(cb=>cb.onchange=()=>{ checks[+cb.dataset.i]=cb.checked; cb.closest(".check").classList.toggle("done",cb.checked); S.checks[id]=checks; save(); updateHint(); });
-  // quiz
   const answers = (S.quiz[id] && S.quiz[id].answers) ? S.quiz[id].answers.slice() : L.quiz.map(()=>null);
   function drawQuiz(){
     $("#quiz").innerHTML = L.quiz.map((q,qi)=>`<div class="quiz-q"><div class="q">${qi+1}. ${esc(q.q)}</div>${q.o.map((o,oi)=>{ let cls=""; if(answers[qi]!==null){ if(oi===q.a) cls="right"; else if(oi===answers[qi]) cls="wrong"; } return `<button class="opt ${cls}" data-q="${qi}" data-o="${oi}" ${answers[qi]!==null?"disabled":""}>${esc(o)}</button>`; }).join("")}${answers[qi]!==null?`<div class="fb" style="color:${answers[qi]===q.a?"var(--ok)":"var(--bad)"}">${answers[qi]===q.a?"¡Correcto!":"Respuesta correcta: "+esc(q.o[q.a])}</div>`:""}</div>`).join("") +
@@ -862,11 +1270,10 @@ function renderLesson(id){
   $("#completeBtn").onclick=()=>{
     if(S.completed[id]){ delete S.completed[id]; log(`Lección «${L.title}» marcada como pendiente`); }
     else { S.completed[id]=today(); log(`✓ Completaste «${L.title}»`); toast("¡Lección completada! 🎉"); }
-    save(); renderLesson(id);
+    save(); stopLessonAudio(); renderLesson(id);
   };
 }
-let lessonStop=null;
-function stopLessonAudio(){ Audio.stop(); if(lessonStop){ lessonStop(); lessonStop=null; } const b=$("#playBtn"); if(b) b.textContent="▶ Reproducir"; $$("#counter .cnt").forEach(c=>c.classList.remove("on")); }
+function stopLessonAudio(){ Audio.stop(); if(lessonStop){ lessonStop(); lessonStop=null; } const b=$("#playBtn"); if(b) b.textContent="▶ Reproducir"; }
 function addPractice(min,dance,label){ S.practice.push({date:today(),min,dance}); log(`${label} · ${min} min`); save(); toast(`+${min} min de práctica registrados`); }
 
 /* =========================================================
@@ -1028,27 +1435,513 @@ function stopPractice(){
 }
 
 /* =========================================================
+   MEMORIZACIÓN
+   ========================================================= */
+let memoDance="salsa", edit=null;
+function renderMemoria(sub,arg){
+  const v=$("#v-memoria"); v.className="view active"+(memoDance==="bachata"?" bach":"");
+  if(sub==="rutinas") return memoRoutines(v);
+  if(sub==="editor") return memoEditor(v,arg);
+  if(sub==="ensayo") return memoRehearse(v,arg);
+  if(sub==="simon") return memoSimon(v);
+  if(sub==="ordena") return memoOrder(v);
+  if(sub==="tarjetas") return memoCards(v);
+  return memoHome(v);
+}
+function memoHead(title,back,d){
+  return `${backLink(back)}<div class="row" style="margin:8px 0 6px"><h1 style="margin:0">${title}</h1><span class="spacer"></span>${d?danceSeg("mDance",d):""}</div>`;
+}
+function memoHome(v){
+  const d=memoDance, figs=FIGS[d];
+  const mastered=figs.filter(f=>(S.memo.cards[f.id]||0)>=4).length;
+  const nR=S.memo.routines.filter(r=>r.dance===d).length;
+  v.innerHTML=`<div class="row" style="margin-bottom:6px"><h1 style="margin:0">Memorización</h1><span class="spacer"></span>${danceSeg("mDance",d)}</div>
+  <p class="muted">Ejercicios para recordar figuras y rutinas. Es el mismo trabajo que se hace en la academia antes de una presentación, en dosis cortas y diarias.</p>
+  <div class="grid g4" style="margin:16px 0">
+    <a class="ex-card" href="#memoria/rutinas"><span class="e">📝</span><span class="tt">Mis rutinas y ensayo</span><span class="ds">Arma tu coreografía con figuras de 8 tiempos y ensáyala con música, quitando las ayudas poco a poco.</span><span class="chip">${nR} rutina(s)</span></a>
+    <a class="ex-card" href="#memoria/simon"><span class="e">🧩</span><span class="tt">Simón de figuras</span><span class="ds">Repite secuencias de figuras que crecen en cada ronda. Entrena la memoria de trabajo.</span><span class="chip">Récord: ${S.memo.simon[d]}</span></a>
+    <a class="ex-card" href="#memoria/ordena"><span class="e">🔀</span><span class="tt">Memoriza y ordena</span><span class="ds">Estudia una rutina unos segundos y reconstrúyela en el orden correcto.</span><span class="chip">Mejor: ${S.memo.order[d]}%</span></a>
+    <a class="ex-card" href="#memoria/tarjetas"><span class="e">🃏</span><span class="tt">Tarjetas de figuras</span><span class="ds">Repaso espaciado: lo que ya dominas aparece menos y lo difícil aparece más.</span><span class="chip">${mastered}/${figs.length} dominadas</span></a>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3>🧠 Técnicas que funcionan</h3><ul class="kp ok-list">
+      <li><b>Bloques de 8:</b> memoriza la rutina por frases de 8 tiempos, no paso por paso.</li>
+      <li><b>Ponle nombre a todo:</b> «básico, CBL, copa, giro» se recuerda mejor que una lista de pasos.</li>
+      <li><b>Marca sin música:</b> repasa caminando o solo con las manos, contando en voz alta.</li>
+      <li><b>Visualización:</b> repasa la rutina mentalmente, con el conteo, antes de dormir.</li>
+      <li><b>Repetición espaciada:</b> 10 minutos varios días rinden más que una sesión larga.</li>
+      <li><b>Retira las ayudas:</b> ensaya con guía, luego solo con la siguiente figura y al final sin ayuda.</li>
+    </ul></div>
+    <div class="card"><h3>Tu avance en ${DANCES[d].name}</h3>
+      <div class="grid g2">
+        <div class="stat"><span class="v">${S.memo.sessions}</span><span class="l">sesiones de memoria (total)</span></div>
+        <div class="stat"><span class="v">${nR}</span><span class="l">rutinas guardadas</span></div>
+        <div class="stat"><span class="v">${S.memo.simon[d]}</span><span class="l">récord en Simón</span></div>
+        <div class="stat"><span class="v">${mastered}<span class="dim" style="font-size:1rem">/${figs.length}</span></span><span class="l">tarjetas dominadas</span></div>
+      </div>
+    </div>
+  </div>`;
+  bindDance("mDance",d,x=>{ memoDance=x; rerender(()=>renderMemoria()); });
+}
+
+/* ---------- Rutinas ---------- */
+const SAMPLE={salsa:["sf1","sf3","sf5","sf7","sf9","sf6"],bachata:["bf1","bf4","bf6","bf8","bf7","bf5"]};
+function memoRoutines(v){
+  const d=memoDance; const list=S.memo.routines.filter(r=>r.dance===d);
+  v.innerHTML=`${memoHead("Mis rutinas","#memoria",d)}
+  <p class="muted">Arma tu rutina con figuras de 8 tiempos y ensáyala con música, quitando las ayudas poco a poco.</p>
+  <div class="row" style="margin:12px 0"><a class="btn ${btnCls(d)}" href="#memoria/editor/new">+ Nueva rutina</a><button class="btn" id="sampleBtn">✨ Crear rutina de ejemplo</button></div>
+  ${list.length? `<div class="grid g2">${list.map(r=>`<div class="card"><div class="row"><h3 style="margin:0;flex:1">${esc(r.name)}</h3><span class="chip">${r.items.length} figuras</span></div>
+     <p class="small muted" style="margin:6px 0 10px">${r.items.map(i=>{const f=figById(i);return f?f.e:"";}).join(" ")}<br>${r.items.length*8} tiempos · ♩ ${r.bpm} BPM${r.lastEval?` · Último ensayo: ${esc(r.lastEval)}`:""}</p>
+     <div class="row"><a class="btn sm ${btnCls(d)}" href="#memoria/ensayo/${r.id}">▶ Ensayar</a><a class="btn sm" href="#memoria/editor/${r.id}">✎ Editar</a><button class="btn sm ghost" data-del="${r.id}" style="color:var(--bad)">Eliminar</button></div></div>`).join("")}</div>`
+   : `<div class="card"><p class="muted" style="margin:0">Aún no tienes rutinas de ${DANCES[d].name.toLowerCase()}. Crea una nueva o genera una de ejemplo para empezar.</p></div>`}`;
+  bindDance("mDance",d,x=>{ memoDance=x; rerender(()=>renderMemoria("rutinas")); });
+  $("#sampleBtn").onclick=()=>{ S.memo.routines.push({id:"r"+Date.now(),name:"Rutina de ejemplo",dance:d,bpm:d==="salsa"?160:120,items:SAMPLE[d].slice()}); log(`Rutina creada: «Rutina de ejemplo» (${DANCES[d].name})`); save(); renderMemoria("rutinas"); };
+  $$("[data-del]").forEach(b=>b.onclick=()=>{ if(confirm("¿Eliminar esta rutina?")){ S.memo.routines=S.memo.routines.filter(r=>r.id!==b.dataset.del); save(); renderMemoria("rutinas"); } });
+}
+function memoEditor(v,arg){
+  if(!arg || arg==="new"){ edit={id:"r"+Date.now(),name:"Mi rutina",dance:memoDance,bpm:memoDance==="salsa"?160:120,items:[],isNew:true}; }
+  else { const r=S.memo.routines.find(x=>x.id===arg); if(!r){ location.hash="#memoria/rutinas"; return; } edit=JSON.parse(JSON.stringify(r)); memoDance=r.dance; }
+  v.className="view active"+(edit.dance==="bachata"?" bach":"");
+  drawEditor(v);
+}
+function drawEditor(v){
+  const e=edit, figs=FIGS[e.dance], secs=Math.round(e.items.length*8*60/e.bpm);
+  v.innerHTML=`${backLink("#memoria/rutinas")}<h1 style="margin:8px 0">${e.isNew?"Nueva rutina":"Editar rutina"} · ${DANCES[e.dance].name}</h1>
+  <div class="grid g2">
+    <div class="card">
+      <div class="grid g2">
+        <label class="fld">Nombre<input type="text" id="eName" value="${esc(e.name)}" maxlength="40"></label>
+        <label class="fld">Tempo: <b id="eBpmV" style="color:var(--text)">${e.bpm} BPM</b><input type="range" id="eBpm" min="${e.dance==="salsa"?110:85}" max="${e.dance==="salsa"?210:150}" value="${e.bpm}" style="width:100%"></label>
+      </div>
+      <h3 style="margin-top:14px">Añade figuras</h3><p class="small dim">Cada figura dura 8 tiempos (una frase). Toca para agregarla al final.</p>
+      <div class="figbtns">${figs.map(f=>`<button class="figbtn" data-add="${f.id}" title="${esc(f.d)}"><span class="e">${f.e}</span>${esc(f.n)}</button>`).join("")}</div>
+    </div>
+    <div class="card">
+      <div class="row"><h3 style="margin:0">Secuencia</h3><span class="spacer"></span><span class="chip">${e.items.length} figuras · ${e.items.length*8} tiempos · ~${Math.floor(secs/60)}:${String(secs%60).padStart(2,"0")} min</span></div>
+      <div>${e.items.length? e.items.map((id,i)=>{const f=figById(id);return `<div class="rt-item"><span class="k">${i+1}</span><span>${f.e}</span><span class="nm">${esc(f.n)}</span><button class="iconbtn" data-up="${i}" title="Subir">↑</button><button class="iconbtn" data-dn="${i}" title="Bajar">↓</button><button class="iconbtn" data-rm="${i}" title="Quitar">✕</button></div>`;}).join("") : `<p class="muted">Toca las figuras para armar tu rutina.</p>`}</div>
+      <div class="row" style="margin-top:14px"><button class="btn ok" id="eSave" ${e.items.length?"":"disabled"}>Guardar</button><button class="btn ${btnCls(e.dance)}" id="eRun" ${e.items.length?"":"disabled"}>Guardar y ensayar ▶</button></div>
+    </div>
+  </div>`;
+  $("#eName").oninput=x=>{ e.name=x.target.value; };
+  $("#eBpm").oninput=x=>{ e.bpm=+x.target.value; $("#eBpmV").textContent=e.bpm+" BPM"; };
+  $$("[data-add]").forEach(b=>b.onclick=()=>{ if(e.items.length>=32) return toast("Máximo 32 figuras"); e.items.push(b.dataset.add); drawEditor(v); });
+  $$("[data-up]").forEach(b=>b.onclick=()=>{ const i=+b.dataset.up; if(i>0){ [e.items[i-1],e.items[i]]=[e.items[i],e.items[i-1]]; drawEditor(v);} });
+  $$("[data-dn]").forEach(b=>b.onclick=()=>{ const i=+b.dataset.dn; if(i<e.items.length-1){ [e.items[i+1],e.items[i]]=[e.items[i],e.items[i+1]]; drawEditor(v);} });
+  $$("[data-rm]").forEach(b=>b.onclick=()=>{ e.items.splice(+b.dataset.rm,1); drawEditor(v); });
+  $("#eSave").onclick=()=>{ persistEdit(); location.hash="#memoria/rutinas"; };
+  $("#eRun").onclick=()=>{ persistEdit(); location.hash="#memoria/ensayo/"+e.id; };
+}
+function persistEdit(){
+  const e=edit; const r={id:e.id,name:(e.name||"").trim()||"Mi rutina",dance:e.dance,bpm:e.bpm,items:e.items.slice(),lastEval:e.lastEval};
+  const i=S.memo.routines.findIndex(x=>x.id===r.id);
+  if(i>=0) S.memo.routines[i]=r; else { S.memo.routines.push(r); log(`Rutina creada: «${r.name}» (${DANCES[r.dance].name})`); }
+  save(); toast("Rutina guardada"); e.isNew=false;
+}
+function memoRehearse(v,id){
+  const r=S.memo.routines.find(x=>x.id===id); if(!r){ location.hash="#memoria/rutinas"; return; }
+  memoDance=r.dance; v.className="view active"+(r.dance==="bachata"?" bach":"");
+  const N=r.items.length; let mode="full", bpm=r.bpm, n=0, revealed=new Set(), hints=0;
+  const MODES={full:"guía completa",next:"solo la siguiente",none:"sin ayudas"};
+  v.innerHTML=`${backLink("#memoria/rutinas")}<div class="row" style="margin:8px 0"><h1 style="margin:0;flex:1">Ensayo: ${esc(r.name)}</h1><a class="btn sm" href="#memoria/editor/${r.id}">✎ Editar</a></div>
+  <div class="card" style="margin-bottom:14px"><div class="row">
+    <label class="fld">Nivel de ayuda<select id="rMode"><option value="full">1 · Guía completa (actual y siguiente)</option><option value="next">2 · Solo aviso de la siguiente</option><option value="none">3 · Sin ayudas (solo conteo)</option></select></label>
+    <label class="fld">Tempo: <b id="rBpmV" style="color:var(--text)">${bpm} BPM</b><input type="range" id="rBpm" min="${r.dance==="salsa"?110:85}" max="${r.dance==="salsa"?210:150}" value="${bpm}"></label>
+    <span class="spacer"></span><button class="btn ${btnCls(r.dance)}" id="rGo">▶ Empezar ensayo</button></div></div>
+  <div class="card prompter" id="prompter"><div class="muted">Elige el nivel de ayuda y pulsa Empezar. Tendrás 8 tiempos de entrada para prepararte.<br>Consejo: baila o marca los pasos mientras ensayas; en el nivel 3 intenta no usar la pista.</div></div>
+  <div class="card" style="margin-top:14px"><h3>Secuencia</h3><div id="rSeq" class="slots">${r.items.map((x,i)=>`<span>${i+1}</span>`).join("")}</div><p class="small dim" style="margin:0">Los números se marcan a medida que avanzas.</p></div>`;
+  $("#rMode").onchange=e=>{ mode=e.target.value; };
+  $("#rBpm").oninput=e=>{ bpm=+e.target.value; $("#rBpmV").textContent=bpm+" BPM"; Audio.setBpm(bpm); };
+  const P=$("#prompter");
+  function stop(){ Audio.stop(); $("#rGo").textContent="▶ Empezar ensayo"; }
+  function draw(){
+    if(n<=8){ P.innerHTML=`<div class="small muted">Entrada</div><div class="big-count">${9-n}</div><div class="nx">Primera figura: ${mode==="none"?"❔":figById(r.items[0]).e+" "+esc(figById(r.items[0]).n)}</div>`; return; }
+    const k=n-9, fig=Math.floor(k/8), within=k%8+1;
+    if(fig>=N){ finish(); return; }
+    const f=figById(r.items[fig]), nx=r.items[fig+1]?figById(r.items[fig+1]):null;
+    const showNow = mode==="full" || revealed.has(fig);
+    const showNext = nx && (mode==="full" || (mode==="next" && within>=6));
+    P.innerHTML=`<div class="small muted">Figura ${fig+1} de ${N} · tiempo <b style="color:var(--text)">${within}</b></div>
+      <div class="now">${showNow?`<span class="e">${f.e}</span>${esc(f.n)}`:`<span class="e">❔</span>¿Cuál toca?`}</div>
+      <div class="bar" style="max-width:360px;margin:0 auto"><i style="width:${within/8*100}%"></i></div>
+      <div class="nx" style="margin-top:10px;min-height:1.4em">${showNext?`Siguiente: ${nx.e} ${esc(nx.n)}`:(nx?"":"Última figura")}</div>
+      ${!showNow?`<button class="btn sm" id="hintBtn" style="margin-top:8px">💡 Pista</button>`:""}`;
+    const hb=$("#hintBtn"); if(hb) hb.onclick=()=>{ revealed.add(fig); hints++; draw(); };
+    $$("#rSeq span").forEach((s,i)=>{ s.classList.toggle("f",i<fig); s.style.borderColor=i===fig?"var(--warn)":""; });
+  }
+  function finish(){
+    stop(); $$("#rSeq span").forEach((s,i)=>{ s.classList.add("f"); s.style.borderColor=""; s.textContent=`${i+1}. ${figById(r.items[i]).n}`; });
+    P.innerHTML=`<div class="now">🎉 ¡Rutina terminada!</div><p class="muted">${hints?`Usaste ${hints} pista(s). `:""}¿Cómo te fue?</p>
+      <div class="row" style="justify-content:center"><button class="btn" data-ev="100">✅ Perfecto</button><button class="btn" data-ev="60">🤔 Con dudas</button><button class="btn" data-ev="20">😵 Me perdí</button></div>`;
+    $$("[data-ev]").forEach(b=>b.onclick=()=>{ const sc=+b.dataset.ev, lbl=b.textContent.slice(2).trim();
+      r.lastEval=`${lbl} (${MODES[mode]})`; save();
+      memoLog("ensayo",sc,`Ensayo de «${r.name}» (${MODES[mode]}): ${lbl}`);
+      P.innerHTML=`<div class="now">Registrado ✓</div><p class="muted">${sc===100?(mode==="none"?"¡La tienes memorizada! Prueba a subir el tempo.":"Sube al siguiente nivel de ayuda."):sc===60?"Repite en el mismo nivel hasta que salga fluida.":"Vuelve a la guía completa y repasa por bloques."}</p><button class="btn ${btnCls(r.dance)}" id="again">↻ Ensayar otra vez</button>`;
+      $("#again").onclick=start; });
+  }
+  function start(){ n=0; revealed=new Set(); hints=0; document.activeElement && document.activeElement.blur();
+    $$("#rSeq span").forEach((s,i)=>{ s.classList.remove("f"); s.textContent=i+1; s.style.borderColor=""; });
+    if(Audio.start({bpm, mode:modeOf(r.dance), onCount:()=>{ n++; draw(); }})) $("#rGo").textContent="■ Detener"; }
+  $("#rGo").onclick=()=>{ if(Audio.running()) stop(); else start(); };
+}
+
+/* ---------- Simón ---------- */
+function memoSimon(v){
+  const d=memoDance; let size=6, seq=[], pos=0, busy=false, over=true;
+  const FREQ=[262,294,330,392,440,523,587,659,784,880,988,1047];
+  const figs=()=>FIGS[d].slice(0,size);
+  function draw(){
+    v.innerHTML=`${memoHead("Simón de figuras","#memoria",d)}
+    <p class="muted">Observa la secuencia de figuras y repítela en el mismo orden. Cada ronda agrega una figura, como cuando una rutina crece frase a frase. Truco: dilo en voz alta («básico, giro, CBL…»).</p>
+    <div class="card"><div class="row"><span class="chip">Ronda <b id="sRound" style="margin-left:4px">${seq.length||"–"}</b></span><span class="chip">Récord ${DANCES[d].name}: <b style="margin-left:4px">${S.memo.simon[d]}</b></span><span class="spacer"></span>
+      <select id="sSize"><option value="6">6 figuras</option><option value="9">9 figuras</option><option value="12">12 figuras</option></select>
+      <button class="btn ${btnCls(d)}" id="sGo">▶ Empezar</button></div>
+      <div class="fbline" id="sMsg">Pulsa Empezar y observa.</div>
+      <div class="figbtns" id="sPad">${figs().map((f,i)=>`<button class="figbtn" data-i="${i}" disabled><span class="e">${f.e}</span>${esc(f.n)}</button>`).join("")}</div></div>`;
+    $("#sSize").value=size;
+    $("#sSize").onchange=e=>{ size=+e.target.value; rerender(()=>{ seq=[]; draw(); }); };
+    bindDance("mDance",d,x=>{ memoDance=x; rerender(()=>renderMemoria("simon")); });
+    $("#sGo").onclick=()=>{ runCleanup(); seq=[]; over=false; $$("#sPad .figbtn").forEach(b=>b.classList.remove("bad")); $("#sGo").textContent="↻ Reiniciar"; nextRound(); };
+    $$("#sPad .figbtn").forEach(b=>b.onclick=()=>press(+b.dataset.i));
+  }
+  function light(i,ms){ const b=$$("#sPad .figbtn")[i]; if(!b) return; b.classList.add("lit"); Audio.beep(FREQ[i],ms/1000*0.9); T(()=>b.classList.remove("lit"),ms); }
+  function setPad(on){ $$("#sPad .figbtn").forEach(b=>b.disabled=!on); }
+  function nextRound(){
+    seq.push(Math.floor(Math.random()*size)); pos=0; busy=true; setPad(false);
+    $("#sRound").textContent=seq.length; $("#sMsg").textContent="Observa…";
+    const sp=Math.max(380,700-seq.length*25);
+    seq.forEach((x,k)=>T(()=>light(x,sp*0.7),500+k*sp));
+    T(()=>{ busy=false; setPad(true); $("#sMsg").textContent="Tu turno: repite la secuencia"; },500+seq.length*sp);
+  }
+  function press(i){
+    if(busy||over) return; light(i,220);
+    if(i===seq[pos]){ pos++; if(pos===seq.length){ busy=true; setPad(false); $("#sMsg").textContent=`¡Bien! ✓ ${seq.length} figura(s)`; T(nextRound,850); } }
+    else {
+      over=true; setPad(false); const score=seq.length-1, best=score>S.memo.simon[d];
+      if(best) S.memo.simon[d]=score;
+      memoLog("simon",score,`Simón de figuras (${DANCES[d].name}): ${score} figura(s)`);
+      $$("#sPad .figbtn")[i].classList.add("bad");
+      $("#sMsg").innerHTML=`Fallaste en la figura ${pos+1}. Recordaste <b>${score}</b>${best?" · ¡nuevo récord! 🏆":""}<div class="small muted" style="margin-top:6px;font-weight:400">Secuencia: ${seq.map(x=>figs()[x].e+" "+esc(figs()[x].n)).join(" → ")}</div>`;
+    }
+  }
+  draw();
+}
+
+/* ---------- Memoriza y ordena ---------- */
+function memoOrder(v){
+  const d=memoDance; const routines=S.memo.routines.filter(r=>r.dance===d);
+  let src="rand", len=5, seq=[], phase="setup", got=0, errors=0;
+  v.innerHTML=`${memoHead("Memoriza y ordena","#memoria",d)}<p class="muted">Estudia la rutina unos segundos y luego reconstrúyela tocando las figuras en orden.</p><div class="card" id="oArea"></div>`;
+  bindDance("mDance",d,x=>{ memoDance=x; rerender(()=>renderMemoria("ordena")); });
+  const a=$("#oArea");
+  function area(){
+    if(phase==="setup"){
+      a.innerHTML=`<div class="row"><label class="fld">Rutina<select id="oSrc"><option value="rand">Aleatoria</option>${routines.map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join("")}</select></label>
+        <label class="fld">Largo (si es aleatoria)<select id="oLen"><option>4</option><option>5</option><option>6</option><option>8</option></select></label>
+        <span class="spacer"></span><button class="btn ${btnCls(d)}" id="oGo">Empezar</button></div>
+        <p class="small dim" style="margin:10px 0 0">Mejor resultado en ${DANCES[d].name}: <b>${S.memo.order[d]}%</b></p>`;
+      $("#oSrc").value=src; $("#oLen").value=String(len);
+      $("#oSrc").onchange=e=>src=e.target.value; $("#oLen").onchange=e=>len=+e.target.value;
+      $("#oGo").onclick=()=>{
+        if(src==="rand"){ const pool=FIGS[d].map(f=>f.id).sort(()=>Math.random()-.5); seq=pool.slice(0,len); }
+        else { seq=routines.find(r=>r.id===src).items.slice(); }
+        phase="study"; area();
+      };
+    } else if(phase==="study"){
+      const secs=Math.max(8,seq.length*3); let left=secs;
+      a.innerHTML=`<div class="row"><h3 style="margin:0;flex:1">Memoriza el orden</h3><span class="chip" id="oLeft">${left} s</span></div><div class="timerbar"><i id="oBar" style="width:100%"></i></div>
+        ${seq.map((id,i)=>{const f=figById(id);return `<div class="rt-item"><span class="k">${i+1}</span><span>${f.e}</span><span class="nm">${esc(f.n)}</span></div>`;}).join("")}
+        <button class="btn ${btnCls(d)}" id="oReady" style="margin-top:10px">¡Listo, ya lo memoricé!</button>`;
+      const iv=setInterval(()=>{ left--; const L=$("#oLeft"); if(L){ L.textContent=left+" s"; $("#oBar").style.width=(left/secs*100)+"%"; } if(left<=0){ clearInterval(iv); quiz(); } },1000);
+      onCleanup(()=>clearInterval(iv));
+      $("#oReady").onclick=()=>{ clearInterval(iv); quiz(); };
+    }
+  }
+  function quiz(){
+    phase="quiz"; got=0; errors=0;
+    const cards=seq.map((id,k)=>({id,k})).sort(()=>Math.random()-.5);
+    a.innerHTML=`<div class="row"><h3 style="margin:0;flex:1">Reconstruye la rutina</h3><span class="chip" id="oErr">Errores: 0</span></div>
+      <div class="slots" id="oSlots">${seq.map((x,i)=>`<span>${i+1}</span>`).join("")}</div>
+      <div class="figbtns" id="oCards">${cards.map((c,j)=>{const f=figById(c.id);return `<button class="figbtn" data-j="${j}"><span class="e">${f.e}</span>${esc(f.n)}</button>`;}).join("")}</div>`;
+    $$("#oCards .figbtn").forEach(b=>b.onclick=()=>{
+      const c=cards[+b.dataset.j];
+      if(c.id===seq[got]){ b.classList.add("good"); b.disabled=true; const s=$$("#oSlots span")[got]; s.classList.add("f"); s.textContent=`${got+1}. ${figById(c.id).e} ${figById(c.id).n}`; got++; Audio.beep(523+got*40,0.12);
+        if(got===seq.length) result(); }
+      else { errors++; $("#oErr").textContent="Errores: "+errors; b.classList.remove("bad"); void b.offsetWidth; b.classList.add("bad"); Audio.beep(160,0.18); }
+    });
+  }
+  function result(){
+    const score=Math.round(100*seq.length/(seq.length+errors)); const best=score>S.memo.order[d];
+    if(best) S.memo.order[d]=score;
+    memoLog("ordena",score,`Memoriza y ordena (${DANCES[d].name}, ${seq.length} figuras): ${score}%`);
+    a.insertAdjacentHTML("beforeend",`<div class="fbline" style="margin-top:14px">Resultado: ${score}% · ${errors} error(es)${best?" · ¡nuevo récord! 🏆":""}</div><div class="row" style="justify-content:center"><button class="btn ${btnCls(d)}" id="oAgain">↻ Otra vez</button></div>`);
+    $("#oAgain").onclick=()=>{ phase="setup"; area(); };
+  }
+  area();
+}
+
+/* ---------- Tarjetas (repetición espaciada, sistema Leitner) ---------- */
+function memoCards(v){
+  const d=memoDance, figs=FIGS[d]; let cur=null, last=null, logged=false;
+  const box=f=>S.memo.cards[f.id]||0;
+  v.innerHTML=`${memoHead("Tarjetas de figuras","#memoria",d)}
+    <p class="muted">Mira el nombre, intenta recordar cómo se hace y en qué tiempos, y luego voltea la tarjeta. Sé honesto: si dudaste, márcala para repasar.</p>
+    <div class="grid g2"><div class="card"><div class="flash" id="flash"><div class="flash-in" id="flashIn"></div></div>
+      <div class="row" style="justify-content:center;margin-top:14px" id="cBtns"></div></div>
+      <div class="card"><h3>Cajas de repaso</h3><p class="small dim">Cada acierto sube la tarjeta de caja; un fallo la devuelve a la caja 1. Las tarjetas de cajas bajas aparecen más seguido.</p><div class="boxes" id="cBoxes"></div>
+      <div class="row" style="margin-top:12px"><button class="btn sm ghost" id="cReset">Reiniciar tarjetas de ${DANCES[d].name}</button></div></div></div>`;
+  bindDance("mDance",d,x=>{ memoDance=x; rerender(()=>renderMemoria("tarjetas")); });
+  function boxes(){ const cnt=[0,0,0,0,0]; figs.forEach(f=>{ const b=box(f); cnt[b===0?0:b>=4?4:b]++; });
+    $("#cBoxes").innerHTML=["Nuevas","Caja 1","Caja 2","Caja 3","Dominadas"].map((l,i)=>`<div><b>${cnt[i]}</b>${l}</div>`).join(""); }
+  function pick(){ const pool=figs.filter(f=>f.id!==last); const w=pool.map(f=>6-Math.min(5,box(f))); let r=Math.random()*w.reduce((a,b)=>a+b,0); for(let i=0;i<pool.length;i++){ r-=w[i]; if(r<=0) return pool[i]; } return pool[0]; }
+  function show(){
+    cur=pick(); $("#flash").classList.remove("flip");
+    $("#flashIn").innerHTML=`<div class="flash-f"><span class="e">${cur.e}</span><h2 style="margin:8px 0 4px">${esc(cur.n)}</h2><span class="small muted">¿Cómo se hace y en qué tiempos? Toca para voltear</span></div>
+      <div class="flash-b"><span class="chip">8 tiempos · ${DANCES[d].name}</span><h3 style="margin:10px 0 6px">${esc(cur.n)}</h3><p style="margin:0 0 8px">${esc(cur.d)}</p><p class="small muted" style="margin:0">💡 ${esc(cur.cue)}</p></div>`;
+    $("#cBtns").innerHTML=`<button class="btn" id="cFlip">Voltear</button>`;
+    $("#cFlip").onclick=flip; $("#flashIn").onclick=flip;
+  }
+  function flip(){ $("#flash").classList.add("flip"); $("#cBtns").innerHTML=`<button class="btn" id="cAgain">🔁 Repasar</button><button class="btn ok" id="cKnow">✅ La sé</button>`;
+    $("#cAgain").onclick=()=>answer(false); $("#cKnow").onclick=()=>answer(true); }
+  function answer(ok){
+    S.memo.cards[cur.id]= ok? Math.min(5,box(cur)+1) : 1; last=cur.id;
+    if(!logged){ logged=true; memoLog("tarjetas",0,`Repaso de tarjetas de ${DANCES[d].name}`); } else save();
+    boxes(); show();
+  }
+  $("#cReset").onclick=()=>{ if(confirm("¿Reiniciar las tarjetas?")){ figs.forEach(f=>delete S.memo.cards[f.id]); save(); boxes(); show(); } };
+  boxes(); show();
+}
+
+/* =========================================================
+   MUSICALIDAD
+   ========================================================= */
+let musDance="salsa";
+const val=(x,d)=> typeof x==="function"? x(d) : x;
+const MG = {
+  find1:{e:"1️⃣",t:"Encuentra el 1",d:"La música empieza en un tiempo al azar: toca justo cuando escuches el «1»."},
+  pulse:{e:"🫀",t:"Sigue el pulso",d:"Marca cada tiempo y mide tu precisión. Prueba a seguir contando cuando la música se calla."},
+  dict:{e:"🔢",t:"Dictado de tiempos",d:"Una campanita aguda cae en uno de los 8 tiempos: ¿en cuál?"},
+  ear:{e:"👂",t:d=>d==="salsa"?"¿Qué clave suena?":"¿Derecho o mambo?",d:d=>d==="salsa"?"Distingue la son clave 3-2, la 2-3 y la rumba clave.":"Reconoce si suena el derecho (bongó) o el mambo (campana)."},
+  steps:{e:"👣",t:d=>d==="salsa"?"Pasos y pausas":"Marca el toque",d:d=>d==="salsa"?"Toca en los tiempos que se pisan (1-2-3, 5-6-7) y deja libres el 4 y el 8.":"Toca solo en los toques del 4 y el 8, sin adelantarte."}
+};
+const gameName=(g,d)=>val(MG[g].t,d);
+function renderMusica(sub){
+  const v=$("#v-musicalidad"); const d=musDance;
+  v.className="view active"+(d==="bachata"?" bach":"");
+  if(sub && MG[sub]) return musGame(v,sub);
+  v.innerHTML=`<div class="row" style="margin-bottom:6px"><h1 style="margin:0">Musicalidad</h1><span class="spacer"></span>${danceSeg("muDance",d)}</div>
+  <p class="muted">Ejercicios de oído para reconocer los tiempos de la música y bailar a tiempo. Usa audífonos si puedes: mejoran mucho la precisión.</p>
+  <div class="grid g3" style="margin:16px 0">${Object.keys(MG).map(g=>{ const b=S.music.best[g+"-"+d]; return `<a class="ex-card" href="#musicalidad/${g}"><span class="e">${MG[g].e}</span><span class="tt">${gameName(g,d)}</span><span class="ds">${val(MG[g].d,d)}</span><span class="chip ${b>=80?"ok":""}">${b!=null?"Mejor: "+b+"%":"Sin intentos"}</span></a>`; }).join("")}</div>
+  <div class="card"><h3>${d==="salsa"?"🎺 Cómo encontrar los tiempos en la salsa":"🎸 Cómo encontrar los tiempos en la bachata"}</h3>
+  ${d==="salsa"?`<ul class="kp ok-list"><li>Se cuenta en frases de <b>8 tiempos</b> (dos compases). Pisas en 1-2-3 y 5-6-7.</li><li>La <b>campana</b> marca los pulsos; en este entrenamiento acentúa el 1 y el 5.</li><li>La <b>clave 3-2</b> empieza su lado de 3 golpes en el 1: «1, 2 y, 4 | 6, 7».</li><li>Los golpes abiertos de la <b>conga</b> (tumbao) caen alrededor del 4 y del 8, justo en las pausas.</li><li>El <b>1</b> suele coincidir con el inicio de una frase del cantante o de los metales.</li></ul>`
+  :`<ul class="kp ok-list"><li>Se cuenta <b>4 + 4</b>: tres pasos y un toque, en el 4 y en el 8.</li><li>La <b>güira</b> marca la subdivisión constante: es tu metrónomo.</li><li>El <b>bajo</b> cae con fuerza en el 1 y en el 5.</li><li>El <b>bongó</b> remata hacia el 4 y el 8: ahí va el toque.</li><li>En el <b>mambo</b> el bongosero toca la campana y la energía sube.</li></ul>`}
+  </div>`;
+  bindDance("muDance",d,x=>{ musDance=x; rerender(()=>renderMusica()); });
+}
+function musGame(v,g){
+  const d=musDance;
+  v.innerHTML=`${backLink("#musicalidad")}<div class="row" style="margin:8px 0 6px"><h1 style="margin:0">${MG[g].e} ${gameName(g,d)}</h1><span class="spacer"></span>${danceSeg("muDance",d)}</div>
+    <p class="muted">${val(MG[g].d,d)} <span class="dim small">Mejor resultado: ${S.music.best[g+"-"+d]!=null?S.music.best[g+"-"+d]+"%":"—"}</span></p>
+    <div class="card" id="gArea"></div>`;
+  bindDance("muDance",d,x=>{ musDance=x; rerender(()=>renderMusica(g)); });
+  const a=$("#gArea");
+  ({find1:gFind1,pulse:gPulse,dict:gDict,ear:gEar,steps:gSteps})[g](a,d);
+}
+const blurBtn=()=>{ if(document.activeElement) document.activeElement.blur(); };
+function tapBind(btn,fn){ btn.addEventListener("pointerdown",e=>{ e.preventDefault(); btn.classList.add("hit"); setTimeout(()=>btn.classList.remove("hit"),90); fn(); }); }
+
+/* 1 · Encuentra el 1 */
+function gFind1(a,d){
+  let easy=true, bpm=d==="salsa"?150:122, res=[], running=false; const TRIES=6;
+  a.innerHTML=`<div class="row"><label class="fld">Dificultad<select id="g1Lvl"><option value="1">Fácil · con acorde de inicio de frase</option><option value="0">Difícil · solo el ritmo</option></select></label>
+    <label class="fld">Tempo: <b id="g1BV" style="color:var(--text)">${bpm} BPM</b><input type="range" id="g1B" min="100" max="${d==="salsa"?200:150}" value="${bpm}"></label>
+    <span class="spacer"></span><button class="btn ${btnCls(d)}" id="g1Go">▶ Empezar</button></div>
+    <p class="small dim">Escucha una o dos frases y toca el botón (o la barra espaciadora <kbd>Espacio</kbd>) justo en el «1». Tienes ${TRIES} intentos. ${d==="salsa"?"Pista: en la clave 3-2 el «1» es el primer golpe del lado de 3, y la campana acentúa el 1 y el 5.":"Pista: el bajo suena en el 1 y en el 5; en el modo fácil, un acorde marca el inicio de la frase (el 1). El bongó cae en el 4 y el 8."}</p>
+    <button class="tapbtn" id="g1Tap" disabled>¡1!</button>
+    <div class="fbline" id="g1Fb"></div><div class="res-list" id="g1Res"></div>`;
+  $("#g1Lvl").onchange=e=>easy=e.target.value==="1";
+  $("#g1B").oninput=e=>{ bpm=+e.target.value; $("#g1BV").textContent=bpm+" BPM"; };
+  function start(){ blurBtn(); res=[]; $("#g1Res").innerHTML=""; $("#g1Fb").textContent="Escucha… y toca en el 1";
+    const st=2*(1+Math.floor(Math.random()*7));
+    if(!Audio.start({bpm,mode:modeOf(d),startStep:st,cue:easy})) return;
+    running=true; $("#g1Tap").disabled=false; $("#g1Go").textContent="■ Detener"; tapHandler=tap; T(finish,75000); }
+  function tap(){ if(!running) return; const n=Audio.nearest(Audio.now()-Audio.latency()); let c,t;
+    if(!n||Math.abs(n.diff)>0.17){ c="b"; t="fuera de tiempo"; } else if(n.beat===0){ c="g"; t="✓ en el 1"; } else if(n.beat===4){ c="m"; t="≈ era el 5"; } else { c="b"; t="✗ era el "+(n.beat+1); }
+    res.push(c); $("#g1Res").insertAdjacentHTML("beforeend",`<span class="${c}">${res.length}. ${t}</span>`); $("#g1Fb").textContent=t;
+    if(res.length>=TRIES) finish(); }
+  function finish(){ if(!running) return; running=false; Audio.stop(); tapHandler=null; $("#g1Tap").disabled=true; $("#g1Go").textContent="▶ Otra vez";
+    if(!res.length){ $("#g1Fb").textContent=""; return; }
+    const g=res.filter(x=>x==="g").length, m=res.filter(x=>x==="m").length; const score=Math.round((g+m*.5)/TRIES*100);
+    musicLog("find1",d,score,`Encuentra el 1 (${DANCES[d].name}${easy?"":", difícil"}): ${score}%`);
+    $("#g1Fb").innerHTML=`Resultado: <b>${score}%</b> · ${g} en el 1${m?`, ${m} en el 5`:""}. ${score>=80?"¡Gran oído! 🎉 Prueba en difícil o a más tempo.":score>=50?"Vas bien: repite contando en voz alta.":"Empieza en Fácil y cuenta «1, 2, 3… 5, 6, 7» en voz alta."}`; }
+  $("#g1Go").onclick=()=>{ running?finish():start(); };
+  tapBind($("#g1Tap"),tap);
+}
+
+/* 2 · Sigue el pulso */
+function gPulse(a,d){
+  let bpm=d==="salsa"?140:120, silent=false, taps=[], n=0, running=false; const WARM=8, BEATS=16;
+  a.innerHTML=`<div class="row"><label class="fld">Modo<select id="g2M"><option value="0">Con música todo el tiempo</option><option value="1">Silencio después de la entrada (pulso interno)</option></select></label>
+    <label class="fld">Tempo: <b id="g2BV" style="color:var(--text)">${bpm} BPM</b><input type="range" id="g2B" min="90" max="${d==="salsa"?200:150}" value="${bpm}"></label>
+    <span class="spacer"></span><button class="btn ${btnCls(d)}" id="g2Go">▶ Empezar</button></div>
+    <div class="big-count" id="g2C">–</div>
+    <div class="fbline" id="g2Fb">Primero escuchas ${WARM} tiempos de entrada contados en pantalla. Luego marca cada tiempo durante ${BEATS} tiempos (botón o <kbd>Espacio</kbd>).</div>
+    <button class="tapbtn" id="g2Tap" disabled>Toca en cada tiempo</button><div id="g2Res" style="margin-top:14px"></div>`;
+  $("#g2M").onchange=e=>silent=e.target.value==="1";
+  $("#g2B").oninput=e=>{ bpm=+e.target.value; $("#g2BV").textContent=bpm+" BPM"; };
+  function start(){ blurBtn(); taps=[]; n=0; $("#g2Res").innerHTML="";
+    if(!Audio.start({bpm,mode:modeOf(d),onCount:b=>{ n++; const C=$("#g2C"); if(!C) return;
+      if(n<=WARM){ C.textContent=b+1; $("#g2Fb").textContent="Escucha la entrada…"; }
+      else if(n===WARM+1){ $("#g2Fb").textContent=silent?"¡Ahora tú! La música se calla: sigue el pulso por dentro":"¡Ahora tú! Marca cada tiempo"; if(silent) Audio.setMute(true); C.textContent="🎯"; }
+      else if(n<=WARM+BEATS){ C.textContent=silent?"🤫":"🎯"; }
+      else finish(); }})) return;
+    running=true; $("#g2Tap").disabled=false; $("#g2Go").textContent="■ Detener"; tapHandler=tap; }
+  function tap(){ if(running) taps.push(Audio.now()-Audio.latency()); }
+  function finish(){ if(!running) return; running=false; Audio.stop(); Audio.setMute(false); tapHandler=null; $("#g2Tap").disabled=true; $("#g2Go").textContent="▶ Otra vez"; $("#g2C").textContent="✓";
+    const grid=Audio.beatsLog().slice(WARM,WARM+BEATS); if(grid.length<BEATS){ $("#g2Fb").textContent="Ejercicio detenido."; return; }
+    const used=new Set(); const errs=grid.map(b=>{ let bi=-1,bd=1; taps.forEach((t,i)=>{ if(used.has(i)) return; const dd=t-b.t; if(Math.abs(dd)<Math.abs(bd)){bd=dd;bi=i;} }); if(bi>=0 && Math.abs(bd)<=0.3){ used.add(bi); return Math.round(bd*1000);} return null; });
+    const pts=errs.map(e=>{ if(e===null) return 0; const x=Math.abs(e); return x<=40?100:x<=80?80:x<=130?50:x<=200?20:0; });
+    const score=Math.round(pts.reduce((a,b)=>a+b,0)/BEATS); const hit=errs.filter(e=>e!==null); const mean=hit.length?Math.round(hit.reduce((a,b)=>a+b,0)/hit.length):0; const mabs=hit.length?Math.round(hit.reduce((a,b)=>a+Math.abs(b),0)/hit.length):0;
+    musicLog("pulse",d,score,`Sigue el pulso (${DANCES[d].name}${silent?", en silencio":""}): ${score}%`);
+    const W=480,H=150,mid=75,sc=v=>Math.max(-65,Math.min(65,v/250*65));
+    const dots=errs.map((e,i)=>{ const x=24+i*(W-48)/(BEATS-1); if(e===null) return `<text x="${x}" y="${mid+4}" text-anchor="middle" fill="#ff6b7a" font-size="12">×</text>`; const c=Math.abs(e)<=40?"#5fd39a":Math.abs(e)<=100?"#ffcf5c":"#ff6b7a"; return `<circle cx="${x}" cy="${mid+sc(e)}" r="5" fill="${c}"><title>${e>0?"+":""}${e} ms</title></circle>`; }).join("");
+    $("#g2Fb").innerHTML=`Resultado: <b>${score}%</b> · acertaste ${hit.length}/${BEATS} tiempos · error medio ${mabs} ms`;
+    $("#g2Res").innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:560px;height:auto;display:block;margin:0 auto"><rect x="0" y="${mid-10}" width="${W}" height="20" fill="#5fd39a" opacity=".08"/><line x1="10" x2="${W-10}" y1="${mid}" y2="${mid}" stroke="#3d2d45"/><text x="4" y="14" fill="#86728a" font-size="11">↑ adelantado</text><text x="4" y="${H-4}" fill="#86728a" font-size="11">↓ atrasado</text>${dots}</svg>
+      <p class="small muted" style="text-align:center;margin:6px 0 0">${hit.length<4?"Casi no se registraron toques: asegúrate de tocar en cada tiempo.":mean<-25?"Tiendes a <b>adelantarte</b>: relájate y espera el golpe.":mean>25?"Tiendes a <b>atrasarte</b>: anticipa un poco el tiempo.":"¡Buen centro! Tus toques caen alrededor del tiempo."}</p>`;
+  }
+  $("#g2Go").onclick=()=>{ running?finish():start(); };
+  tapBind($("#g2Tap"),tap);
+}
+
+/* 3 · Dictado de tiempos */
+function gDict(a,d){
+  let visual=true, round=0, score=0, ping=-1, last=-1, answered=false; const R=6, bpm=d==="salsa"?130:112;
+  a.innerHTML=`<div class="row"><label class="fld">Ayuda<select id="g3V"><option value="1">Con conteo en pantalla</option><option value="0">Solo audio (con acorde en el 1)</option></select></label><span class="spacer"></span><button class="btn ${btnCls(d)}" id="g3Go">▶ Empezar</button></div>
+    <p class="small dim">Suena el ritmo con una campanita aguda que se repite en el mismo tiempo de cada frase. Elige en qué tiempo cae. ${R} rondas.</p><div id="g3S"></div>`;
+  $("#g3V").onchange=e=>visual=e.target.value==="1";
+  const S3=$("#g3S");
+  function play(){ let c=0; Audio.start({bpm,mode:modeOf(d),ping,cue:!visual,onCount:b=>{ c++; $$("#g3Cnt .cnt").forEach((x,i)=>x.classList.toggle("on",i===b)); if(c>=24) Audio.stop(); }}); }
+  function newRound(){ round++; answered=false; do{ ping=Math.floor(Math.random()*8); }while(ping===last); last=ping;
+    S3.innerHTML=`<div class="row" style="margin-top:12px"><span class="chip">Ronda ${round}/${R}</span><span class="chip">Aciertos ${score}</span><span class="spacer"></span><button class="btn sm" id="g3Rep">↻ Volver a escuchar</button></div>
+      <div class="${visual?"":"hidden-count"}"><div class="counter" id="g3Cnt">${[1,2,3,4,5,6,7,8].map(i=>`<div class="cnt" style="min-height:52px"><span class="n">${i}</span></div>`).join("")}</div></div>
+      <p class="small muted" style="margin:6px 0">¿En qué tiempo suena la campanita?</p>
+      <div class="ans-grid" id="g3Ans">${[1,2,3,4,5,6,7,8].map(i=>`<button data-i="${i-1}">${i}</button>`).join("")}</div><div class="fbline" id="g3Fb"></div>`;
+    $("#g3Rep").onclick=()=>{ if(!answered) play(); };
+    $$("#g3Ans button").forEach(b=>b.onclick=()=>answer(+b.dataset.i));
+    play(); }
+  function answer(i){ if(answered) return; answered=true; Audio.stop(); const ok=i===ping; if(ok) score++;
+    $$("#g3Ans button").forEach((b,k)=>{ if(k===ping) b.classList.add("right"); else if(k===i) b.classList.add("wrong"); b.disabled=true; });
+    $("#g3Fb").innerHTML=(ok?"✓ ¡Correcto!":`✗ Sonaba en el ${ping+1}`)+(round<R?` <button class="btn sm" id="g3N" style="margin-left:8px">Siguiente →</button>`:"");
+    if(round<R) $("#g3N").onclick=newRound; else finish(); }
+  function finish(){ const pc=Math.round(score/R*100); musicLog("dict",d,pc,`Dictado de tiempos (${DANCES[d].name}${visual?"":", solo audio"}): ${pc}%`);
+    S3.insertAdjacentHTML("beforeend",`<div class="fbline">Resultado final: <b>${pc}%</b> (${score}/${R}). ${pc>=80?(visual?"Prueba el modo solo audio.":"¡Excelente oído!"):"Cuenta en voz alta mientras escuchas."}</div>`);
+    $("#g3Go").textContent="↻ Jugar de nuevo"; }
+  $("#g3Go").onclick=()=>{ blurBtn(); round=0; score=0; last=-1; $("#g3Go").textContent="↻ Reiniciar"; newRound(); };
+}
+
+/* 4 · Oído: clave (salsa) o derecho/mambo (bachata) */
+function gEar(a,d){
+  const opts = d==="salsa" ? [["32","Son clave 3-2"],["23","Son clave 2-3"],["rumba32","Rumba clave 3-2"]] : [["bachata","Derecho (bongó)"],["bachmambo","Mambo (campana)"]];
+  const R=5, bpm=d==="salsa"?118:122; let round=0, score=0, ans=null, last=null, answered=false;
+  a.innerHTML=`<div class="row"><p class="small dim" style="margin:0;flex:1;min-width:220px">${d==="salsa"?"Escucharás la clave junto a un clic que acentúa el 1. Recuerda: 3-2 = «1, 2 y, 4 | 6, 7»; 2-3 = «2, 3 | 5, 6 y, 8»; la rumba retrasa el tercer golpe al «4 y». Repasa los patrones en Teoría → La clave.":"En el derecho el bongó adorna el ritmo y la energía es tranquila; en el mambo el bongosero cambia a la campana, que suena en cada tiempo y en los contratiempos."} ${R} rondas.</p><button class="btn ${btnCls(d)}" id="g4Go">▶ Empezar</button></div><div id="g4S"></div>`;
+  const S4=$("#g4S");
+  function play(){ let c=0; const cb=()=>{ c++; if(c>=16) Audio.stop(); }; if(d==="salsa") Audio.start({bpm,mode:"clave",clave:ans,onCount:cb}); else Audio.start({bpm,mode:ans,onCount:cb}); }
+  function newRound(){ round++; answered=false; do{ ans=opts[Math.floor(Math.random()*opts.length)][0]; }while(opts.length>2 && ans===last); last=ans;
+    S4.innerHTML=`<div class="row" style="margin-top:12px"><span class="chip">Ronda ${round}/${R}</span><span class="chip">Aciertos ${score}</span><span class="spacer"></span><button class="btn sm" id="g4Rep">↻ Volver a escuchar</button></div>
+      <p class="small muted">¿Qué suena?</p><div class="row" id="g4O">${opts.map(o=>`<button class="btn" data-v="${o[0]}">${o[1]}</button>`).join("")}</div><div class="fbline" id="g4Fb"></div>`;
+    $("#g4Rep").onclick=()=>{ if(!answered) play(); };
+    $$("#g4O button").forEach(b=>b.onclick=()=>answer(b));
+    play(); }
+  function answer(b){ if(answered) return; answered=true; Audio.stop(); const ok=b.dataset.v===ans; if(ok) score++;
+    $$("#g4O button").forEach(x=>{ x.disabled=true; if(x.dataset.v===ans) x.classList.add("ok"); });
+    $("#g4Fb").innerHTML=(ok?"✓ ¡Correcto!":`✗ Era: ${opts.find(o=>o[0]===ans)[1]}`)+(round<R?` <button class="btn sm" id="g4N" style="margin-left:8px">Siguiente →</button>`:"");
+    if(round<R) $("#g4N").onclick=newRound; else { const pc=Math.round(score/R*100); musicLog("ear",d,pc,`${gameName("ear",d)} (${DANCES[d].name}): ${pc}%`); S4.insertAdjacentHTML("beforeend",`<div class="fbline">Resultado final: <b>${pc}%</b> (${score}/${R})</div>`); $("#g4Go").textContent="↻ Jugar de nuevo"; } }
+  $("#g4Go").onclick=()=>{ blurBtn(); round=0; score=0; $("#g4Go").textContent="↻ Reiniciar"; newRound(); };
+}
+
+/* 5 · Pasos y pausas / Marca el toque */
+function gSteps(a,d){
+  const exp = d==="salsa" ? [1,1,1,0,1,1,1,0] : [0,0,0,1,0,0,0,1];
+  const lbl = d==="salsa" ? ["Paso","Paso","Paso","Pausa","Paso","Paso","Paso","Pausa"] : ["—","—","—","Toque","—","—","—","Toque"];
+  let bpm=d==="salsa"?120:110, hide=true, taps=[], n=0, running=false; const TOT=32;
+  a.innerHTML=`<div class="row"><label class="fld">Conteo en pantalla<select id="g5H"><option value="1">Ocultarlo después de la 1.ª frase</option><option value="0">Visible siempre</option></select></label>
+    <label class="fld">Tempo: <b id="g5BV" style="color:var(--text)">${bpm} BPM</b><input type="range" id="g5B" min="90" max="${d==="salsa"?190:145}" value="${bpm}"></label>
+    <span class="spacer"></span><button class="btn ${btnCls(d)}" id="g5Go">▶ Empezar</button></div>
+    <p class="small dim">${d==="salsa"?"Toca en cada tiempo en el que se pisa (1-2-3 y 5-6-7) y NO toques en las pausas (4 y 8).":"Toca solo en los toques (4 y 8): ni antes ni después."} Son 4 frases (32 tiempos); la primera tiene el conteo de guía. Botón o <kbd>Espacio</kbd>.</p>
+    <div id="g5W"><div class="counter" id="g5Cnt">${lbl.map((l,i)=>`<div class="cnt ${exp[i]?"":"pause"}" style="min-height:64px"><span class="n">${i+1}</span><span class="lbl">${l}</span></div>`).join("")}</div></div>
+    <button class="tapbtn" id="g5Tap" disabled>${d==="salsa"?"Pisa 👣":"Toque 👟"}</button>
+    <div class="fbline" id="g5Fb"></div><div id="g5Res"></div>`;
+  $("#g5H").onchange=e=>hide=e.target.value==="1";
+  $("#g5B").oninput=e=>{ bpm=+e.target.value; $("#g5BV").textContent=bpm+" BPM"; };
+  function start(){ blurBtn(); taps=[]; n=0; $("#g5Res").innerHTML=""; $("#g5W").classList.remove("hidden-count"); $("#g5Fb").textContent="Frase de guía…";
+    if(!Audio.start({bpm,mode:modeOf(d),onCount:b=>{ n++; $$("#g5Cnt .cnt").forEach((x,i)=>x.classList.toggle("on",i===b));
+      if(n===9){ if(hide) $("#g5W").classList.add("hidden-count"); $("#g5Fb").textContent=hide?"Ahora sin conteo visual: ¡escucha!":"¡Sigue así!"; }
+      if(n>TOT) finish(); }})) return;
+    running=true; $("#g5Tap").disabled=false; $("#g5Go").textContent="■ Detener"; tapHandler=tap; }
+  function tap(){ if(running) taps.push(Audio.now()-Audio.latency()); }
+  function finish(){ if(!running) return; running=false; Audio.stop(); tapHandler=null; $("#g5Tap").disabled=true; $("#g5Go").textContent="▶ Otra vez"; $("#g5W").classList.remove("hidden-count");
+    const grid=Audio.beatsLog().slice(0,TOT); if(grid.length<TOT){ $("#g5Fb").textContent="Ejercicio detenido."; return; }
+    const r=grid.map(b=>{ const tapped=taps.some(t=>Math.abs(t-b.t)<0.17); return {tapped, ok: tapped===!!exp[b.beat], beat:b.beat}; });
+    const okN=r.filter(x=>x.ok).length, pc=Math.round(okN/TOT*100);
+    musicLog("steps",d,pc,`${gameName("steps",d)} (${DANCES[d].name}): ${pc}%`);
+    $("#g5Fb").innerHTML=`Resultado: <b>${pc}%</b> (${okN}/${TOT} tiempos correctos)`;
+    $("#g5Res").innerHTML=[0,1,2,3].map(f=>`<div class="counter" style="margin:6px 0">${r.slice(f*8,f*8+8).map(x=>`<div class="cnt" style="min-height:46px;border-color:${x.ok?"rgba(95,211,154,.6)":"rgba(255,107,122,.7)"};background:${x.ok?"rgba(95,211,154,.1)":"rgba(255,107,122,.12)"}"><span class="n" style="font-size:1rem">${x.beat+1}</span><span class="lbl">${x.tapped?"tocaste":"—"}</span></div>`).join("")}</div>`).join("")+
+      `<p class="small muted" style="text-align:center">Frase 1 (guía) arriba · verde = correcto, rojo = ${d==="salsa"?"tocaste en una pausa o faltó un paso":"tocaste fuera del toque o faltó un toque"}</p>`;
+  }
+  $("#g5Go").onclick=()=>{ running?finish():start(); };
+  tapBind($("#g5Tap"),tap);
+}
+
+/* Bloque para el dashboard */
+function dashExtra(){
+  const mastered=FIGS.salsa.concat(FIGS.bachata).filter(f=>(S.memo.cards[f.id]||0)>=4).length;
+  const lastM=S.memo.hist[0], lastMu=S.music.hist[0];
+  const row=g=>{ const s=S.music.best[g+"-salsa"], b=S.music.best[g+"-bachata"]; const cell=(x,c)=>`<span>${x==null?"<span class='dim'>—</span>":`<span style="color:${c};font-weight:700">${x}%</span>`}</span>`;
+    return `<span>${MG[g].e} ${gameName(g,"salsa")}${g==="ear"||g==="steps"?` / ${gameName(g,"bachata")}`:""}</span>${cell(s,"var(--salsa)")}${cell(b,"var(--bachata)")}`; };
+  return `<div class="grid g2" style="margin-bottom:18px">
+    <div class="card"><div class="row"><h3 style="margin:0">🧠 Memorización</h3><span class="spacer"></span><a class="btn sm" href="#memoria">Entrenar →</a></div>
+      <div class="grid g2" style="margin-top:12px">
+        <div class="stat"><span class="v">${S.memo.sessions}</span><span class="l">sesiones de memoria</span></div>
+        <div class="stat"><span class="v">${S.memo.routines.length}</span><span class="l">rutinas guardadas</span></div>
+        <div class="stat"><span class="v">${S.memo.simon.salsa} · ${S.memo.simon.bachata}</span><span class="l">récord Simón (salsa · bachata)</span></div>
+        <div class="stat"><span class="v">${mastered}<span class="dim" style="font-size:1rem">/24</span></span><span class="l">tarjetas dominadas</span></div>
+      </div>
+      <p class="small dim" style="margin:10px 0 0">${lastM?`Última sesión: ${fmtDate(lastM.d)}`:"Aún no hay sesiones de memorización."}</p>
+    </div>
+    <div class="card"><div class="row"><h3 style="margin:0">🎧 Musicalidad</h3><span class="spacer"></span><a class="btn sm" href="#musicalidad">Entrenar →</a></div>
+      <div class="mini-scores" style="margin-top:12px"><span class="h">Mejor resultado</span><span class="h">Salsa</span><span class="h">Bachata</span>${Object.keys(MG).map(row).join("")}</div>
+      <p class="small dim" style="margin:10px 0 0">${S.music.sessions} ejercicio(s) realizados${lastMu?` · último: ${fmtDate(lastMu.d)}`:""}</p>
+    </div>
+  </div>`;
+}
+
+/* =========================================================
    ROUTER
    ========================================================= */
 let currentView=null;
 function route(){
-  // detener audio al cambiar de vista
-  if(prac.start) stopPractice(); if(lessonStop || Audio.running()) stopLessonAudio();
-  const h = (location.hash||"#dashboard").slice(1); const [name,arg] = h.split("/");
-  $$(".view").forEach(v=>{ v.classList.remove("active"); v.className="view"; });
+  runCleanup();
+  if(prac.start) stopPractice();
+  if(lessonStop || Audio.running()) stopLessonAudio();
+  Audio.stop(); Audio.setMute(false);
+  if(lessonAnim){ lessonAnim.destroy(); lessonAnim=null; }
+  const h = (location.hash||"#dashboard").slice(1); const parts = h.split("/"); const name=parts[0];
+  $$(".view").forEach(v=>{ v.className="view"; });
   const tabName = name==="leccion" ? "lecciones" : name;
   $$("#tabs a").forEach(a=>a.classList.toggle("active",a.dataset.r===tabName));
   if(name==="lecciones"){ renderLessons(); $("#v-lecciones").classList.add("active"); }
-  else if(name==="leccion"){ renderLesson(arg); }
+  else if(name==="leccion"){ renderLesson(parts[1]); }
+  else if(name==="memoria"){ renderMemoria(parts[1],parts[2]); }
+  else if(name==="musicalidad"){ renderMusica(parts[1]); }
   else if(name==="teoria"){ renderTheory(); $("#v-teoria").classList.add("active"); }
   else if(name==="practica"){ renderPractice(); }
-  else { renderDashboard(); $("#v-dashboard").classList.add("active"); }
-  if(currentView!==h) window.scrollTo({top:0,behavior:"instant" in window?"instant":"auto"});
+  else { renderDashboard(); $("#v-dashboard").classList.add("active"); $$("#tabs a").forEach(a=>a.classList.toggle("active",a.dataset.r==="dashboard")); }
+  if(currentView!==h) window.scrollTo(0,0);
   currentView=h;
 }
 window.addEventListener("hashchange",route);
 window.addEventListener("beforeunload",()=>{ if(prac.start) stopPractice(); if(lessonStop) stopLessonAudio(); });
-document.addEventListener("visibilitychange",()=>{ if(document.hidden){ if(prac.start) stopPractice(); if(lessonStop) stopLessonAudio(); } });
+document.addEventListener("visibilitychange",()=>{ if(document.hidden){ if(prac.start) stopPractice(); if(lessonStop) stopLessonAudio(); runCleanup(); Audio.stop(); } });
 route();
 </script>
 </body>
